@@ -2,7 +2,9 @@
 from django.contrib import admin
 from nested_inline.admin import NestedStackedInline, NestedModelAdmin
 
+import views
 from visitas_stg.models import *
+
 
 
 # Register your models here.
@@ -49,3 +51,4 @@ admin.site.register(CargoLocal)
 admin.site.register(ParticipanteLocal)
 admin.site.register(Medio)
 admin.site.register(TipoCapitalizacion)
+admin.site.register_view('my_view/', view=views.detail, name="Consulta por Filtros", visible=True)
