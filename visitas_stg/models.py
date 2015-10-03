@@ -77,6 +77,8 @@ class Visita(models.Model):
     entidad = models.ForeignKey(Estado)
     municipio = models.ForeignKey(Municipio)
     cargo = models.ForeignKey(Cargo)
+    distrito_electoral = models.IntegerField(default=0)
+    partido_gobernante = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
         return self.cargo.nombre_funcionario + " - " + self.actividad_set.first().descripcion
@@ -121,12 +123,26 @@ class Actividad(models.Model):
     tipo_actividad = models.ForeignKey(TipoActividad)
     descripcion = models.CharField(max_length=200)
     clasificacion = models.ForeignKey(Clasificacion)
-    problematica = models.CharField(max_length=200)
     visita = models.ForeignKey(Visita, default=1)
 
     class Meta:
         verbose_name_plural = "Actividades"
         verbose_name = "Actividad"
+
+
+class ProblematicaSocial(models.Model):
+    problematica_social = models.CharField(max_length=200)
+    actividad = models.ForeignKey(Actividad)
+
+    def __str__(self):
+        return self.problematica_social
+
+    def __unicode__(self):
+        return self.problematica_social
+
+    class Meta:
+        verbose_name = 'Problematica social'
+        verbose_name_plural = 'Problematicas sociales'
 
 
 class CargoLocal(models.Model):  # Cargo de la persona Local

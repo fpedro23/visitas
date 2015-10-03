@@ -10,6 +10,10 @@ from visitas_stg.models import *
 # Register your models here.
 
 
+class ProblematicaSocialInLine(NestedStackedInline):
+    model = ProblematicaSocial
+    extra = 1
+
 class ParticipanteLocalInline(NestedStackedInline):
     model = ParticipanteLocal
     extra = 1
@@ -23,9 +27,9 @@ class CapitalizacionInline(NestedStackedInline):
 class ActividadInLine(NestedStackedInline):
     model = Actividad
     extra = 1
-    inlines = [ParticipanteLocalInline, CapitalizacionInline]
+    inlines = [ParticipanteLocalInline, CapitalizacionInline, ProblematicaSocialInLine]
     fieldsets = [
-        (None, {'fields': ['tipo_actividad', 'descripcion', 'clasificacion', 'problematica']}),
+        (None, {'fields': ['tipo_actividad', 'descripcion', 'clasificacion', ]}),
 
     ]
 
@@ -34,8 +38,11 @@ class VisitaAdmin(NestedModelAdmin):
     model = Visita
     inlines = [ActividadInLine]
     fieldsets = [
-        (None, {'fields': ['dependencia']}),
-        ('Información general', {'fields': ['fecha_visita', 'region', 'entidad', 'municipio', 'cargo', ]}),
+        ('Información básica de la visita', {'fields': ['dependencia', 'fecha_visita',]}),
+        ('Localización', {'fields': ['region', 'entidad', 'municipio', ]}),
+        ('Datos electorales', {'fields': ['distrito_electoral', 'partido_gobernante',]}),
+        ('Funcionarios', {'fields': ['cargo', ]}),
+
     ]
 
 
