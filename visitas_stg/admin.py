@@ -41,7 +41,7 @@ class VisitaAdmin(NestedModelAdmin):
 
 admin.site.register(Visita, VisitaAdmin)
 admin.site.register(Region)
-admin.site.register(Estado)
+# admin.site.register(Estado)
 admin.site.register(Municipio)
 admin.site.register(Cargo)
 admin.site.register(Dependencia)
@@ -51,4 +51,3 @@ admin.site.register(CargoLocal)
 admin.site.register(ParticipanteLocal)
 admin.site.register(Medio)
 admin.site.register(TipoCapitalizacion)
-admin.site.register_view('my_view/', view=views.detail, name="Consulta por Filtros", visible=True)

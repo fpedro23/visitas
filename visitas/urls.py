@@ -1,9 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from adminplus.sites import AdminSitePlus
+from visitas_stg import  views
 
-admin.site = AdminSitePlus()
-admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
@@ -11,5 +9,7 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin_tools/', include('admin_tools.urls')),
+    url(r'^my_view/', views.detail, name='consulta_filtros'),
 
     )

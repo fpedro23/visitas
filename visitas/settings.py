@@ -26,19 +26,34 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+ADMIN_TOOLS_MENU = 'menu.CustomMenu'
+
+
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.request',
+    'django.contrib.auth.context_processors.auth',
+)
+
+
 
 # Application definition
 
 INSTALLED_APPS = (
-    'adminplus',
-    'django.contrib.admin.apps.SimpleAdminConfig',
+    'admin_tools',
+    'admin_tools.theming',
+    'admin_tools.menu',
+    'admin_tools.dashboard',
+    'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'visitas_stg',
     'nested_inline',
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -88,3 +103,4 @@ STATIC_URL = '/static/'
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR,  'templates'),
 )
+

@@ -1,7 +1,12 @@
 from django.http import HttpResponse
 
 # Create your views here.
+from django.template import loader, RequestContext
 
 
 def detail(request):
-    return HttpResponse("You're looking at question success")
+    template = loader.get_template('filtros.html')
+    context = RequestContext(request, {
+        'latest_question_list': "1,2",
+    })
+    return HttpResponse(template.render(context))

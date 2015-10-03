@@ -13,6 +13,10 @@ class Region(models.Model):
     def __unicode__(self):  # __unicode__ on Python 2
         return self.numeroRegion
 
+    class Meta:
+        verbose_name = 'Región'
+        verbose_name_plural = 'Regiones'
+
 
 class Estado(models.Model):
     nombreEstado = models.CharField(max_length=200)
@@ -50,12 +54,20 @@ class Cargo(models.Model):  # Cargo de la persona que hace la actividad
     def __unicode__(self):
         return self.nombre_cargo + "-" + self.nombre_funcionario
 
+    class Meta:
+        verbose_name = 'Cargo'
+        verbose_name_plural = 'Cargos'
+
 
 class Dependencia(models.Model):
     nombreDependencia = models.CharField(max_length=200)
 
     def __str__(self):  # __unicode__ on Python 2
         return self.nombreDependencia
+
+    class Meta:
+        verbose_name = 'Dependencia'
+        verbose_name_plural = 'Dependencias'
 
 
 class Visita(models.Model):
@@ -72,6 +84,10 @@ class Visita(models.Model):
     def __unicode__(self):
         return self.cargo.nombre_funcionario + " - " + self.actividad_set.first().descripcion
 
+    class Meta:
+        verbose_name = 'Visita'
+        verbose_name_plural = 'Visitas'
+
 
 class TipoActividad(models.Model):
     nombre_actividad = models.CharField(max_length=200)
@@ -82,6 +98,10 @@ class TipoActividad(models.Model):
     def __unicode__(self):
         return self.nombre_actividad
 
+    class Meta:
+        verbose_name = 'Tipo de Actividad'
+        verbose_name_plural = 'Tipos de Actividad'
+
 
 class Clasificacion(models.Model):
     nombre_clasificacion = models.CharField(max_length=200)
@@ -91,6 +111,10 @@ class Clasificacion(models.Model):
 
     def __unicode__(self):
         return self.nombre_clasificacion
+
+    class Meta:
+        verbose_name = 'Clasificación'
+        verbose_name_plural = 'Clasificaciones'
 
 
 class Actividad(models.Model):
@@ -114,6 +138,10 @@ class CargoLocal(models.Model):  # Cargo de la persona Local
     def __unicode__(self):
         return self.nombre_cargo
 
+    class Meta:
+        verbose_name = 'Cargo local'
+        verbose_name_plural = 'Cargos locales'
+
 
 class ParticipanteLocal(models.Model):
     nombre = models.CharField(max_length=200)
@@ -134,6 +162,10 @@ class Medio(models.Model):
     def __unicode__(self):
         return self.nombre_medio
 
+    class Meta:
+        verbose_name = 'Medio'
+        verbose_name_plural = 'Medios'
+
 
 class TipoCapitalizacion(models.Model):
     nombre_tipo_capitalizacion = models.CharField(max_length=200)
@@ -144,6 +176,10 @@ class TipoCapitalizacion(models.Model):
     def __unicode__(self):
         return self.nombre_tipo_capitalizacion
 
+    class Meta:
+        verbose_name = 'Tipo de Capitalización'
+        verbose_name_plural = 'Tipos de Capitalización'
+
 
 class Capitalizacion(models.Model):
     medio = models.ForeignKey(Medio)
@@ -153,7 +189,7 @@ class Capitalizacion(models.Model):
     actividad = models.ForeignKey(Actividad)
 
     class Meta:
-        verbose_name_plural = 'Capitalización'
+        verbose_name_plural = 'Capitalizaciones'
         verbose_name = 'Capitalización'
 
 
