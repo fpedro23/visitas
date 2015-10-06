@@ -1,4 +1,5 @@
 # coding=utf-8
+from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
@@ -65,20 +66,23 @@ class Dependencia(models.Model):
     def __str__(self):  # __unicode__ on Python 2
         return self.nombreDependencia
 
+    def __unicode__(self):  # __unicode__ on Python 2
+        return self.nombreDependencia
+
     class Meta:
         verbose_name = 'Dependencia'
         verbose_name_plural = 'Dependencias'
 
 
 class Visita(models.Model):
-    dependencia = models.ForeignKey(Dependencia, default=1)
-    fecha_visita = models.DateField('Fecha')
-    region = models.ForeignKey(Region)
-    entidad = models.ForeignKey(Estado)
-    municipio = models.ForeignKey(Municipio)
-    cargo = models.ForeignKey(Cargo)
-    distrito_electoral = models.IntegerField(default=0)
-    partido_gobernante = models.CharField(max_length=200, null=True, blank=True)
+    dependencia = models.ForeignKey(Dependencia, default=1, verbose_name='Dependencia')
+    fecha_visita = models.DateField(verbose_name='Fecha de Visita')
+    region = models.ForeignKey(Region, verbose_name='Región')
+    entidad = models.ForeignKey(Estado, verbose_name='Entidad')
+    municipio = models.ForeignKey(Municipio,  verbose_name='Municipio')
+    cargo = models.ForeignKey(Cargo, verbose_name='Cargo que ejecuta')
+    distrito_electoral = models.IntegerField(default=0,  verbose_name='Distrito electoral')
+    partido_gobernante = models.CharField(max_length=200, null=True, blank=True,  verbose_name='Partido Gobernante')
 
     def __str__(self):
         return self.cargo.nombre_funcionario + " - " + self.actividad_set.first().descripcion
@@ -120,9 +124,9 @@ class Clasificacion(models.Model):
 
 
 class Actividad(models.Model):
-    tipo_actividad = models.ForeignKey(TipoActividad)
-    descripcion = models.CharField(max_length=200)
-    clasificacion = models.ForeignKey(Clasificacion)
+    tipo_actividad = models.ForeignKey(TipoActividad,  verbose_name='Tipo de Actividad')
+    descripcion = models.CharField(max_length=200,  verbose_name='Descripción')
+    clasificacion = models.ForeignKey(Clasificacion,  verbose_name='Clasificación')
     visita = models.ForeignKey(Visita, default=1)
 
     class Meta:
@@ -160,9 +164,15 @@ class CargoLocal(models.Model):  # Cargo de la persona Local
 
 
 class ParticipanteLocal(models.Model):
-    nombre = models.CharField(max_length=200)
-    cargo = models.ForeignKey(CargoLocal)
+    nombre = models.CharField(max_length=200,  verbose_name='Nombre de participante local')
+    cargo = models.ForeignKey(CargoLocal,  verbose_name='Cargo del participante local')
     actividad = models.ForeignKey(Actividad)
+
+    def __str__(self):
+        return self.nombre + ' - ' + self.cargo.nombre_cargo
+
+    def __unicode__(self):
+        return self.nombre + ' - ' + self.cargo.nombre_cargo
 
     class Meta:
         verbose_name_plural = 'Participantes locales'
@@ -204,8 +214,25 @@ class Capitalizacion(models.Model):
     evidencia_grafica = models.FileField(null=True, blank=True)
     actividad = models.ForeignKey(Actividad)
 
+    def __str__(self):
+        return self.tipo_capitalizacion.nombre_tipo_capitalizacion + ' - ' + self.medio.nombre_medio
+
+    def __unicode__(self):
+        return self.tipo_capitalizacion.nombre_tipo_capitalizacion + ' - ' + self.medio.nombre_medio
+
     class Meta:
         verbose_name_plural = 'Capitalizaciones'
         verbose_name = 'Capitalización'
 
 
+class UserProfile(models.Model):
+    ADMIN = 'AD'
+    USER = 'US'
+
+    ROLES_CHOICES = (
+        (ADMIN, 'Administrador general'),
+        (USER, 'Usuario de Dependencia'),
+    )
+    rol = models.CharField(max_length=2, choices=ROLES_CHOICES, default=USER)
+    user = models.OneToOneField(User)
+    dependencia = models.ForeignKey(Dependencia, blank=True, null=True, )
