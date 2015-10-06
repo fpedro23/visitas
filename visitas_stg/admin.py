@@ -8,6 +8,7 @@ from visitas_stg.models import *
 
 
 
+
 # Register your models here.
 
 
@@ -41,7 +42,6 @@ class VisitaAdmin(NestedModelAdmin):
     inlines = [ActividadInLine]
     list_display = ('__str__', 'dependencia', 'region', 'entidad', 'municipio', 'cargo', 'partido_gobernante', )
 
-
     fieldsets = [
         ('Información básica de la visita', {'fields': ['dependencia', 'fecha_visita', ]}),
         ('Localización', {'fields': ['region', 'entidad', 'municipio', ]}),
@@ -71,7 +71,7 @@ class UserProfileInline(admin.StackedInline):
 
 class CustomUserAdmin(UserAdmin):
     inlines = (UserProfileInline, )
-    list_display = ('username', 'first_name', 'last_name', 'email', 'get_dependencia', )
+    list_display = ('username', 'first_name', 'last_name', 'email', 'get_dependencia', 'get_rol', )
 
     add_fieldsets = (
         (None, {'fields': ('username', 'password1', 'password2')}),
@@ -80,8 +80,25 @@ class CustomUserAdmin(UserAdmin):
         (('Important dates', ), {'fields': ('last_login', 'date_joined')}),
     )
 
+    def f(self, x):
+        return {
+            'US': 'Usuario de dependencia',
+            'AD': 'Administrador General',
+        }.get(x, 'Sin Rol Asignado')
+
+    def get_rol(self, obj):
+        try:
+            nombre_rol = self.f(obj.userprofile.rol)
+            return nombre_rol
+        except Exception as e:
+            print e
+            nombre = ''
+            return nombre
+
+    get_rol.short_description = 'Rol de usuario'
+
+
     def get_dependencia(self, obj):
-        nombre_dependencia = ''
         try:
             nombre_dependencia = obj.userprofile.dependencia.nombreDependencia
             return nombre_dependencia
