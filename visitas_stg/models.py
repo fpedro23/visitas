@@ -79,10 +79,10 @@ class Visita(models.Model):
     fecha_visita = models.DateField(verbose_name='Fecha de Visita')
     region = models.ForeignKey(Region, verbose_name='Región')
     entidad = models.ForeignKey(Estado, verbose_name='Entidad')
-    municipio = models.ForeignKey(Municipio,  verbose_name='Municipio')
+    municipio = models.ForeignKey(Municipio, verbose_name='Municipio')
     cargo = models.ForeignKey(Cargo, verbose_name='Cargo que ejecuta')
-    distrito_electoral = models.IntegerField(default=0,  verbose_name='Distrito electoral')
-    partido_gobernante = models.CharField(max_length=200, null=True, blank=True,  verbose_name='Partido Gobernante')
+    distrito_electoral = models.IntegerField(default=0, verbose_name='Distrito electoral')
+    partido_gobernante = models.CharField(max_length=200, null=True, blank=True, verbose_name='Partido Gobernante')
 
     def __str__(self):
         return self.cargo.nombre_funcionario + " - " + self.actividad_set.first().descripcion
@@ -124,9 +124,9 @@ class Clasificacion(models.Model):
 
 
 class Actividad(models.Model):
-    tipo_actividad = models.ForeignKey(TipoActividad,  verbose_name='Tipo de Actividad')
-    descripcion = models.CharField(max_length=200,  verbose_name='Descripción')
-    clasificacion = models.ForeignKey(Clasificacion,  verbose_name='Clasificación')
+    tipo_actividad = models.ForeignKey(TipoActividad, verbose_name='Tipo de Actividad')
+    descripcion = models.CharField(max_length=200, verbose_name='Descripción')
+    clasificacion = models.ForeignKey(Clasificacion, verbose_name='Clasificación')
     visita = models.ForeignKey(Visita, default=1)
 
     class Meta:
@@ -164,8 +164,8 @@ class CargoLocal(models.Model):  # Cargo de la persona Local
 
 
 class ParticipanteLocal(models.Model):
-    nombre = models.CharField(max_length=200,  verbose_name='Nombre de participante local')
-    cargo = models.ForeignKey(CargoLocal,  verbose_name='Cargo del participante local')
+    nombre = models.CharField(max_length=200, verbose_name='Nombre de participante local')
+    cargo = models.ForeignKey(CargoLocal, verbose_name='Cargo del participante local')
     actividad = models.ForeignKey(Actividad)
 
     def __str__(self):

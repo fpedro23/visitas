@@ -4,7 +4,6 @@ from django.db.models import Q
 from nested_inline.admin import NestedStackedInline, NestedModelAdmin
 from django.contrib.auth.admin import UserAdmin
 
-import views
 from visitas_stg.models import *
 
 
@@ -15,6 +14,7 @@ from visitas_stg.models import *
 class ProblematicaSocialInLine(NestedStackedInline):
     model = ProblematicaSocial
     extra = 1
+
 
 class ParticipanteLocalInline(NestedStackedInline):
     model = ParticipanteLocal
@@ -40,11 +40,10 @@ class VisitaAdmin(NestedModelAdmin):
     model = Visita
     inlines = [ActividadInLine]
 
-
     fieldsets = [
-        ('Información básica de la visita', {'fields': ['dependencia', 'fecha_visita',]}),
+        ('Información básica de la visita', {'fields': ['dependencia', 'fecha_visita', ]}),
         ('Localización', {'fields': ['region', 'entidad', 'municipio', ]}),
-        ('Datos electorales', {'fields': ['distrito_electoral', 'partido_gobernante',]}),
+        ('Datos electorales', {'fields': ['distrito_electoral', 'partido_gobernante', ]}),
         ('Funcionarios', {'fields': ['cargo', ]}),
 
     ]
