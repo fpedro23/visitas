@@ -79,7 +79,14 @@ class CustomUserAdmin(UserAdmin):
     )
 
     def get_dependencia(self, obj):
-        return obj.userprofile.dependencia.nombreDependencia
+        nombre_dependencia = ''
+        try:
+            nombre_dependencia = obj.userprofile.dependencia.nombreDependencia
+            return nombre_dependencia
+        except Exception as e:
+            print e
+            nombre_dependencia = 'Sin dependencia asignada'
+            return nombre_dependencia
 
     get_dependencia.short_description = 'Dependencia'
 
