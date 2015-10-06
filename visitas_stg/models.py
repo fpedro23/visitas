@@ -50,10 +50,10 @@ class Cargo(models.Model):  # Cargo de la persona que hace la actividad
     nombre_funcionario = models.CharField(max_length=200)
 
     def __str__(self):
-        return self.nombre_cargo + "-" + self.nombre_funcionario
+        return self.nombre_cargo + " - " + self.nombre_funcionario
 
     def __unicode__(self):
-        return self.nombre_cargo + "-" + self.nombre_funcionario
+        return self.nombre_cargo + " - " + self.nombre_funcionario
 
     class Meta:
         verbose_name = 'Cargo'

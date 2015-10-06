@@ -39,6 +39,8 @@ class ActividadInLine(NestedStackedInline):
 class VisitaAdmin(NestedModelAdmin):
     model = Visita
     inlines = [ActividadInLine]
+    list_display = ('__str__', 'dependencia', 'region', 'entidad', 'municipio', 'cargo', 'partido_gobernante', )
+
 
     fieldsets = [
         ('Información básica de la visita', {'fields': ['dependencia', 'fecha_visita', ]}),
