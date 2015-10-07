@@ -32,11 +32,22 @@ class Estado(models.Model):
         return self.nombreEstado
 
 
+class DistritoElectoral(models.Model):
+    nombre_distrito_electoral = models.CharField(max_length=200, verbose_name='Distrito Electoral')
+
+    def __str__(self):
+        return self.nombre_distrito_electoral
+
+    def __unicode__(self):
+        return self.nombre_distrito_electoral
+
+
 class Municipio(models.Model):
     nombreMunicipio = models.CharField(max_length=200)
     latitud = models.FloatField()
     longitud = models.FloatField()
     estado = models.ForeignKey(Estado, null=False, blank=False)
+    distrito_electoral = models.ForeignKey(DistritoElectoral, default=1)
 
     def __str__(self):
         return self.nombreMunicipio
@@ -81,7 +92,7 @@ class Visita(models.Model):
     entidad = models.ForeignKey(Estado, verbose_name='Entidad')
     municipio = models.ForeignKey(Municipio, verbose_name='Municipio')
     cargo = models.ForeignKey(Cargo, verbose_name='Cargo que ejecuta')
-    distrito_electoral = models.IntegerField(default=0, verbose_name='Distrito electoral')
+    distrito_electoral = models.ForeignKey(DistritoElectoral, default=0, verbose_name='Distrito electoral')
     partido_gobernante = models.CharField(max_length=200, null=True, blank=True, verbose_name='Partido Gobernante')
 
     def __str__(self):
@@ -149,30 +160,30 @@ class ProblematicaSocial(models.Model):
         verbose_name_plural = 'Problematicas sociales'
 
 
-class CargoLocal(models.Model):  # Cargo de la persona Local
-    nombre_cargo = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.nombre_cargo
-
-    def __unicode__(self):
-        return self.nombre_cargo
-
-    class Meta:
-        verbose_name = 'Cargo local'
-        verbose_name_plural = 'Cargos locales'
+# class CargoLocal(models.Model):  # Cargo de la persona Local
+#     nombre_cargo = models.CharField(max_length=200)
+#
+#     def __str__(self):
+#         return self.nombre_cargo
+#
+#     def __unicode__(self):
+#         return self.nombre_cargo
+#
+#     class Meta:
+#         verbose_name = 'Cargo local'
+#         verbose_name_plural = 'Cargos locales'
 
 
 class ParticipanteLocal(models.Model):
     nombre = models.CharField(max_length=200, verbose_name='Nombre de participante local')
-    cargo = models.ForeignKey(CargoLocal, verbose_name='Cargo del participante local')
+    cargo = models.CharField(max_length=200, verbose_name='Cargo del participante local')
     actividad = models.ForeignKey(Actividad)
 
     def __str__(self):
-        return self.nombre + ' - ' + self.cargo.nombre_cargo
+        return self.nombre + ' - ' + self.cargo
 
     def __unicode__(self):
-        return self.nombre + ' - ' + self.cargo.nombre_cargo
+        return self.nombre + ' - ' + self.cargo
 
     class Meta:
         verbose_name_plural = 'Participantes locales'
