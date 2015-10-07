@@ -34,6 +34,7 @@ class Estado(models.Model):
 
 class DistritoElectoral(models.Model):
     nombre_distrito_electoral = models.CharField(max_length=200, verbose_name='Distrito Electoral')
+    estado = models.ForeignKey(Estado, default=1)
 
     def __str__(self):
         return self.nombre_distrito_electoral
