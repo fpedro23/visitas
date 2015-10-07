@@ -51,8 +51,8 @@ class VisitaAdmin(NestedModelAdmin):
     ]
 
     def get_readonly_fields(self, request, obj=None):
-        if request.user.userprofile.rol == 'US':
-            return ('dependencia', )
+        # if request.user.userprofile.rol == 'US':
+        #     return ('dependencia', )
         return super(VisitaAdmin, self).get_readonly_fields(request, obj)
 
     def get_queryset(self, request):
@@ -63,6 +63,14 @@ class VisitaAdmin(NestedModelAdmin):
             )
 
         return super(VisitaAdmin, self).get_queryset(request)
+
+    def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
+
+        if request.user.userprofile.rol == 'US':
+            if db_field.name == "dependencia":
+                kwargs["queryset"] = Dependencia.objects.filter(id=request.user.userprofile.dependencia.id)
+
+        return super(VisitaAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 class UserProfileInline(admin.StackedInline):
