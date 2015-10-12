@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+
 from visitas_stg import  views
 
 
@@ -10,6 +11,6 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^admin_tools/', include('admin_tools.urls')),
-    url(r'^my_view/', views.detail, name='consulta_filtros'),
+    url(r'^busqueda-filtros/', views.buscar_visitas_web, name='consulta_filtros'),
 
     )
