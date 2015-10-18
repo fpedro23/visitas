@@ -1,0 +1,29 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static admin_urls %}
+{% block extrastyle %}{{ block.super }}
+
+{% endblock %}
+{% block breadcrumbs %}
+{% endblock %}
+
+{% block content %}
+
+    <div id="body">
+   	    <div id= "regresarBTN" onclick="window.history.go(-1);"></div>
+        <div id="welcome">Catálogo de Tipo de Capitalización</div>
+
+        <div class="capitalizacionAGREGAR" onclick="location.href='/admin/visitas_stg/tipocapitalizacion/add/'">
+        </div>
+
+        <div class="capitalizacionBUSCAR" onclick="location.href='/admin/visitas_stg/tipocapitalizacion/'">
+        </div>
+
+        <div class="capitalizacionEDITAR" onclick="location.href='/admin/visitas_stg/tipocapitalizacion/?e=2'">
+        </div>
+
+        <div class="capitalizacionELIMINAR" onclick="location.href='/admin/visitas_stg/tipocapitalizacion/?e=2'">
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static admin_urls %}
+{% block extrastyle %}{{ block.super }}
+
+{% endblock %}
+{% block breadcrumbs %}
+{% endblock %}
+
+{% block content %}
+
+    <div id="body">
+   	    <div id= "regresarBTN" onclick="window.history.go(-1);"></div>
+        <div id="welcome">Catálogo de Funcionarios</div>
+
+        <div class="funcionariosAGREGAR" onclick="location.href='/admin/visitas_stg/cargo/add/?s=1'">
+        </div>
+
+        <div class="funcionariosBUSCAR" onclick="location.href='/admin/visitas_stg/cargo/'">
+        </div>
+
+        <div class="funcionariosEDITAR" onclick="location.href='/admin/visitas_stg/cargo/?e=2'">
+        </div>
+
+        <div class="funcionariosELIMINAR" onclick="location.href='/admin/visitas_stg/cargo/?e=1'">
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static admin_urls %}
+{% block extrastyle %}{{ block.super }}
+
+{% endblock %}
+{% block breadcrumbs %}
+{% endblock %}
+
+{% block content %}
+
+    <div id="body">
+   	    <div id= "regresarBTN" onclick="window.history.go(-1);"></div>
+        <div id="welcome">Catálogo de Medios</div>
+
+        <div class="mediosAGREGAR" onclick="location.href='/admin/visitas_stg/medio/add/'">
+        </div>
+
+        <div class="mediosBUSCAR" onclick="location.href='/admin/visitas_stg/medio/'">
+        </div>
+
+        <div class="mediosEDITAR" onclick="location.href='/admin/visitas_stg/medio/?e=2'">
+        </div>
+
+        <div class="mediosELIMINAR" onclick="location.href='/admin/visitas_stg/medio/?e=1'">
+        </div>
+    </div>
+
+
+{% endblock %}

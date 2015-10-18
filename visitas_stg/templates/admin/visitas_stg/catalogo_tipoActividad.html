@@ -1,0 +1,29 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static admin_urls %}
+{% block extrastyle %}{{ block.super }}
+
+{% endblock %}
+{% block breadcrumbs %}
+{% endblock %}
+
+{% block content %}
+
+    <div id="body">
+   	    <div id= "regresarBTN" onclick="window.history.go(-1);"></div>
+        <div id="welcome">Catálogo de Tipo de Actividad</div>
+
+        <div class="actividadAGREGAR" onclick="location.href='/admin/visitas_stg/tipoactividad/add/'">
+        </div>
+
+        <div class="actividadBUSCAR" onclick="location.href='/admin/visitas_stg/tipoactividad/'">
+        </div>
+
+        <div class="actividadEDITAR" onclick="location.href='/admin/visitas_stg/tipoactividad/?e=2'">
+        </div>
+
+        <div class="actividadELIMINAR" onclick="location.href='/admin/visitas_stg/tipoactividad/?e=1'">
+        </div>
+    </div>
+
+
+{% endblock %}
