@@ -2,9 +2,33 @@ from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.shortcuts import render_to_response, redirect
 from visitas_stg.models import *
+from visitas_stg.tools import *
 
 # Create your views here.
 from BuscarVisitas import BuscarVisitas
+
+def get_user_for_token(token):
+    if token:
+        return AccessToken.objects.get(token=token).user
+    else:
+        return None
+
+def register_by_access_token(request):
+
+    #del request.session['access_token']
+
+    if request.session.get('access_token'):
+        token = {
+        'access_token': request.session.get('access_token'),
+        'token_type': 'Bearer'
+    }
+        return JsonResponse(token)
+    else:
+        #user = get_user_for_token('3DVteYz9OIH6gvQDyYX78GOpHKXgPy'
+        user = request.user
+        return get_access_token(user,request)
+
+
 
 
 def get_array_or_none(the_string):

@@ -276,17 +276,17 @@ url('../fonts/Soberana%20Sans/soberanasans-regular-webfont.svg#soberana_sansregu
     cursor: pointer;
 }
 
-.salirBTN{
-	width: 60px;
-	height: 30px;
-	background-image: url(../img-botones/bigBackground.fw.png);
-	background-position: -806px -1788px;
+.salirBTNpop{
+	width: 65px;
+	height: 23px;
+	background-image: url(../imagenes/bigBACK.png);
+	background-position: -402px -256px;
 	position: relative;
     display: inline-block;
 }
 
-.salirBTN:hover{
-	background-position: -806px -1818px;
+.salirBTNpop:hover{
+	background-position: -402px -279px;
     cursor: pointer;
 }
 
@@ -315,14 +315,14 @@ url('../fonts/Soberana%20Sans/soberanasans-regular-webfont.svg#soberana_sansregu
 .graficoBTN{
 	width: 30px;
 	height: 30px;
-	background-image: url(../img-botones/bigBackground.fw.png);
-	background-position: -709px -369px;
+	background-image: url(../imagenes/bigBACK.png);
+	background-position: -1384px -234px;
 	position: relative;
 	display: inline-block;
 }
 
 .graficoBTN:hover{
-	background-position:-709px -399px;
+	background-position:-1384px -264px;
     cursor: pointer;
 }
 
@@ -391,36 +391,9 @@ url('../fonts/Soberana%20Sans/soberanasans-regular-webfont.svg#soberana_sansregu
     cursor: pointer;
 }
 
-.salirBTN{
-	width: 60px;
-	height: 30px;
-	background-image: url(../img-botones/bigBackground.fw.png);
-	background-position: -806px -1788px;
-	position: relative;
-    display: inline-block;
-}
-
-.salirBTN:hover{
-	background-position: -806px -1818px;
-    cursor: pointer;
-}
 
 
 
-
-.graficoBTN{
-	width: 30px;
-	height: 30px;
-	background-image: url(../img-botones/bigBackground.fw.png);
-	background-position: -709px -369px;
-	position: relative;
-	display: inline-block;
-}
-
-.graficoBTN:hover{
-	background-position:-709px -399px;
-    cursor: pointer;
-}
 
 .imprimePDF{
 	width: 77px;
@@ -534,42 +507,42 @@ url('../fonts/Soberana%20Sans/soberanasans-regular-webfont.svg#soberana_sansregu
 .excel{
 	width: 78px;
 	height: 82px;
-	background-image: url(../img-botones/bigBackground.fw.png);
-	background-position: -920px -2257px;
+	background-image: url(../imagenes/bigBACK.png);
+	background-position: -1453px -305px;
 	position: relative;
 
 }
 
 .excel:hover{
-	background-position: -920px -2340px;
+	background-position: -1453px -395px;
     cursor: pointer;
 }
 
 .pdf{
 	width: 78px;
 	height: 82px;
-	background-image: url(../img-botones/bigBackground.fw.png);
-	background-position: -1006px -2259px;
+	background-image: url(../imagenes/bigBACK.png);
+	background-position: -1540px -305px;
 	position: relative;
 
 }
 
 .pdf:hover{
-	background-position: -1003px -2349px;
+	background-position: -1540px -395px;
     cursor: pointer;
 }
 
 .ppt{
 	width: 78px;
 	height: 82px;
-	background-image: url(../img-botones/bigBackground.fw.png);
-	background-position: -1098px -2260px;
+	background-image: url(../imagenes/bigBACK.png);
+	background-position: -1632px -305px;
 	position: relative;
 
 }
 
 .ppt:hover{
-	background-position:-1095px -2350px;
+	background-position:-1632px -395px;
     cursor: pointer;
 }
 

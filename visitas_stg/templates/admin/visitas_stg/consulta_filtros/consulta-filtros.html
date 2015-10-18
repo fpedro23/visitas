@@ -495,7 +495,7 @@ et$(function() {
             <div class="row" style="width: 60%;padding-top: 15px;margin-left: auto;margin-right: auto">
                 <article id="salir_exporta">
                     {% csrf_token %}
-                    <div class="salirBTN popup-exporta-dismiss" id="salirExporta" style="height: 30px">
+                    <div class="salirBTNpop popup-exporta-dismiss" id="salirExporta" style="height: 23px">
                     </div>
                 </article>
             </div><br>
@@ -533,7 +533,7 @@ et$(function() {
             <div class="row" style="width: 60%;padding-top: 15px;margin-left: auto;margin-right: auto">
                 <article id="salir_exporta">
                     {% csrf_token %}
-                    <div class="salirBTN popup-exporta-dismiss" id="salirExporta" style="height: 30px">
+                    <div class="salirBTNpop popup-exporta-dismiss" id="salirExporta" style="height: 23px">
                     </div>
                 </article>
             </div><br>
@@ -665,7 +665,7 @@ et$(function() {
 
    <form id="forma" >
    <input type="hidden" name="historico" id="historico"/>
-   <div id="body">
+   <div class= "container2" id="pagina">
    <div id="regresarBTN" onclick="location.href='/visitas/consultas'">
     </div>   <!--AGREGAR A DONDE SE VA A REGRESAR CON ESTA URL REGRESA A LA PÀGINA PRINCIPAL-->
 
@@ -1031,7 +1031,7 @@ et$(function() {
                            <div class="estadoBTN" id="mapaEstado"></div>
                        </div>
                        <div class="col-md-5" id="ajaxProgress">
-                            <img src="../../static/gifs/loading-barra2.gif">
+                            <img src="../../static/assets/gifs/loading-barra2.gif">
                        </div>
                    </div>
                    <div id="map-canvas" style="height: 285px;margin: 0px;padding: 0px;">

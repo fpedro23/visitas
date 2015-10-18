@@ -19,4 +19,5 @@ urlpatterns = patterns('',
     url(r'^visitas/catalogo-capitalizacion$', 'visitas_stg.views.catalogo_capitalizacion', name='catalogo_capitalizacion'),
     url(r'^visitas/consultas$', 'visitas_stg.views.consultas', name='consultas'),
     url(r'^visitas/consulta_filtros$', 'visitas_stg.views.consulta_filtros', name='consulta_filtros'),
+    url(r'^visitas/register-by-token$',views.register_by_access_token),
     )

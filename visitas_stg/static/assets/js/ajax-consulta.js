@@ -18,7 +18,7 @@ var ajax_datatoken = {
 
 
     $j.ajax({
-        url: '/obras/register-by-token',
+        url: '/visitas/register-by-token',
         type: 'get',
         data: ajax_datatoken,
         success: function(data) {
@@ -90,7 +90,7 @@ function volverHistorico() {
     //document.write(variable);
     var sHistorico = $j('#historico').val();
     if (sHistorico.toString() =="SI") {
-        $.get("/obras/register-by-token", function (respu) {
+        $.get("/visitas/register-by-token", function (respu) {
            newToken = respu.access_token;
            verDatos()
         });
