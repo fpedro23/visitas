@@ -100,9 +100,14 @@ SITE_ID = 1
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
+
+
 STATIC_URL = '/static/'
 
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR,  'templates'),
+    os.path.join(BASE_DIR,  'visitas_stg/templates/'),
 )
 
+TEMPLATETAGS_DIRS = (
+    os.path.join(BASE_DIR, 'visitas_stg/templatetags/'),
+)

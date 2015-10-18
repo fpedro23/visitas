@@ -1,0 +1,144 @@
+{% load  admin_static app_filters%}
+
+{% for line in fieldset %}
+     {% for field in line %}
+         {% if field.field.name == "dependencia" %}
+            <div id="alta01">
+             <table width="1008px" border="0px">
+                <tr valign="top">
+                    <td width="252px">
+                        <fieldset class="module ">
+                            <table width="252px" border="0px" >
+                                <tr>
+                                    <td class="tituloTABLA" colspan="2">Información básica</td>
+                                </tr>
+                                 <tr>
+                                    <td class="contenidoTABLA" width="147px">No. de Control Interno:</td>
+                                    <td width="105px">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td width="147px">
+                                         <label class="contenidoTABLA" for="id_dependencia">Dependencia:</label>
+                                    </td>
+                                    <td width="105px">
+                                         {{ field.field }}
+                                    </td>
+                                </tr>
+
+         {% endif %}
+         {% if field.field.name == "fecha_visita" %}
+                                <tr class="form-row field-fecha_visita">
+                                    <td width="147px">
+                                        <label class="contenidoTABLA" for="id_fecha_visita">Fecha de Visita:</label>
+                                    </td>
+                                    <td width="105px">
+                                         {{ field.field|addcss:"form-control2"}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                    </td>
+         {% endif %}
+         {% if field.field.name == "region" %}
+                    <td width="252px">
+                          <fieldset class="module">
+                            <table width="252px" border="0px">
+                                <tr>
+                                    <td class="tituloTABLA" colspan="2">Geolocalización</td>
+                                </tr>
+                                <tr class="form-row field-id_region">
+                                    <td width="126px">
+                                         <label class="contenidoTABLA" for="id_region">Región:</label>
+                                    </td>
+                                    <td width="126px">
+                                         {{ field.field }}
+                                    </td>
+                                </tr>
+
+         {% endif %}
+         {% if field.field.name == "entidad" %}
+                                <tr class="form-row field-entidad">
+                                    <td width="126px">
+                                        <label class="contenidoTABLA" for="id_entidad">	Entidad Federativa:</label>
+                                    </td>
+                                    <td width="126px">
+                                         {{ field.field }}
+                                    </td>
+                                </tr>
+         {% endif %}
+         {% if field.field.name == "municipio" %}
+
+                                <tr class="form-row field-municipio">
+                                    <td width="126px">
+                                        <label class="contenidoTABLA" for="id_municipio">Municipio:</label>
+                                    </td>
+                                    <td width="126px">
+                                        {{ field.field }}
+                                    </td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                 </td>
+         {% endif %}
+         {% if field.field.name == "distrito_electoral" %}
+                 <td width="252px">
+                        <fieldset class="module">
+                            <table width="252px" border="0px">
+                                <tr>
+                                    <td class="tituloTABLA" colspan="2">Datos Electorales</td>
+                                </tr>
+                                <tr class="form-row field-distrito_electoral">
+                                    <td width="140px">
+                                        <label class="contenidoTABLA" for="id_distrito_electoral" style="width: auto;">	No. de dtro. electoral:<label>
+                                    </td>
+                                    <td width="112px">
+                                        {{ field.field }}
+                                    </td>
+                                </tr>
+         {% endif %}
+         {% if field.field.name == "partido_gobernante" %}
+                                <tr class="form-row field-partido_gobernante">
+                                    <td width="140px">
+                                        <label class="contenidoTABLA" for="id_partido_gobernante">Partido Gobernante:</label>
+                                    </td>
+                                    <td width="112px">
+                                        {{ field.field }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="140px">&nbsp;</td>
+                                    <td width="112px">&nbsp;</td>
+                                </tr>
+                            </table>
+                     </fieldset>
+                 </td>
+         {% endif %}
+         {% if field.field.name == "cargo" %}
+                 <td width="252px">
+                        <fieldset class="module">
+                            <table width="252px" border="0px">
+                                <tr>
+                                    <td class="tituloTABLA" colspan="2">Funcionario</td>
+                                </tr>
+                                <tr class="form-row field-cargo" align="center">
+                                    <td width="252px" align="left">
+                                        <label class="contenidoTABLA" for="id_cargo" style="width: auto;">Nombre/Cargo:</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="252px">
+                                        {{ field.field }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="252px">&nbsp;</td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                 </td>
+            </tr>
+         </table>
+         {% endif %}
+      {% endfor%}
+    {% endfor %}
+

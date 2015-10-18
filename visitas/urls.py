@@ -12,5 +12,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^admin_tools/', include('admin_tools.urls')),
     url(r'^busqueda-filtros/', views.buscar_visitas_web, name='consulta_filtros'),
-
+    url(r'^visitas_stg/movimientos$', 'visitas_stg.views.movimientos', name='movimientos'),
     )

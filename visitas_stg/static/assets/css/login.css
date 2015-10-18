@@ -1,0 +1,194 @@
+
+/*elementos del DIV BODY correspondientes a la página de LOG IN*/
+ .galeria{
+	 position:relative;
+	 width:540px;
+	 height:360px;
+	 border: 1px solid black;
+	 margin-top:55px;
+	 margin-left:50px;
+}
+
+.botGAL{
+	width:55px;
+	height:10px;
+	position:absolute;
+	top: 365px;
+	left: 295px;
+	border: 1px solid black;
+}
+
+.logIn {
+	position: absolute;
+	left: 630px;
+	top: 55px;
+	width: 345px;
+	height: 360px;
+	z-index: 1;
+	/*border: 1px solid black;*/
+
+	font-family: 'soberana_textoregular';
+	font-size:18px;
+	font-weight:normal;
+	color: #6A6B6C;
+
+}
+
+.titulo{
+	font-family: 'soberana_titularregular';
+	font-size:25px;
+	font-weight:bold;
+	color: #6A6B6C;
+
+}
+
+#botLI{
+	width:126px;
+	height:25px;
+	position:absolute;
+	top: 250px;
+	left:217px;
+    background-color: #6A6B6C;
+    color: #cccccc;
+    text-align: center;
+    vertical-align: middle;
+    cursor:pointer;
+	background-image:url(../img/bigBackground.fw.png);
+	background-position:0px 0px;
+}
+
+#botLI:hover{
+	background-position: 0px -45px;
+}
+
+#olvidarPW{
+	width: 224px;
+	height:40px;
+
+	position:absolute;
+	top:320px;
+
+	background-image:url(../img/bigBackground.fw.png);
+	background-position:-127px -187px;
+}
+
+#olvidarPW:hover{
+	background-position: -127px -230px;
+}
+/*Cierre de elementos del DIV BODY correspondientes a la página de LOG IN*/
+
+ #regresarBTN{
+	 width: 80px;
+	 height: 22px;
+	 background-image:url(../img/bigBackground.fw.png);
+	 background-position: -300px -4px;
+}
+
+#regresarBTN:hover{
+	background-position: -300px -25px;
+}
+
+ .recuperarCon{
+	 position:relative;
+	 width:460px;
+	 height:330px;
+	 margin-top:55px;
+	 margin-left:50px;
+
+	font: "Myriad Pro";
+    font-size:18px;
+    font-weight: regular;
+    color: #6A6B6C;
+
+}
+
+.botENVIAR{
+	width:126px;
+	height:45px;
+	position:absolute;
+	top: 340px;
+	left: 365px;
+	background-image:url(../img/bigBackground.fw.png);
+	background-position: 0px -184px;
+}
+
+.botENVIAR:hover{
+	background-position:0px -229px;
+}
+
+
+
+.titulo{
+	font-family: 'soberana_titularregular';
+	font-size:25px;
+	font-weight:bold;
+	color: #6A6B6C;
+
+}
+
+#alertaMAIL{
+	width:400px;
+	height:250px;
+	position:absolute;
+	left:17px;
+	background-image:url(../img/bigBackground.fw.png);
+	background-position:-721px -1520px;
+}
+
+.logIn2 {
+	position: absolute;
+	left: 300px;
+	top: 76px;
+	width: 435px;
+	height: 337px;
+	z-index: 1;
+}
+
+.recuperarCon{
+	 position:relative;
+	 width:460px;
+	 height:330px;
+	 margin-top:33px;
+	 margin-left:50px;
+
+	font-family: "soberana_sanslight";
+    font-size:18px;
+
+    color: #6A6B6C;
+
+}
+
+.botCAMBIAR{
+	width:126px;
+	height:45px;
+	position:absolute;
+	top: 340px;
+	left: 365px;
+	background-image:url(../img/bigBackground.fw.png);
+	background-position: 0px -524px;
+}
+
+.botCAMBIAR:hover{
+	background-position:0px -569px;
+}
+
+
+.botCAMBIAR2{
+	width:126px;
+	height:45px;
+	position:absolute;
+	top: 290px;
+	left: 335px;
+	background-image:url(../img/bigBackground.fw.png);
+	background-position: 0px -524px;
+}
+
+.botCAMBIAR2:hover{
+	background-position:0px -569px;
+}
+
+
+
+
+
+

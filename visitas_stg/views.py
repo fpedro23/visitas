@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 
 # Create your views here.
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 from BuscarVisitas import BuscarVisitas
 
 
@@ -28,3 +30,8 @@ def buscar_visitas_web(request):
     print resultados
 
     return HttpResponse(resultados['visitas'])
+
+
+def movimientos(request):
+    return render_to_response('admin/visitas_stg/movimientos.html', locals(),
+                                 context_instance=RequestContext(request))
