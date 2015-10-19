@@ -45,7 +45,7 @@ class BuscarVisitas:
             query = query & Q(fecha_visita__gte=self.fecha_inicio)
 
         if self.fecha_fin is not None and self.fecha_inicio is None:
-            query = query & Q(fecha_visita_lte=self.fecha_fin)
+            query = query & Q(fecha_visita__lte=self.fecha_fin)
 
         if self.regiones is not None:
             query = query & Q(region_id__in=self.regiones)

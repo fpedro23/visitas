@@ -75,6 +75,23 @@ class Municipio(models.Model):
         return ans
 
 
+class Dependencia(models.Model):
+    nombreDependencia = models.CharField(max_length=200)
+
+    def __str__(self):  # __unicode__ on Python 2
+        return self.nombreDependencia
+
+    def __unicode__(self):  # __unicode__ on Python 2
+        return self.nombreDependencia
+
+    def to_serializable_dict(self):
+        return model_to_dict(self)
+
+    class Meta:
+        verbose_name = 'Dependencia'
+        verbose_name_plural = 'Dependencias'
+
+
 class Cargo(models.Model):  # Cargo de la persona que hace la actividad
     nombre_cargo = models.CharField(max_length=200)
     nombre_funcionario = models.CharField(max_length=200)
@@ -95,22 +112,6 @@ class Cargo(models.Model):  # Cargo de la persona que hace la actividad
         verbose_name_plural = 'Cargos'
 
 
-
-class Dependencia(models.Model):
-    nombreDependencia = models.CharField(max_length=200)
-
-    def __str__(self):  # __unicode__ on Python 2
-        return self.nombreDependencia
-
-    def __unicode__(self):  # __unicode__ on Python 2
-        return self.nombreDependencia
-
-    def to_serializable_dict(self):
-        return model_to_dict(self)
-
-    class Meta:
-        verbose_name = 'Dependencia'
-        verbose_name_plural = 'Dependencias'
 
 
 class Visita(models.Model):
@@ -139,8 +140,9 @@ class Visita(models.Model):
         ans['fecha_visita'] = self.fecha_visita.__str__()
 
         ans['actividades'] = []
-        for actividad in self.actividad_set.all():
-            ans['actividades'].append(actividad)
+        actividades = Actividad.objects.filter(visita_id=self.id).all()
+        for actividad in actividades:
+            ans['actividades'].append(actividad.to_serializabe_dict())
 
         return ans
 
@@ -191,6 +193,23 @@ class Actividad(models.Model):
         ans['clasificacion'] = self.clasificacion.to_serializable_dict()
         ans['visita'] = self.visita_id
 
+        ans['capitalizaciones'] = []
+        capitalizaciones = Capitalizacion.objects.filter(actividad_id=self.id).all()
+        for capitalizacion in capitalizaciones:
+            ans['capitalizaciones'].append(capitalizacion.to_serializable_dict())
+
+        ans['problematicas_sociales'] = []
+        problematicas = ProblematicaSocial.objects.filter(actividad_id=self.id).all()
+        for capitalizacion in problematicas:
+            ans['problematicas_sociales'].append(capitalizacion.to_serializable_dict())
+
+        ans['participantes_locales'] = []
+        participantes = ParticipanteLocal.objects.filter(actividad_id=self.id).all()
+        for participante in participantes:
+            ans['participantes_locales'].append(participante.to_serializable_dict())
+
+        return ans
+
     class Meta:
         verbose_name_plural = "Actividades"
         verbose_name = "Actividad"
@@ -205,6 +224,11 @@ class ProblematicaSocial(models.Model):
 
     def __unicode__(self):
         return self.problematica_social
+
+    def to_serializable_dict(self):
+        ans = model_to_dict(self)
+        ans['actividad'] = self.actividad_id
+        return ans
 
     class Meta:
         verbose_name = 'Problematica social'
@@ -238,7 +262,8 @@ class ParticipanteLocal(models.Model):
 
     def to_serializable_dict(self):
         ans = model_to_dict(self)
-        ans['actividad'] = self.actividad.to_serializabe_dict()
+        ans['actividad'] = self.actividad_id
+        return ans
 
     class Meta:
         verbose_name_plural = 'Participantes locales'
