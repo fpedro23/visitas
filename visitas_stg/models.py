@@ -101,10 +101,10 @@ class Cargo(models.Model):  # Cargo de la persona que hace la actividad
     dependencia = models.ForeignKey(Dependencia, default=1)
 
     def __str__(self):
-        return self.nombre_cargo + " - " + self.nombre_funcionario
+        return self.nombre_cargo + " - " + self.nombre_funcionario + " - " + self.dependencia.nombreDependencia
 
     def __unicode__(self):
-        return self.nombre_cargo + " - " + self.nombre_funcionario
+        return self.nombre_cargo + " - " + self.nombre_funcionario + " - " + self.dependencia.nombreDependencia
 
     def to_serializable_dict(self):
         return {'id': self.id, 'nombre_cargo': self.nombre_cargo, 'nombre_funcionario': self.nombre_funcionario,
@@ -361,7 +361,6 @@ class Capitalizacion(models.Model):
             ans['evidencia_grafica'] = None
         ans['actividad'] = self.actividad_id
         return ans
-
 
     class Meta:
         verbose_name_plural = 'Capitalizaciones'

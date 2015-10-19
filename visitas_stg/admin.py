@@ -11,6 +11,7 @@ from visitas_stg.models import *
 
 
 
+
 # Register your models here.
 
 
@@ -39,13 +40,25 @@ class ActividadInLine(NestedStackedInline):
     ]
 
 
+class FuncionarioAdmin(admin.ModelAdmin):
+    def get_queryset(self, request):
+        """Limit Pages to those that belong to the request's user."""
+        qs = super(FuncionarioAdmin, self).queryset(request)
+        if request.user.userprofile.rol == 'AD':  # Usuario de depencia
+            return qs
+        if request.user.userprofile.rol == 'US':
+            return qs.filter(
+                Q(dependencia_id=request.user.userprofile.dependencia.id))
+
+
 class VisitaAdmin(NestedModelAdmin):
     model = Visita
     inlines = [ActividadInLine]
     form = AddVisitaForm
     list_display = (
-    '__str__', 'identificador_unico', 'dependencia', 'region', 'entidad', 'municipio', 'cargo', 'partido_gobernante',
-    'distrito_electoral', )
+        '__str__', 'identificador_unico', 'dependencia', 'region', 'entidad', 'municipio', 'cargo',
+        'partido_gobernante',
+        'distrito_electoral', )
 
     fieldsets = [
         ('Información básica de la visita', {'fields': ['identificador_unico', 'dependencia', 'fecha_visita', ]}),
@@ -131,7 +144,7 @@ admin.site.register(Region)
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Municipio)
-admin.site.register(Cargo)
+admin.site.register(Cargo, FuncionarioAdmin)
 admin.site.register(Dependencia)
 admin.site.register(TipoActividad)
 admin.site.register(Clasificacion)
