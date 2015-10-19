@@ -335,9 +335,12 @@ class Capitalizacion(models.Model):
         ans['medio'] = self.medio.to_serializable_dict()
         ans['tipo_capitalizacion'] = self.tipo_capitalizacion.to_serializable_dict()
         ans['cantidad'] = self.cantidad
-        if self.evidencia_grafica is not None and self.evidencia_grafica.name is not None:
-            ans['evidencia_grafica'] = self.evidencia_grafica.url
-        else:
+        try:
+            if self.evidencia_grafica is not None and self.evidencia_grafica.name is not None:
+                ans['evidencia_grafica'] = self.evidencia_grafica.url
+            else:
+                ans['evidencia_grafica'] = None
+        except ValueError:
             ans['evidencia_grafica'] = None
         ans['actividad'] = self.actividad_id
         return ans

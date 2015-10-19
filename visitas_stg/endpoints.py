@@ -64,7 +64,7 @@ class CargosForDependenciasEndpoint(ProtectedResourceView):
         else:
             cargos = Cargo.objects.all()
 
-        return HttpResponse(json.dumps(map(lambda cargo: cargo.to_serializable_dict()), cargos), 'application/json')
+        return HttpResponse(json.dumps(map(lambda cargo: cargo.to_serializable_dict(), cargos)), 'application/json')
 
 
 class BuscarVisitasEndpoint(ProtectedResourceView):
@@ -99,7 +99,7 @@ class DependenciasEndpoint(ProtectedResourceView):
 
 class TipoActividadEndpoint(ProtectedResourceView):
     def get(self, request):
-        return HttpResponse(json.dumps(map(lambda tipo: tipo.to_serilizable_dict(), TipoActividad.objects.all())),
+        return HttpResponse(json.dumps(map(lambda tipo: tipo.to_serializable_dict(), TipoActividad.objects.all())),
                             "application/json")
 
 
