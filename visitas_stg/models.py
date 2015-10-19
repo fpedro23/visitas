@@ -111,8 +111,8 @@ class Cargo(models.Model):  # Cargo de la persona que hace la actividad
                 'dependencia': self.dependencia.to_serializable_dict()}
 
     class Meta:
-        verbose_name = 'Cargo'
-        verbose_name_plural = 'Cargos'
+        verbose_name = 'Funcionario'
+        verbose_name_plural = 'Funcionarios'
 
 
 class PartidoGobernante(models.Model):
