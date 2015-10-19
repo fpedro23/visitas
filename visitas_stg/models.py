@@ -20,7 +20,7 @@ class Region(models.Model):
         verbose_name_plural = 'Regiones'
 
     def to_serializable_dict(self):
-        return model_to_dict(self)
+        return {'id': self.id, 'numeroRegion': self.numeroRegion}
 
 
 class Estado(models.Model):
@@ -36,9 +36,8 @@ class Estado(models.Model):
         return self.nombreEstado
 
     def to_serialzable_dict(self):
-        ans = model_to_dict(self)
-        ans['region'] = self.region.to_serializable_dict()
-        return ans
+        return {'id': self.id, 'nombreEstado': self.nombreEstado, 'latitud': self.latitud, 'longitud': self.longitud,
+                'region': self.region.to_serializable_dict()}
 
 
 class DistritoElectoral(models.Model):
@@ -54,7 +53,8 @@ class DistritoElectoral(models.Model):
     def to_serializable_dict(self):
         ans = model_to_dict(self)
         ans['estado'] = self.estado.to_serialzable_dict()
-        return ans
+        return {'id': self.id, 'nombre_distrito_electoral': self.nombre_distrito_electoral,
+                'estado': self.estado.to_serialzable_dict()}
 
 
 class Municipio(models.Model):
@@ -70,7 +70,10 @@ class Municipio(models.Model):
         return self.nombreMunicipio
 
     def to_serializable_dict(self):
-        ans = model_to_dict(self)
+        ans = {}
+        ans['nombreMunicipio'] = self.nombreMunicipio
+        ans['latitud'] = self.latitud
+        ans['longitud'] = self.longitud
         ans['estado'] = self.estado.to_serialzable_dict()
         return ans
 
@@ -85,7 +88,7 @@ class Dependencia(models.Model):
         return self.nombreDependencia
 
     def to_serializable_dict(self):
-        return model_to_dict(self)
+        return {'id': self.id, 'nombreDependencia': self.nombreDependencia}
 
     class Meta:
         verbose_name = 'Dependencia'
@@ -104,14 +107,12 @@ class Cargo(models.Model):  # Cargo de la persona que hace la actividad
         return self.nombre_cargo + " - " + self.nombre_funcionario
 
     def to_serializable_dict(self):
-        ans = model_to_dict(self)
-        ans['dependencia'] = self.dependencia.to_serializable_dict()
+        return {'id': self.id, 'nombre_cargo': self.nombre_cargo, 'nombre_funcionario': self.nombre_funcionario,
+                'dependencia': self.dependencia.to_serializable_dict()}
 
     class Meta:
         verbose_name = 'Cargo'
         verbose_name_plural = 'Cargos'
-
-
 
 
 class Visita(models.Model):
@@ -135,8 +136,15 @@ class Visita(models.Model):
         verbose_name_plural = 'Visitas'
 
     def to_serializable_dict(self):
-        ans = model_to_dict(self)
+        ans = {}
+        ans['id'] = self.id
         ans['dependencia'] = self.dependencia.to_serializable_dict()
+        ans['region'] = self.region.to_serializable_dict()
+        ans['entidad'] = self.entidad.to_serialzable_dict()
+        ans['municipio'] = self.municipio.to_serializable_dict()
+        ans['cargo'] = self.cargo.to_serializable_dict()
+        ans['distrito_electoral'] = self.distrito_electoral.to_serializable_dict()
+        ans['partido_gobernante'] = self.partido_gobernante
         ans['fecha_visita'] = self.fecha_visita.__str__()
 
         ans['actividades'] = []
@@ -157,7 +165,7 @@ class TipoActividad(models.Model):
         return self.nombre_actividad
 
     def to_serializable_dict(self):
-        return model_to_dict(self)
+        return {'id': self.id, 'nombre_actividad': self.nombre_actividad}
 
     class Meta:
         verbose_name = 'Tipo de Actividad'
@@ -174,7 +182,7 @@ class Clasificacion(models.Model):
         return self.nombre_clasificacion
 
     def to_serializable_dict(self):
-        return model_to_dict(self)
+        return {'id': self.id, 'nombre_clasificacion': self.nombre_clasificacion}
 
     class Meta:
         verbose_name = 'Clasificación'
@@ -188,8 +196,9 @@ class Actividad(models.Model):
     visita = models.ForeignKey(Visita, default=1)
 
     def to_serializabe_dict(self):
-        ans = model_to_dict(self)
+        ans = {}
         ans['tipo_actividad'] = self.tipo_actividad.to_serializable_dict()
+        ans['descripcion'] = self.descripcion
         ans['clasificacion'] = self.clasificacion.to_serializable_dict()
         ans['visita'] = self.visita_id
 
@@ -226,7 +235,9 @@ class ProblematicaSocial(models.Model):
         return self.problematica_social
 
     def to_serializable_dict(self):
-        ans = model_to_dict(self)
+        ans = {}
+        ans['id'] = self.id
+        ans['problematica_social'] = self.problematica_social
         ans['actividad'] = self.actividad_id
         return ans
 
@@ -236,10 +247,10 @@ class ProblematicaSocial(models.Model):
 
 
 # class CargoLocal(models.Model):  # Cargo de la persona Local
-#     nombre_cargo = models.CharField(max_length=200)
+# nombre_cargo = models.CharField(max_length=200)
 #
-#     def __str__(self):
-#         return self.nombre_cargo
+# def __str__(self):
+# return self.nombre_cargo
 #
 #     def __unicode__(self):
 #         return self.nombre_cargo
@@ -261,7 +272,9 @@ class ParticipanteLocal(models.Model):
         return self.nombre + ' - ' + self.cargo
 
     def to_serializable_dict(self):
-        ans = model_to_dict(self)
+        ans = {}
+        ans['nombre'] = self.nombre
+        ans['cargo'] = self.cargo
         ans['actividad'] = self.actividad_id
         return ans
 
@@ -280,7 +293,7 @@ class Medio(models.Model):
         return self.nombre_medio
 
     def to_serializable_dict(self):
-        return model_to_dict(self)
+        return {'id': self.id, 'nombre_medio': self.nombre_medio}
 
     class Meta:
         verbose_name = 'Medio'
@@ -297,7 +310,7 @@ class TipoCapitalizacion(models.Model):
         return self.nombre_tipo_capitalizacion
 
     def to_serializable_dict(self):
-        return model_to_dict(self)
+        return {'id': self.id, 'nombre_tipo_capitalizacion': self.nombre_tipo_capitalizacion}
 
     class Meta:
         verbose_name = 'Tipo de Capitalización'
@@ -318,14 +331,17 @@ class Capitalizacion(models.Model):
         return self.tipo_capitalizacion.nombre_tipo_capitalizacion + ' - ' + self.medio.nombre_medio
 
     def to_serializable_dict(self):
-        ans = model_to_dict(self)
+        ans = {}
         ans['medio'] = self.medio.to_serializable_dict()
         ans['tipo_capitalizacion'] = self.tipo_capitalizacion.to_serializable_dict()
+        ans['cantidad'] = self.cantidad
         if self.evidencia_grafica is not None and self.evidencia_grafica.name is not None:
             ans['evidencia_grafica'] = self.evidencia_grafica.url
         else:
             ans['evidencia_grafica'] = None
+        ans['actividad'] = self.actividad_id
         return ans
+
 
     class Meta:
         verbose_name_plural = 'Capitalizaciones'
