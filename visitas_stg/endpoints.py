@@ -82,7 +82,7 @@ class BuscarVisitasEndpoint(ProtectedResourceView):
                                  )
         ans = buscador.buscar()
 
-        json_ans = ans
+        json_ans = {}
         json_ans['visitas'] = []
         for visita in ans['visitas']:
             json_ans['visitas'].append(visita.to_serializable_dict())
