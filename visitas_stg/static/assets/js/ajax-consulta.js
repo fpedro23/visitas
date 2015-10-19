@@ -375,19 +375,20 @@ function PptxObrasReporte() {
 
 
 function verDatos() {
-    var arrayTipoInversion = $l("#msTipoInversion").multiselect("getChecked").map(function(){return this.value;}).get();
-    var arrayEstatusObra = $l("#msEstatusObra").multiselect("getChecked").map(function(){return this.value;}).get();
-    var arrayInstanciaEjecutora = $l("#msInstanciaEjecutora").multiselect("getChecked").map(function(){return this.value;}).get();
+
     var arrayDependencias = $l("#msDependencias").multiselect("getChecked").map(function(){return this.value;}).get();
-    var arraySubDependencias = $l("#msSubDependencias").multiselect("getChecked").map(function(){return this.value;}).get();
-    var arrayMunicipios = $l("#msMunicipios").multiselect("getChecked").map(function(){return this.value;}).get();
-    var arrayEstados = $l("#msEstados").multiselect("getChecked").map(function(){return this.value;}).get();
-    var arrayClasificacion = $l("#msClasificacion").multiselect("getChecked").map(function(){return this.value;}).get();
-    var arrayImpacto = $l("#msImpacto").multiselect("getChecked").map(function(){return this.value;}).get();
-    var arrayInaugurador = $l("#msInaugurador").multiselect("getChecked").map(function(){return this.value;}).get();
-    var arrayInaugurador = $l("#msInaugurador").multiselect("getChecked").map(function(){return this.value;}).get();
     var fechaInicio1 = $l("#fechaInicial1").val();
     var fechaInicio2 = $l("#fechaInicial2").val();
+    var arrayRegion = $l("#msRegiones").multiselect("getChecked").map(function(){return this.value;}).get();
+    var arrayEstados = $l("#msEstados").multiselect("getChecked").map(function(){return this.value;}).get();
+    var arrayMunicipios = $l("#msMunicipios").multiselect("getChecked").map(function(){return this.value;}).get();
+    var arrayFuncionarios= $l("#msFuncionarios").multiselect("getChecked").map(function(){return this.value;}).get();
+    var arrayDistritos= $l("#msDistritos").multiselect("getChecked").map(function(){return this.value;}).get();
+    var arrayClasificacion = $l("#msClasificaciones").multiselect("getChecked").map(function(){return this.value;}).get();
+    var arrayTipoCapitalizacion = $l("#msTipoCapitalizacion").multiselect("getChecked").map(function(){return this.value;}).get();
+    var arrayTipoActividad = $l("#msTipoActividad").multiselect("getChecked").map(function(){return this.value;}).get();
+    var arrayMedios = $l("#msMedios").multiselect("getChecked").map(function(){return this.value;}).get();
+
     var fechaFin1 = $l("#fechaFinal1").val();
     var fechaFin2 = $l("#fechaFinal2").val();
     var inversionInicial = $l("#inversionInicial").val();
@@ -403,32 +404,30 @@ function verDatos() {
     var ajax_data = {
       "access_token"  : newToken,
       "limiteMin":0,
-      "limiteMax":2000
+      "limiteMax":100
     };
 
     if(arrayDependencias.toString()!=""){ajax_data.dependencia=arrayDependencias.toString();}
-    if(arraySubDependencias.toString()!=""){ajax_data.subdependencias=arraySubDependencias.toString();}
-    if(arrayMunicipios.toString()!=""){ajax_data.municipios=arrayMunicipios.toString();}
-    if(arrayEstatusObra.toString()!=""){ajax_data.tipoDeObra=arrayEstatusObra.toString();}
-    if(arrayInstanciaEjecutora.toString()!=""){ajax_data.instanciaEjecutora=arrayInstanciaEjecutora.toString();}
+    if(arrayRegion.toString()!=""){ajax_data.region=arrayRegion.toString();}
+    if(arrayMunicipios.toString()!=""){ajax_data.municipio=arrayMunicipios.toString();}
+    if(arrayFuncionarios.toString()!=""){ajax_data.cargoEjecuta=arrayFuncionarios.toString();}
+    if(arrayDistritos.toString()!=""){ajax_data.distritoElectoral=arrayDistritos.toString();}
     if(arrayEstados.toString()!=""){ajax_data.estado=arrayEstados.toString();}
     if(arrayClasificacion.toString()!=""){ajax_data.clasificacion=arrayClasificacion.toString();}
-    if(arrayTipoInversion.toString()!=""){ajax_data.tipoDeInversion=arrayTipoInversion.toString();}
-    if(arrayInaugurador.toString()!=""){ajax_data.inaugurador=arrayInaugurador.toString();}
-    if(arrayImpacto.toString()!=""){ajax_data.impacto=arrayImpacto.toString();}
+    if(arrayTipoCapitalizacion.toString()!=""){ajax_data.capitalizacion=arrayTipoCapitalizacion.toString();}
+    if(arrayTipoActividad.toString()!=""){ajax_data.tipoactividad=arrayTipoActividad.toString();}
+    if(arrayMedios.toString()!=""){ajax_data.medio=arrayMedios.toString();}
     if(fechaInicio1!=""){ajax_data.fechaInicio=fechaInicio1;}
-    if(fechaInicio2!=""){ajax_data.fechaInicioSegunda=fechaInicio2;}
-    if(fechaFin1!=""){ajax_data.fechaFin=fechaFin1;}
-    if(fechaFin2!=""){ajax_data.fechaFinSegunda=fechaFin2;}
+    if(fechaInicio2!=""){ajax_data.fechaFin=fechaInicio2;}
+
     if(inversionInicial!=""){ajax_data.inversionMinima=inversionInicial;}
     if(inversionFinal!=""){ajax_data.inversionMaxima=inversionFinal;}
-    if(denominacion!=""){ajax_data.denominacion=denominacion.toUpperCase();}
-    if($j('#inauguradas').is(':checked')){ajax_data.inaugurada = $j('#inauguradas').is(':checked');}
+
 
 
     $j("#ajaxProgress").show();
     $j.ajax({
-        url: '/obras/api/busqueda',
+        url: '/api/buscador',
         type: 'get',
         data: ajax_data,
         success: function(data) {

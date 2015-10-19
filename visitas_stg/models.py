@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
+from django.forms import model_to_dict
 
 
 class Region(models.Model):
@@ -18,6 +19,9 @@ class Region(models.Model):
         verbose_name = 'Región'
         verbose_name_plural = 'Regiones'
 
+    def to_serializable_dict(self):
+        return {'id': self.id, 'numeroRegion': self.numeroRegion}
+
 
 class Estado(models.Model):
     nombreEstado = models.CharField(max_length=200)
@@ -31,6 +35,10 @@ class Estado(models.Model):
     def __unicode__(self):  # __unicode__ on Python 2
         return self.nombreEstado
 
+    def to_serialzable_dict(self):
+        return {'id': self.id, 'nombreEstado': self.nombreEstado, 'latitud': self.latitud, 'longitud': self.longitud,
+                'region': self.region.to_serializable_dict()}
+
 
 class DistritoElectoral(models.Model):
     nombre_distrito_electoral = models.CharField(max_length=200, verbose_name='Distrito Electoral')
@@ -42,13 +50,18 @@ class DistritoElectoral(models.Model):
     def __unicode__(self):
         return self.nombre_distrito_electoral
 
+    def to_serializable_dict(self):
+        ans = model_to_dict(self)
+        ans['estado'] = self.estado.to_serialzable_dict()
+        return {'id': self.id, 'nombre_distrito_electoral': self.nombre_distrito_electoral,
+                'estado': self.estado.to_serialzable_dict()}
+
 
 class Municipio(models.Model):
     nombreMunicipio = models.CharField(max_length=200)
     latitud = models.FloatField()
     longitud = models.FloatField()
     estado = models.ForeignKey(Estado, null=False, blank=False)
-    distrito_electoral = models.ForeignKey(DistritoElectoral, default=1)
 
     def __str__(self):
         return self.nombreMunicipio
@@ -56,20 +69,13 @@ class Municipio(models.Model):
     def __unicode__(self):
         return self.nombreMunicipio
 
-
-class Cargo(models.Model):  # Cargo de la persona que hace la actividad
-    nombre_cargo = models.CharField(max_length=200)
-    nombre_funcionario = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.nombre_cargo + " - " + self.nombre_funcionario
-
-    def __unicode__(self):
-        return self.nombre_cargo + " - " + self.nombre_funcionario
-
-    class Meta:
-        verbose_name = 'Cargo'
-        verbose_name_plural = 'Cargos'
+    def to_serializable_dict(self):
+        ans = {}
+        ans['nombreMunicipio'] = self.nombreMunicipio
+        ans['latitud'] = self.latitud
+        ans['longitud'] = self.longitud
+        ans['estado'] = self.estado.to_serialzable_dict()
+        return ans
 
 
 class Dependencia(models.Model):
@@ -81,12 +87,49 @@ class Dependencia(models.Model):
     def __unicode__(self):  # __unicode__ on Python 2
         return self.nombreDependencia
 
+    def to_serializable_dict(self):
+        return {'id': self.id, 'nombreDependencia': self.nombreDependencia}
+
     class Meta:
         verbose_name = 'Dependencia'
         verbose_name_plural = 'Dependencias'
 
 
+class Cargo(models.Model):  # Cargo de la persona que hace la actividad
+    nombre_cargo = models.CharField(max_length=200)
+    nombre_funcionario = models.CharField(max_length=200)
+    dependencia = models.ForeignKey(Dependencia, default=1)
+
+    def __str__(self):
+        return self.nombre_cargo + " - " + self.nombre_funcionario + " - " + self.dependencia.nombreDependencia
+
+    def __unicode__(self):
+        return self.nombre_cargo + " - " + self.nombre_funcionario + " - " + self.dependencia.nombreDependencia
+
+    def to_serializable_dict(self):
+        return {'id': self.id, 'nombre_cargo': self.nombre_cargo, 'nombre_funcionario': self.nombre_funcionario,
+                'dependencia': self.dependencia.to_serializable_dict()}
+
+    class Meta:
+        verbose_name = 'Funcionario'
+        verbose_name_plural = 'Funcionarios'
+
+
+class PartidoGobernante(models.Model):
+    nombre_partido_gobernante = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.nombre_partido_gobernante
+
+    def __unicode__(self):
+        return self.nombre_partido_gobernante
+    
+    def to_serializable_dict(self):
+        return {'id': self.id, 'nombre_partido_gobernante': self.nombre_partido_gobernante}
+
+
 class Visita(models.Model):
+    identificador_unico = models.SlugField(unique=True, null=True, verbose_name='Identificador Único')
     dependencia = models.ForeignKey(Dependencia, default=1, verbose_name='Dependencia')
     fecha_visita = models.DateField(verbose_name='Fecha de Visita')
     region = models.ForeignKey(Region, verbose_name='Región')
@@ -94,7 +137,7 @@ class Visita(models.Model):
     municipio = models.ForeignKey(Municipio, verbose_name='Municipio')
     cargo = models.ForeignKey(Cargo, verbose_name='Cargo que ejecuta')
     distrito_electoral = models.ForeignKey(DistritoElectoral, default=0, verbose_name='Distrito electoral')
-    partido_gobernante = models.CharField(max_length=200, null=True, blank=True, verbose_name='Partido Gobernante')
+    partido_gobernante = models.ForeignKey(PartidoGobernante, null=True, blank=True, verbose_name='Partido Gobernante')
 
     def __str__(self):
         return self.cargo.nombre_funcionario + " - " + self.actividad_set.first().descripcion
@@ -106,6 +149,26 @@ class Visita(models.Model):
         verbose_name = 'Visita'
         verbose_name_plural = 'Visitas'
 
+    def to_serializable_dict(self):
+        ans = {}
+        ans['id'] = self.id
+        ans['identificador_unico'] = self.identificador_unico
+        ans['dependencia'] = self.dependencia.to_serializable_dict()
+        ans['region'] = self.region.to_serializable_dict()
+        ans['entidad'] = self.entidad.to_serialzable_dict()
+        ans['municipio'] = self.municipio.to_serializable_dict()
+        ans['cargo'] = self.cargo.to_serializable_dict()
+        ans['distrito_electoral'] = self.distrito_electoral.to_serializable_dict()
+        ans['partido_gobernante'] = self.partido_gobernante.to_serializable_dict()
+        ans['fecha_visita'] = self.fecha_visita.__str__()
+
+        ans['actividades'] = []
+        actividades = Actividad.objects.filter(visita_id=self.id).all()
+        for actividad in actividades:
+            ans['actividades'].append(actividad.to_serializabe_dict())
+
+        return ans
+
 
 class TipoActividad(models.Model):
     nombre_actividad = models.CharField(max_length=200)
@@ -115,6 +178,9 @@ class TipoActividad(models.Model):
 
     def __unicode__(self):
         return self.nombre_actividad
+
+    def to_serializable_dict(self):
+        return {'id': self.id, 'nombre_actividad': self.nombre_actividad}
 
     class Meta:
         verbose_name = 'Tipo de Actividad'
@@ -130,6 +196,9 @@ class Clasificacion(models.Model):
     def __unicode__(self):
         return self.nombre_clasificacion
 
+    def to_serializable_dict(self):
+        return {'id': self.id, 'nombre_clasificacion': self.nombre_clasificacion}
+
     class Meta:
         verbose_name = 'Clasificación'
         verbose_name_plural = 'Clasificaciones'
@@ -140,6 +209,30 @@ class Actividad(models.Model):
     descripcion = models.CharField(max_length=200, verbose_name='Descripción')
     clasificacion = models.ForeignKey(Clasificacion, verbose_name='Clasificación')
     visita = models.ForeignKey(Visita, default=1)
+
+    def to_serializabe_dict(self):
+        ans = {}
+        ans['tipo_actividad'] = self.tipo_actividad.to_serializable_dict()
+        ans['descripcion'] = self.descripcion
+        ans['clasificacion'] = self.clasificacion.to_serializable_dict()
+        ans['visita'] = self.visita_id
+
+        ans['capitalizaciones'] = []
+        capitalizaciones = Capitalizacion.objects.filter(actividad_id=self.id).all()
+        for capitalizacion in capitalizaciones:
+            ans['capitalizaciones'].append(capitalizacion.to_serializable_dict())
+
+        ans['problematicas_sociales'] = []
+        problematicas = ProblematicaSocial.objects.filter(actividad_id=self.id).all()
+        for capitalizacion in problematicas:
+            ans['problematicas_sociales'].append(capitalizacion.to_serializable_dict())
+
+        ans['participantes_locales'] = []
+        participantes = ParticipanteLocal.objects.filter(actividad_id=self.id).all()
+        for participante in participantes:
+            ans['participantes_locales'].append(participante.to_serializable_dict())
+
+        return ans
 
     class Meta:
         verbose_name_plural = "Actividades"
@@ -156,16 +249,23 @@ class ProblematicaSocial(models.Model):
     def __unicode__(self):
         return self.problematica_social
 
+    def to_serializable_dict(self):
+        ans = {}
+        ans['id'] = self.id
+        ans['problematica_social'] = self.problematica_social
+        ans['actividad'] = self.actividad_id
+        return ans
+
     class Meta:
         verbose_name = 'Problematica social'
         verbose_name_plural = 'Problematicas sociales'
 
 
 # class CargoLocal(models.Model):  # Cargo de la persona Local
-#     nombre_cargo = models.CharField(max_length=200)
+# nombre_cargo = models.CharField(max_length=200)
 #
-#     def __str__(self):
-#         return self.nombre_cargo
+# def __str__(self):
+# return self.nombre_cargo
 #
 #     def __unicode__(self):
 #         return self.nombre_cargo
@@ -186,13 +286,20 @@ class ParticipanteLocal(models.Model):
     def __unicode__(self):
         return self.nombre + ' - ' + self.cargo
 
+    def to_serializable_dict(self):
+        ans = {}
+        ans['nombre'] = self.nombre
+        ans['cargo'] = self.cargo
+        ans['actividad'] = self.actividad_id
+        return ans
+
     class Meta:
         verbose_name_plural = 'Participantes locales'
         verbose_name = 'Participante local'
 
 
 class Medio(models.Model):
-    nombre_medio = models.CharField(max_length=200)
+    nombre_medio = models.CharField(max_length=200, verbose_name='Tipo de Medio')
 
     def __str__(self):
         return self.nombre_medio
@@ -200,9 +307,12 @@ class Medio(models.Model):
     def __unicode__(self):
         return self.nombre_medio
 
+    def to_serializable_dict(self):
+        return {'id': self.id, 'nombre_medio': self.nombre_medio}
+
     class Meta:
-        verbose_name = 'Medio'
-        verbose_name_plural = 'Medios'
+        verbose_name = 'Tipo de Medio'
+        verbose_name_plural = 'Tipos de Medio'
 
 
 class TipoCapitalizacion(models.Model):
@@ -214,13 +324,17 @@ class TipoCapitalizacion(models.Model):
     def __unicode__(self):
         return self.nombre_tipo_capitalizacion
 
+    def to_serializable_dict(self):
+        return {'id': self.id, 'nombre_tipo_capitalizacion': self.nombre_tipo_capitalizacion}
+
     class Meta:
         verbose_name = 'Tipo de Capitalización'
         verbose_name_plural = 'Tipos de Capitalización'
 
 
 class Capitalizacion(models.Model):
-    medio = models.ForeignKey(Medio)
+    medio = models.ForeignKey(Medio, verbose_name='Tipo de Medio')
+    nombre_medio = models.CharField(max_length=200, null=True, blank=True, verbose_name='Nombre De Medio')
     tipo_capitalizacion = models.ForeignKey(TipoCapitalizacion)
     cantidad = models.PositiveIntegerField()
     evidencia_grafica = models.FileField(null=True, blank=True)
@@ -231,6 +345,22 @@ class Capitalizacion(models.Model):
 
     def __unicode__(self):
         return self.tipo_capitalizacion.nombre_tipo_capitalizacion + ' - ' + self.medio.nombre_medio
+
+    def to_serializable_dict(self):
+        ans = {}
+        ans['medio'] = self.medio.to_serializable_dict()
+        ans['nombre_medio'] = self.nombre_medio
+        ans['tipo_capitalizacion'] = self.tipo_capitalizacion.to_serializable_dict()
+        ans['cantidad'] = self.cantidad
+        try:
+            if self.evidencia_grafica is not None and self.evidencia_grafica.name is not None:
+                ans['evidencia_grafica'] = self.evidencia_grafica.url
+            else:
+                ans['evidencia_grafica'] = None
+        except ValueError:
+            ans['evidencia_grafica'] = None
+        ans['actividad'] = self.actividad_id
+        return ans
 
     class Meta:
         verbose_name_plural = 'Capitalizaciones'

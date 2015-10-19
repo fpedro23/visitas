@@ -8,6 +8,10 @@ from visitas_stg.models import *
 class BuscarVisitas:
     def __init__(
             self,
+            identificador_unico,
+            descripcion,
+            problematica,
+            nombre_medio,
             ids_dependencia,
             rango_fecha_inicio,
             rango_fecha_fin,
@@ -16,24 +20,61 @@ class BuscarVisitas:
             ids_municipio,
             ids_cargo_ejecuta,
             ids_distrito_electoral,
+            ids_tipo_actividad,
+            ids_tipo_medio,
+            ids_tipo_capitalizacion,
+            ids_clasificacion,
+            ids_partido,
             limite_min,
             limite_max,
     ):
-
+        self.identificador_unico = identificador_unico
+        self.descripcion = descripcion
         self.dependencias = ids_dependencia
         self.fecha_inicio = rango_fecha_inicio
         self.fecha_fin = rango_fecha_fin
-
+        self.ids_tipo_actividad = ids_tipo_actividad
+        self.ids_tipo_medio = ids_tipo_medio
+        self.ids_tipo_capitalizacion = ids_tipo_capitalizacion
+        self.ids_clasificacion = ids_clasificacion
+        self.problematica = problematica
+        self.nombre_medio = nombre_medio
         self.regiones = ids_region
         self.entidades = ids_entidad
         self.municipios = ids_municipio
         self.cargos_ejecuta = ids_cargo_ejecuta
         self.distritos_electorales = ids_distrito_electoral
+        self.ids_partido = ids_partido
+
         self.limite_min = limite_min
         self.limite_max = limite_max
 
     def buscar(self):
         query = Q()
+
+        if self.identificador_unico is not None:
+            query = query & Q(identificador_unico=self.identificador_unico)
+
+        if self.descripcion is not None:
+            query = query & Q(actividad__descripcion__icontains=self.descripcion)
+
+        if self.nombre_medio is not None:
+            query = query & Q(actividad__capitalizacion__nombre_medio__icontains=self.nombre_medio)
+
+        if self.problematica is not None:
+            query = query & Q(actividad__problematicasocial__problematica_social__icontains=self.problematica)
+
+        if self.ids_tipo_actividad is not None:
+            query = query & Q(actividad__tipo_actividad__id__in=self.ids_tipo_actividad)
+
+        if self.ids_clasificacion is not None:
+            query = query & Q(actividad__clasificacion__id__in=self.ids_clasificacion)
+
+        if self.ids_tipo_medio is not None:
+            query = query & Q(actividad__capitalizacion__medio__id__in=self.ids_tipo_medio)
+
+        if self.ids_tipo_capitalizacion is not None:
+            query = query & Q(actividad__capitalizacion__tipo_capitalizacion__id__in=self.ids_tipo_capitalizacion)
 
         if self.dependencias is not None:
             query = query & Q(dependencia_id__in=self.dependencias)
@@ -45,7 +86,7 @@ class BuscarVisitas:
             query = query & Q(fecha_visita__gte=self.fecha_inicio)
 
         if self.fecha_fin is not None and self.fecha_inicio is None:
-            query = query & Q(fecha_visita_lte=self.fecha_fin)
+            query = query & Q(fecha_visita__lte=self.fecha_fin)
 
         if self.regiones is not None:
             query = query & Q(region_id__in=self.regiones)
@@ -62,8 +103,12 @@ class BuscarVisitas:
         if self.distritos_electorales is not None:
             query = query & Q(distrito_electoral_id__in=self.distritos_electorales)
 
+        if self.ids_partido is not None:
+            print self.ids_partido
+            query = query & Q(partido_gobernante_id__in=self.ids_partido)
+
         if query is not None:
-            visitas = Visita.objects.filter(query)
+            visitas = Visita.objects.filter(query).distinct()
 
         # Reporte General
         visitas_totales = visitas.count()

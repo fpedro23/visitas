@@ -3,6 +3,7 @@ from django.template import RequestContext, loader
 from django.shortcuts import render_to_response, redirect
 from visitas_stg.models import *
 from visitas_stg.tools import *
+from oauth2_provider.views import ProtectedResourceView
 
 # Create your views here.
 from BuscarVisitas import BuscarVisitas

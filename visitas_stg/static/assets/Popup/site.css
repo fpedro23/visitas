@@ -12,7 +12,7 @@
 
 
 .green-popup-block {
-  background: linear-gradient(#206341,#206341,#1E613F,#276947,#206341);
+  background: linear-gradient(to right, rgba(194,194,194,1) 0%, rgba(44,44,44,1) 0%, rgba(92,92,92,1) 16%, rgba(102,102,102,1) 25%, rgba(128,128,128,1) 50%, rgba(128,128,128,1) 53%, rgba(131,131,131,0.98) 76%, rgba(133,133,133,0.98) 92%, rgba(94,92,94,0.98) 100%);
   padding: 5px 5px;
     padding-left: 20px;
     padding-right: 20px;

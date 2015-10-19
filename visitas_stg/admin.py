@@ -4,7 +4,10 @@ from django.db.models import Q
 from nested_inline.admin import NestedStackedInline, NestedModelAdmin
 from django.contrib.auth.admin import UserAdmin
 
+from visitas_stg.forms import AddVisitaForm
 from visitas_stg.models import *
+
+
 
 
 
@@ -37,13 +40,28 @@ class ActividadInLine(NestedStackedInline):
     ]
 
 
+class FuncionarioAdmin(admin.ModelAdmin):
+    def get_queryset(self, request):
+        """Limit Pages to those that belong to the request's user."""
+        qs = super(FuncionarioAdmin, self).queryset(request)
+        if request.user.userprofile.rol == 'AD':  # Usuario de depencia
+            return qs
+        if request.user.userprofile.rol == 'US':
+            return qs.filter(
+                Q(dependencia_id=request.user.userprofile.dependencia.id))
+
+
 class VisitaAdmin(NestedModelAdmin):
     model = Visita
     inlines = [ActividadInLine]
-    list_display = ('__str__', 'dependencia', 'region', 'entidad', 'municipio', 'cargo', 'partido_gobernante','distrito_electoral', )
+    form = AddVisitaForm
+    list_display = (
+        '__str__', 'identificador_unico', 'dependencia', 'region', 'entidad', 'municipio', 'cargo',
+        'partido_gobernante',
+        'distrito_electoral', )
 
     fieldsets = [
-        ('Información básica de la visita', {'fields': ['dependencia', 'fecha_visita', ]}),
+        ('Información básica de la visita', {'fields': ['identificador_unico', 'dependencia', 'fecha_visita', ]}),
         ('Localización', {'fields': ['region', 'entidad', 'municipio', ]}),
         ('Datos electorales', {'fields': ['distrito_electoral', 'partido_gobernante', ]}),
         ('Funcionarios', {'fields': ['cargo', ]}),
@@ -51,9 +69,8 @@ class VisitaAdmin(NestedModelAdmin):
     ]
 
     def get_readonly_fields(self, request, obj=None):
-        # if request.user.userprofile.rol == 'US':
-        #     return ('dependencia', )
-        return super(VisitaAdmin, self).get_readonly_fields(request, obj)
+        readonly_fields = ('identificador_unico',)
+        return readonly_fields
 
     def get_queryset(self, request):
         if request.user.userprofile.rol == 'US':
@@ -69,6 +86,9 @@ class VisitaAdmin(NestedModelAdmin):
         if request.user.userprofile.rol == 'US':
             if db_field.name == "dependencia":
                 kwargs["queryset"] = Dependencia.objects.filter(id=request.user.userprofile.dependencia.id)
+
+            if db_field.name == "cargo":
+                kwargs["queryset"] = Cargo.objects.filter(dependencia__id=request.user.userprofile.dependencia.id)
 
         return super(VisitaAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
@@ -124,7 +144,7 @@ admin.site.register(Region)
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Municipio)
-admin.site.register(Cargo)
+admin.site.register(Cargo, FuncionarioAdmin)
 admin.site.register(Dependencia)
 admin.site.register(TipoActividad)
 admin.site.register(Clasificacion)
@@ -132,3 +152,4 @@ admin.site.register(ParticipanteLocal)
 admin.site.register(DistritoElectoral)
 admin.site.register(Medio)
 admin.site.register(TipoCapitalizacion)
+admin.site.register(PartidoGobernante)
