@@ -60,16 +60,17 @@ class Municipio(models.Model):
 class Cargo(models.Model):  # Cargo de la persona que hace la actividad
     nombre_cargo = models.CharField(max_length=200)
     nombre_funcionario = models.CharField(max_length=200)
+    dependencia = models.ForeignKey('Dependencia', default=1)
 
     def __str__(self):
-        return self.nombre_cargo + " - " + self.nombre_funcionario
+        return self.nombre_cargo + " - " + self.nombre_funcionario + " - " + self.dependencia.nombreDependencia
 
     def __unicode__(self):
-        return self.nombre_cargo + " - " + self.nombre_funcionario
+        return self.nombre_cargo + " - " + self.nombre_funcionario + " - " + self.dependencia.nombreDependencia
 
     class Meta:
-        verbose_name = 'Cargo'
-        verbose_name_plural = 'Cargos'
+        verbose_name = 'Funcionario'
+        verbose_name_plural = 'Funcionarios'
 
 
 class Dependencia(models.Model):
@@ -86,7 +87,18 @@ class Dependencia(models.Model):
         verbose_name_plural = 'Dependencias'
 
 
+class PartidoGobernante(models.Model):
+    nombre_partido_gobernante = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.nombre_partido_gobernante
+
+    def __unicode__(self):
+        return self.nombre_partido_gobernante
+
+
 class Visita(models.Model):
+    identificador_unico = models.SlugField(unique=True, null=True, verbose_name='Identificador Único')
     dependencia = models.ForeignKey(Dependencia, default=1, verbose_name='Dependencia')
     fecha_visita = models.DateField(verbose_name='Fecha de Visita')
     region = models.ForeignKey(Region, verbose_name='Región')
@@ -94,7 +106,7 @@ class Visita(models.Model):
     municipio = models.ForeignKey(Municipio, verbose_name='Municipio')
     cargo = models.ForeignKey(Cargo, verbose_name='Cargo que ejecuta')
     distrito_electoral = models.ForeignKey(DistritoElectoral, default=0, verbose_name='Distrito electoral')
-    partido_gobernante = models.CharField(max_length=200, null=True, blank=True, verbose_name='Partido Gobernante')
+    partido_gobernante = models.ForeignKey(PartidoGobernante, null=True, blank=True, verbose_name='Partido Gobernante')
 
     def __str__(self):
         return self.cargo.nombre_funcionario + " - " + self.actividad_set.first().descripcion
@@ -192,7 +204,7 @@ class ParticipanteLocal(models.Model):
 
 
 class Medio(models.Model):
-    nombre_medio = models.CharField(max_length=200)
+    nombre_medio = models.CharField(max_length=200, verbose_name='Tipo de Medio')
 
     def __str__(self):
         return self.nombre_medio
@@ -201,8 +213,8 @@ class Medio(models.Model):
         return self.nombre_medio
 
     class Meta:
-        verbose_name = 'Medio'
-        verbose_name_plural = 'Medios'
+        verbose_name = 'Tipo de Medio'
+        verbose_name_plural = 'Tipos de Medio'
 
 
 class TipoCapitalizacion(models.Model):
@@ -220,7 +232,8 @@ class TipoCapitalizacion(models.Model):
 
 
 class Capitalizacion(models.Model):
-    medio = models.ForeignKey(Medio)
+    medio = models.ForeignKey(Medio, verbose_name='Tipo de Medio')
+    nombre_medio = models.CharField(max_length=200, null=True, blank=True, verbose_name='Nombre De Medio')
     tipo_capitalizacion = models.ForeignKey(TipoCapitalizacion)
     cantidad = models.PositiveIntegerField()
     evidencia_grafica = models.FileField(null=True, blank=True)
