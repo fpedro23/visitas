@@ -6,26 +6,42 @@ from BuscarVisitas import BuscarVisitas
 from models import Estado, Municipio, TipoCapitalizacion, DistritoElectoral, Region, Cargo, Dependencia, \
     TipoActividad, Clasificacion, Medio, Visita, Capitalizacion
 import json
+from oauth2_provider.models import AccessToken
 from views import get_array_or_none
 
 
 __author__ = 'mng687'
 
 
+def get_usuario_for_token(token):
+    if token:
+        return AccessToken.objects.get(token=token).user.usuario
+    else:
+        return None
+
+
 class ReporteInicioEndpoint(ProtectedResourceView):
     def get(self, request):
+        dependencia = get_usuario_for_token(request.GET.get('access_token')).dependencia
+        if dependencia is None:
+            visitas = Visita.objects.all()
+            capitalizaciones = Capitalizacion.objects.all()
+        else:
+            visitas = Visita.objects.filter(dependencia=dependencia)
+            capitalizaciones = Capitalizacion.objects.filter(actividad__visita__in=visitas)
+
         reporte = {}
 
         reporte['estados'] = []
         for estado in Estado.objects.all():
             reporte_estado = {'estado': estado.to_serialzable_dict(),
-                              'total_visitas': Visita.objects.filter(entidad=estado).count()}
+                              'total_visitas': visitas.filter(entidad=estado).count()}
             reporte['estados'].append(reporte_estado)
 
         reporte['medios'] = []
         for tipo_medio in Medio.objects.all():
             reporte_medio = {'medio': tipo_medio.to_serializable_dict(),
-                             'total_apariciones': Capitalizacion.objects.filter(medio=tipo_medio).aggregate(
+                             'total_apariciones': capitalizaciones.filter(medio=tipo_medio).aggregate(
                                  total=Sum(F('cantidad'), output_field=IntegerField()))['total']}
             reporte['medios'] = reporte_medio
 
