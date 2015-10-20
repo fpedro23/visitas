@@ -4,9 +4,8 @@
 
 .form-row {
     overflow: hidden;
-    padding: 8px 12px;
+    padding: 4px 6px;
     font-size: 11px;
-    border-bottom: 1px solid #eee;
 }
 
 .form-row img, .form-row input {
@@ -33,12 +32,11 @@ form h4 {
 label {
     font-weight: normal !important;
     color: #666;
-    font-size: 12px;
+    font: 11px Verdana, Geneva, sans-serif;
 }
 
 .required label, label.required {
-    font-weight: bold !important;
-    color: #333 !important;
+    font: 11px Verdana, Geneva, sans-serif;
 }
 
 /* RADIO BUTTONS */
@@ -66,9 +64,9 @@ form ul.inline li {
 
 .aligned label {
     display: block;
-    padding: 3px 10px 0 0;
+    padding: 3px 0px 0 0;
     float: left;
-   
+
 }
 
 .aligned ul label {
@@ -157,7 +155,7 @@ fieldset.collapsed .collapse-toggle {
 /* MONOSPACE TEXTAREAS */
 
 fieldset.monospace textarea {
-    font-family: "soberana_sansregular";
+    font-family: Verdana, Geneva, sans-serif;
 }
 
 /* SUBMIT ROW */
@@ -255,6 +253,7 @@ body.popup .submit-row {
 }
 
 .inline-group .aligned label {
+    font: 11pt Verdana, Geneva, sans-serif;
     width: 8em;
 }
 

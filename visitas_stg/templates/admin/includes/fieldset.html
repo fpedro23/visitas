@@ -9,19 +9,50 @@
             {% if line.fields|length_is:'1' %}{{ line.errors }}{% endif %}
             {% for field in line %}
                   {% if field.field.name == "tipo_actividad" %}
-                                <div style="width: 504px;" align="center">General</div>
-                             <div style="width: 100px; position: absolute;">{{ field.field.name }}</div>
-                              <div style="width: 151px; left:101px; position: absolute;">{{ field.field }}</div>
+                              <div class="subtituloTABLA" style="width: 504px; height: 22px;">General</div>
+                              <div class="contenidoTABLA2" style="width: 100px; height: 22px; position: absolute;"><label class="contenidoTABLA" for="id_actividad_set-0-tipo_actividad">Tipo:</label></div>
+                              <div class="contenidoTABLA2" style="width: 152px; height: 22px; left:101px; position: absolute;">{{ field.field }}</div>
 
                   {% elif field.field.name == "descripcion" %}
 
-                              <div style="width: 100px; left:252px; top:25px; position: absolute;">{{ field.field.name }}</div>
-                              <div style="width: 151px; left:353px; top:25px; position: absolute;">{{ field.field }}</div>
+                              <div class="contenidoTABLA2" style="width: 100px; height: 22px; left:253px; top:26px; position: absolute;"><label class="contenidoTABLA" for="id_actividad_set-0-descripcion">Descripción:</label></div>
+                              <div class="contenidoTABLA2" style="width: 156px; height: 22px; left:353px; top:26px; position: absolute;">{{ field.field }}</div>
 
                   {% elif  field.field.name == "clasificacion" %}
+                              <div class="contenidoTABLA2" style="width: 100px; height: 22px; top: 48px; position: absolute;"><label class="contenidoTABLA" for="id_actividad_set-0-clasificacion">Clasificación:</label></div>
+                              <div class="contenidoTABLA2" style="width: 152px; height: 22px; left:101px; top:48px; position: absolute;">{{ field.field }}</div>
+                              <div class="contenidoTABLA2" style="width: 100px; height: 22px; left:253px; top:48px; position: absolute;"></div>
+                              <div class="contenidoTABLA2" style="width: 156px; height: 22px; left:353px; top:48px; position: absolute;"></div>
 
-                              <div style="width: 100px;">{{ field.field.name }}</div>
-                              <div style="width: 151px; left:101px; top:40px; position: absolute;">{{ field.field }}</div>
+                  {% elif field.field.name == "nombre" %}
+                              <div class="subtituloTABLA" style="width: 252px; height: 22px; top:2px;">Participante Local Destacado</div>
+                              <div class="contenidoTABLA2" style="width: 100px; height: 22px; position: absolute;"><label class="contenidoTABLA" for="id_actividad_set-0-participantelocal_set-0-nombre">Nombre:</label></div>
+                              <div class="contenidoTABLA2" style="width: 152px; height: 22px; left:101px; position: absolute;">{{ field.field }}</div>
+                  {% elif field.field.name == "cargo" %}
+                              <div class="contenidoTABLA2" style="width: 100px; height: 22px; top: 48px; position: absolute;"><label class="contenidoTABLA" for="id_actividad_set-0-participantelocal_set-0-cargo">Cargo:</label></div>
+                              <div class="contenidoTABLA2" style="width: 152px; height: 22px; left:101px; top:48px; position: absolute;">{{ field.field }}</div>
+                  {% elif  field.field.name == "problematica_social" %}
+                               <div class="subtituloTABLA" style="width: 252px; height: 22px; left:0px; position: absolute;">Problemática Sociopolítica</div>
+                              <div class="contenidoTABLA2" style="width: 252px; height: 22px; left:0px; top:23px; position: absolute;">&nbsp;{{ field.field }}</div>
+                              <div class="contenidoTABLA2" style="width: 252px; height: 22px; left: 0px; top:45px; position: absolute;">&nbsp;<br></div>
+                  {% elif field.field.name == "medio" %}
+                              <div class="subtituloTABLA" style="width: 504px; height: 22px;">Capitalización</div>
+                              <div class="contenidoTABLA2" style="width: 118px; height: 22px; position: absolute;"><label class="contenidoTABLA" for="id_actividad_set-0-capitalizacion_set-0-medio">Medio:</label></div>
+                              <div class="contenidoTABLA2" style="width: 136px; height: 22px; left:118px; position: absolute;">{{ field.field }}</div>
+                  {% elif field.field.name == "tipo_capitalizacion" %}
+                              <div class="contenidoTABLA2" style="width: 159px; height: 22px; left:253px; top:26px; position: absolute;"><label class="contenidoTABLA" for="id_actividad_set-0-capitalizacion_set-0-tipo_capitalizacion">Tipo:</label></div>
+                              <div class="contenidoTABLA2" style="width: 93px; height: 22px; left:411px; top:26px; position: absolute;">{{ field.field }}</div>
+
+                  {% elif  field.field.name == "cantidad" %}
+                              <div class="contenidoTABLA2" style="width: 118px; height: 22px; top: 48px; position: absolute;"><label class="contenidoTABLA" for="id_actividad_set-0-clasificacion">Nombre del Medio:</label></div>
+                              <div class="contenidoTABLA2" style="width: 136px; height: 22px; left:118px; top:48px; position: absolute;"><input  type="text"></div>
+                              <div class="contenidoTABLA2" style="width: 159px; height: 22px; left:254px; top:48px; position: absolute;"><label class="contenidoTABLA" for="id_actividad_set-0-capitalizacion_set-0-cantidad">Cantidad de Apariciones:</label></div>
+                              <div class="contenidoTABLA2" style="width: 93px; height: 22px; left:413px; top:48px; position: absolute;">{{ field.field }}</div>
+                  {% elif  field.field.name == "evidencia_grafica" %}
+                              <div class="contenidoTABLA2" style="width: 118px; height: 22px; top: 68px; position: absolute;"><label class="contenidoTABLA" for="id_actividad_set-0-capitalizacion_set-0-evidencia_grafica">Evidencia Gráfica:</label></div>
+                              <div class="contenidoTABLA2" style="width: 352px; height: 37px; left:118px; top:68px; position: absolute;">{{ field.field }}</div>
+                              <div class="contenidoTABLA2" style="width: 34px; height: 37px; left:470px; top:68px; position: absolute;"></div>
+
 
                   {% else %}
                         <div{% if not line.fields|length_is:'1' %} class="field-box{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% if not field.is_readonly and field.errors %} errors{% endif %}{% if field.field.is_hidden %} hidden{% endif %}"{% elif field.is_checkbox %} class="checkbox-row"{% endif %}>
