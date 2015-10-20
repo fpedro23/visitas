@@ -1301,12 +1301,33 @@ ul li {
 }
 
 #id_cargo {
-    width: 240px;
+    width: 95%;
 }
 #id_partido_gobernante {
-    width: 100px;
+    width: 95%;
+    height: 20px;
 }
 
 #id_distrito_electoral {
-    width: 100px;
+    width: 95%;
+}
+
+.add-another {
+    display:none;
+}
+
+select, textarea, input[type=text]{
+    width:95%
+}
+
+#alta03{
+	border: 2px solid #626262;
+	border-radius: 2px;
+
+	width:1010px;
+	height:50px;
+
+	position:absolute;
+	left:2px;
+	top:559px;
 }

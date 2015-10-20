@@ -56,19 +56,17 @@
 {% endif %}
 
 {% block field_sets %}
-
 {% for fieldset in adminform %}
   {% include "admin/visitas_stg/visita/fieldset.html" %}
 {% endfor %}
-
 {% endblock %}
 
 {% block after_field_sets %}{% endblock %}
 
 {% block inline_field_sets %}
-    <div style="top:180px; width: 100%; height: 360px; border: 2px; border-color:#b00c0c; border-style: solid; position: absolute;" align="left">
-
-{% for inline_admin_formset in inline_admin_formsets %}
+    <div id="alta02" style="overflow: scroll;">
+        <div class="tituloTABLA">Registro de Visita</div>
+  {% for inline_admin_formset in inline_admin_formsets %}
     {% include inline_admin_formset.opts.template %}
 {% endfor %}
     </div>
@@ -76,7 +74,11 @@
 
 {% block after_related_objects %}{% endblock %}
 
-{% block submit_buttons_bottom %}{% submit_row %}{% endblock %}
+{% block submit_buttons_bottom %}
+    <div id="alta03">
+        {% submit_row %}
+    </div>
+{% endblock %}
 
 {% if adminform and add %}
     <script type="text/javascript">

@@ -30,7 +30,7 @@ class CapitalizacionInline(NestedStackedInline):
 class ActividadInLine(NestedStackedInline):
     model = Actividad
     extra = 1
-    inlines = [ParticipanteLocalInline, ProblematicaSocialInLine, CapitalizacionInline]
+    inlines = [CapitalizacionInline, ParticipanteLocalInline, ProblematicaSocialInLine]
     fieldsets = [
         (None, {'fields': ['tipo_actividad', 'descripcion', 'clasificacion', ]}),
 
