@@ -113,6 +113,20 @@ class BuscarVisitasEndpoint(ProtectedResourceView):
         for visita in ans['visitas']:
             json_ans['visitas'].append(visita.to_serializable_dict())
 
+        json_ans['reporte_general'] = {'visitas_totales': ans['reporte_general']['visitas_totales']}
+
+        json_ans['repote_estado'] = []
+        for estado in ans['reporte_estado']:
+            json_map = {'estado': estado['estado__nombreEstado'],
+                        'numero_visitas': estado['numero_visitas']}
+            json_ans.append(json_map)
+
+        json_ans['reporte_dependencia'] = []
+        for dependencia in ans['reporte_dependencia']:
+            json_map = {'dependencia': dependencia['dependencia__nombreDependencia'],
+                        'numero_visitas': dependencia['numero_visitas']}
+            json_ans['reporte_dependencia'].append(json_map)
+
         return HttpResponse(json.dumps(json_ans), 'application/json')
 
 
