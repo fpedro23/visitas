@@ -67,28 +67,45 @@ class CargosForDependenciasEndpoint(ProtectedResourceView):
         return HttpResponse(json.dumps(map(lambda cargo: cargo.to_serializable_dict(), cargos)), 'application/json')
 
 
+class CargosForCargosEndpoint(ProtectedResourceView):
+    def get(self, request):
+        cargos_string = request.GET.get('cargos', None)
+
+        if cargos_string is None:
+            cargos_nombres = None
+        else:
+            cargos_nombres = cargos_string.split(',')
+
+        if cargos_nombres is not None and len(cargos_nombres) > 0:
+            cargos = Cargo.objects.all()
+        else:
+            cargos = Cargo.objects.filter(nombre_cargo__in=cargos_nombres)
+
+        return HttpResponse(json.dumps(map(lambda cargo: cargo.to_serializable_dict(), cargos)), 'application/json')
+
+
 class BuscarVisitasEndpoint(ProtectedResourceView):
     def get(self, request):
         buscador = BuscarVisitas(ids_dependencia=get_array_or_none(request.GET.get('dependencia')),
-            rango_fecha_inicio=request.GET.get('fechaInicio', None),
-            rango_fecha_fin=request.GET.get('fechaFin', None),
-            descripcion=request.GET.get('descripcion', None),
-            problematica=request.GET.get('problematica', None),
-            nombre_medio=request.GET.get('nombreMedio', None),
-            ids_region=get_array_or_none(request.GET.get('region')),
-            ids_entidad=get_array_or_none(request.GET.get('estado')),
-            ids_municipio=get_array_or_none(request.GET.get('municipio')),
-            ids_cargo_ejecuta=get_array_or_none(request.GET.get('cargoEjecuta')),
-            ids_distrito_electoral=get_array_or_none(request.GET.get('distritoElectoral')),
-            ids_partido=get_array_or_none(request.GET.get('partido')),
-            identificador_unico=request.GET.get('identificador_unico', None),
-            ids_tipo_actividad=get_array_or_none(request.GET.get('tipoActividad')),
-            ids_tipo_medio=get_array_or_none(request.GET.get('tipoMedio')),
-            ids_tipo_capitalizacion=get_array_or_none(request.GET.get('tipoCapitalizacion')),
-            ids_clasificacion=get_array_or_none(request.GET.get('tipoClasificacion')),
-            limite_min=request.GET.get('limiteMin', 0),
-            limite_max=request.GET.get('limiteMax', 100),
-        )
+                                 rango_fecha_inicio=request.GET.get('fechaInicio', None),
+                                 rango_fecha_fin=request.GET.get('fechaFin', None),
+                                 descripcion=request.GET.get('descripcion', None),
+                                 problematica=request.GET.get('problematica', None),
+                                 nombre_medio=request.GET.get('nombreMedio', None),
+                                 ids_region=get_array_or_none(request.GET.get('region')),
+                                 ids_entidad=get_array_or_none(request.GET.get('estado')),
+                                 ids_municipio=get_array_or_none(request.GET.get('municipio')),
+                                 ids_cargo_ejecuta=get_array_or_none(request.GET.get('cargoEjecuta')),
+                                 ids_distrito_electoral=get_array_or_none(request.GET.get('distritoElectoral')),
+                                 ids_partido=get_array_or_none(request.GET.get('partido')),
+                                 identificador_unico=request.GET.get('identificador_unico', None),
+                                 ids_tipo_actividad=get_array_or_none(request.GET.get('tipoActividad')),
+                                 ids_tipo_medio=get_array_or_none(request.GET.get('tipoMedio')),
+                                 ids_tipo_capitalizacion=get_array_or_none(request.GET.get('tipoCapitalizacion')),
+                                 ids_clasificacion=get_array_or_none(request.GET.get('tipoClasificacion')),
+                                 limite_min=request.GET.get('limiteMin', 0),
+                                 limite_max=request.GET.get('limiteMax', 100),
+                                 )
         ans = buscador.buscar()
 
         json_ans = {}
