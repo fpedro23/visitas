@@ -21,6 +21,10 @@ urlpatterns = patterns('',
     url(r'^visitas/consulta_filtros$', 'visitas_stg.views.consulta_filtros', name='consulta_filtros'),
     url(r'^visitas/busqueda-filtros', views.buscar_visitas_web, name='consulta_filtros'),
     url(r'^visitas/register-by-token$',views.register_by_access_token),
+    url(r'^visitas/listar-visitas', views.listar_visitas, name='listar_visitas'),
+
+
+
 
 
     url(r'^api/buscador', endpoints.BuscarVisitasEndpoint.as_view()),
@@ -34,4 +38,5 @@ urlpatterns = patterns('',
     url(r'^api/clasificaciones', endpoints.ClasificacionEndpoint.as_view()),
     url(r'^api/medios', endpoints.MediosEndpoint.as_view()),
     url(r'^api/tipos_capitalizacion', endpoints.TipoCapitalizacionEndpoint.as_view()),
+    url(r'^api/Inicio', endpoints.ReporteInicioEndpoint.as_view()),      
     )

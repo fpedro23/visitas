@@ -2,13 +2,46 @@ from django.http import HttpResponse
 from oauth2_provider.views import ProtectedResourceView
 from BuscarVisitas import BuscarVisitas
 from models import Estado, Municipio, TipoCapitalizacion, DistritoElectoral, Region, Cargo, Dependencia, \
-    TipoActividad, Clasificacion, Medio
+    TipoActividad, Clasificacion, Medio,Capitalizacion,Visita
 import json
 from views import get_array_or_none
+from oauth2_provider.models import AccessToken
 
 
 __author__ = 'mng687'
 
+def get_usuario_for_token(token):
+    if token:
+        return AccessToken.objects.get(token=token).user.usuario
+    else:
+        return None
+
+class ReporteInicioEndpoint(ProtectedResourceView):
+    def get(self, request):
+        dependencia = get_usuario_for_token(request.GET.get('access_token')).dependencia
+        if dependencia is None:
+            visitas = Visita.objects.all()
+            capitalizaciones = Capitalizacion.objects.all()
+        else:
+            visitas = Visita.objects.filter(dependencia=dependencia)
+            capitalizaciones = Capitalizacion.objects.filter(actividad__visita__in=visitas)
+
+        reporte = {}
+
+        reporte['estados'] = []
+        for estado in Estado.objects.all():
+            reporte_estado = {'estado': estado.to_serialzable_dict(),
+                              'total_visitas': visitas.filter(entidad=estado).count()}
+            reporte['estados'].append(reporte_estado)
+
+        reporte['medios'] = []
+        for tipo_medio in Medio.objects.all():
+            reporte_medio = {'medio': tipo_medio.to_serializable_dict(),
+                             'total_apariciones': capitalizaciones.filter(medio=tipo_medio).aggregate(
+                                 total=Sum(F('cantidad'), output_field=IntegerField()))['total']}
+            reporte['medios'] = reporte_medio
+
+        return HttpResponse(json.dumps(reporte), 'application/json')
 
 class RegionesEndpoint(ProtectedResourceView):
     def get(self, request):
@@ -67,34 +100,65 @@ class CargosForDependenciasEndpoint(ProtectedResourceView):
         return HttpResponse(json.dumps(map(lambda cargo: cargo.to_serializable_dict(), cargos)), 'application/json')
 
 
+class CargosForCargosEndpoint(ProtectedResourceView):
+    def get(self, request):
+        cargos_string = request.GET.get('cargos', None)
+
+        if cargos_string is None:
+            cargos_nombres = None
+        else:
+            cargos_nombres = cargos_string.split(',')
+
+        if cargos_nombres is not None and len(cargos_nombres) > 0:
+            cargos = Cargo.objects.all()
+        else:
+            cargos = Cargo.objects.filter(nombre_cargo__in=cargos_nombres)
+
+        return HttpResponse(json.dumps(map(lambda cargo: cargo.to_serializable_dict(), cargos)), 'application/json')
+
+
 class BuscarVisitasEndpoint(ProtectedResourceView):
     def get(self, request):
         buscador = BuscarVisitas(ids_dependencia=get_array_or_none(request.GET.get('dependencia')),
-            rango_fecha_inicio=request.GET.get('fechaInicio', None),
-            rango_fecha_fin=request.GET.get('fechaFin', None),
-            descripcion=request.GET.get('descripcion', None),
-            problematica=request.GET.get('problematica', None),
-            nombre_medio=request.GET.get('nombreMedio', None),
-            ids_region=get_array_or_none(request.GET.get('region')),
-            ids_entidad=get_array_or_none(request.GET.get('estado')),
-            ids_municipio=get_array_or_none(request.GET.get('municipio')),
-            ids_cargo_ejecuta=get_array_or_none(request.GET.get('cargoEjecuta')),
-            ids_distrito_electoral=get_array_or_none(request.GET.get('distritoElectoral')),
-            ids_partido=get_array_or_none(request.GET.get('partido')),
-            identificador_unico=request.GET.get('identificador_unico', None),
-            ids_tipo_actividad=get_array_or_none(request.GET.get('tipoActividad')),
-            ids_tipo_medio=get_array_or_none(request.GET.get('tipoMedio')),
-            ids_tipo_capitalizacion=get_array_or_none(request.GET.get('tipoCapitalizacion')),
-            ids_clasificacion=get_array_or_none(request.GET.get('tipoClasificacion')),
-            limite_min=request.GET.get('limiteMin', 0),
-            limite_max=request.GET.get('limiteMax', 100),
-        )
+                                 rango_fecha_inicio=request.GET.get('fechaInicio', None),
+                                 rango_fecha_fin=request.GET.get('fechaFin', None),
+                                 descripcion=request.GET.get('descripcion', None),
+                                 problematica=request.GET.get('problematica', None),
+                                 nombre_medio=request.GET.get('nombreMedio', None),
+                                 ids_region=get_array_or_none(request.GET.get('region')),
+                                 ids_entidad=get_array_or_none(request.GET.get('estado')),
+                                 ids_municipio=get_array_or_none(request.GET.get('municipio')),
+                                 ids_cargo_ejecuta=get_array_or_none(request.GET.get('cargoEjecuta')),
+                                 ids_distrito_electoral=get_array_or_none(request.GET.get('distritoElectoral')),
+                                 ids_partido=get_array_or_none(request.GET.get('partido')),
+                                 identificador_unico=request.GET.get('identificador_unico', None),
+                                 ids_tipo_actividad=get_array_or_none(request.GET.get('tipoActividad')),
+                                 ids_tipo_medio=get_array_or_none(request.GET.get('tipoMedio')),
+                                 ids_tipo_capitalizacion=get_array_or_none(request.GET.get('tipoCapitalizacion')),
+                                 ids_clasificacion=get_array_or_none(request.GET.get('tipoClasificacion')),
+                                 limite_min=request.GET.get('limiteMin', 0),
+                                 limite_max=request.GET.get('limiteMax', 100),
+                                 )
         ans = buscador.buscar()
 
         json_ans = {}
         json_ans['visitas'] = []
         for visita in ans['visitas']:
             json_ans['visitas'].append(visita.to_serializable_dict())
+
+        json_ans['reporte_general'] = {'visitas_totales': ans['reporte_general']['visitas_totales']}
+
+        json_ans['reporte_estado'] = []
+        for estado in ans['reporte_estado']:
+            json_map = {'estado': estado['entidad__nombreEstado'],
+                        'numero_visitas': estado['numero_visitas']}
+            json_ans['reporte_estado'].append(json_map)
+
+        json_ans['reporte_dependencia'] = []
+        for dependencia in ans['reporte_dependencia']:
+            json_map = {'dependencia': dependencia['dependencia__nombreDependencia'],
+                        'numero_visitas': dependencia['numero_visitas']}
+            json_ans['reporte_dependencia'].append(json_map)
 
         return HttpResponse(json.dumps(json_ans), 'application/json')
 

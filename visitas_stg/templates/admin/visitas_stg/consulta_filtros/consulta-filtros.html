@@ -611,8 +611,8 @@ et$(function() {
                                                <article id="ver_grafica_datos">
                                                     {% csrf_token %}
                                                     <select class="selectpicker" data-size="5" id="datosGrafica">
-                                                          <option value="Numero">N&uacute;mero de obras</option>
-                                                          <option value="Monto">Monto total</option>
+                                                          <option value="Numero">N&uacute;mero de visitas</option>
+
                                                     </select>
                                                </article>
                                             </div>
@@ -1004,15 +1004,10 @@ et$(function() {
            <div class="col-md-6" style="margin-right: 0px;margin-left: 0px; padding-left: 4px; padding-right: 4px; ">
                <div class="col-md-12-box"  style="margin-right: 0px;margin-left: 0px; padding-left: 4px; padding-right: 4px; ">
                    <div class="row" style="padding-bottom: 4px;">
-                         <div class="col-md-3 tituloFiltros">
+                         <div class="col-md-5 tituloFiltros">
                              Mapa
                          </div>
-                        <div class="col-md-2">
-                            <div class="visitasBTN" id="mapaObra"></div>
-                       </div>
-                       <div class="col-md-2" >
-                           <div class="estadoBTN" id="mapaEstado"></div>
-                       </div>
+
                        <div class="col-md-5" id="ajaxProgress">
                             <img src="../../static/assets/gifs/loading-barra2.gif">
                        </div>
@@ -1051,15 +1046,15 @@ et$(function() {
                         <thead>
 
                             <tr>
-                                <th>Tipo Inversi&oacute;n</th>
-                                <th>No. de Obras</th>
+                                <th>Origen</th>
+                                <th>No. de Visitas</th>
                                 <th>Monto</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>Tipo Inversi&oacute;n</th>
-                                <th>No. de Obras</th>
+                                <th>Origen</th>
+                                <th>No. de Visitas</th>
                                 <th>Monto</th>
                             </tr>
                             <tr><td class="pager" id="pager2" colspan="3">

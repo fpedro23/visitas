@@ -1,4 +1,4 @@
-{% load static %}
+{% load app_filters static %}
 <fieldset class="module aligned wide {{ fieldset.classes }}" style="border: 0px;">
  <div class="datosCATALOGOS">
   <div id="tituloCUADROS">DATOS GENERALES</div>
@@ -44,6 +44,23 @@
         </div>
       {% endif %}
 
+      {% if field.field.name == "dependencia" %}
+                  <div class="row field-dependencia" style="padding-top: 8px;">
+                    <div class="col-md-4" >
+                        <label style="padding-right: 0px;" for="id_usuario-0-dependencia"><span class="error__msg">*</span> Dependencia:</label>
+                    </div>
+                    <div class="col-md-8" >
+                        {{ field.field|add_attributes:"class:usudependencia" }}
+                    {% if field.field.errors %}
+                             <img id="imgerr8" data-toggle="tooltip" data-placement="right"  title="{% for error in field.field.errors %}{{ error }}{% endfor %}" src="{% static "img/iconoExclamacion.gif" %}" width="15px" height="15px">
+                           {% endif %}
+                       {% if field.field.help_text %}
+                        <p class="help" hidden="true">{{ field.field.help_text|safe }}</p>
+                    {% endif %}
+                    </div>
+                  </div>
+
+                {% endif %}
 
   {% endfor %}
    {% endfor %}

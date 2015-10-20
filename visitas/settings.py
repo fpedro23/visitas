@@ -77,10 +77,21 @@ WSGI_APPLICATION = 'visitas.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'visitas',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': '',
+        'PORT': '',
     }
 }
+
+#DATABASES = {
+#    'default': {
+ #       'ENGINE': 'django.db.backends.sqlite3',
+  #      'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+   # }
+#}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -107,3 +118,6 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR,  'visitas_stg/templates/'),
 )
 
+TEMPLATETAGS_DIRS = (
+    os.path.join(BASE_DIR, 'obras/templatetags/'),
+)
