@@ -15,7 +15,7 @@ __author__ = 'mng687'
 
 def get_usuario_for_token(token):
     if token:
-        return AccessToken.objects.get(token=token).user.usuario
+        return AccessToken.objects.get(token=token).user.userprofile
     else:
         return None
 
