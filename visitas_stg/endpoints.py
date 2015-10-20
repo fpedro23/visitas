@@ -1,13 +1,35 @@
+from django.db.models import Sum, IntegerField
+from django.db.models import F
 from django.http import HttpResponse
 from oauth2_provider.views import ProtectedResourceView
 from BuscarVisitas import BuscarVisitas
 from models import Estado, Municipio, TipoCapitalizacion, DistritoElectoral, Region, Cargo, Dependencia, \
-    TipoActividad, Clasificacion, Medio
+    TipoActividad, Clasificacion, Medio, Visita, Capitalizacion
 import json
 from views import get_array_or_none
 
 
 __author__ = 'mng687'
+
+
+class ReporteInicioEndpoint(ProtectedResourceView):
+    def get(self, request):
+        reporte = {}
+
+        reporte['estados'] = []
+        for estado in Estado.objects.all():
+            reporte_estado = {'estado': estado.to_serialzable_dict(),
+                              'total_visitas': Visita.objects.filter(entidad=estado).count()}
+            reporte['estados'].append(reporte_estado)
+
+        reporte['medios'] = []
+        for tipo_medio in Medio.objects.all():
+            reporte_medio = {'medio': tipo_medio.to_serializable_dict(),
+                             'total_apariciones': Capitalizacion.objects.filter(medio=tipo_medio).aggregate(
+                                 total=Sum(F('cantidad'), output_field=IntegerField()))['total']}
+            reporte['medios'] = reporte_medio
+
+        return HttpResponse(json.dumps(reporte), 'application/json')
 
 
 class RegionesEndpoint(ProtectedResourceView):
