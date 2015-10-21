@@ -41,8 +41,9 @@ class ReporteInicioEndpoint(ProtectedResourceView):
         reporte['medios'] = []
         for tipo_medio in Medio.objects.all():
             reporte_medio = {'medio': tipo_medio.to_serializable_dict(),
-                             'total_apariciones': capitalizaciones.filter(medio=tipo_medio).aggregate(
-                                 total=Sum(F('cantidad'), output_field=IntegerField()))['total']}
+                             'total_apariciones': capitalizaciones.filter(medio=tipo_medio).count()}
+                             # 'total_apariciones': capitalizaciones.filter(medio=tipo_medio).aggregate(
+                             #  total=Sum(F('cantidad'), output_field=IntegerField()))['total']}
             reporte['medios'] = reporte_medio
 
         return HttpResponse(json.dumps(reporte), 'application/json')
