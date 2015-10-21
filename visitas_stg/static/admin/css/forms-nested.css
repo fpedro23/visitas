@@ -17,10 +17,6 @@ form .form-row p {
     font-size: 11px;
 }
 
-.hidden {
-    display: none;
-}
-
 /* FORM LABELS */
 
 form h4 {
@@ -32,11 +28,12 @@ form h4 {
 label {
     font-weight: normal !important;
     color: #666;
-    font: 11px Verdana, Geneva, sans-serif;
+    font-size: 12px;
 }
 
 .required label, label.required {
-    font: 11px Verdana, Geneva, sans-serif;
+    font-weight: normal !important;
+    color: #333 !important;
 }
 
 /* RADIO BUTTONS */
@@ -64,9 +61,9 @@ form ul.inline li {
 
 .aligned label {
     display: block;
-    padding: 3px 0px 0 0;
+    padding: 3px 10px 0 0;
     float: left;
-
+    width: 8em;
 }
 
 .aligned ul label {
@@ -155,7 +152,7 @@ fieldset.collapsed .collapse-toggle {
 /* MONOSPACE TEXTAREAS */
 
 fieldset.monospace textarea {
-    font-family: Verdana, Geneva, sans-serif;
+    font-family: "Bitstream Vera Sans Mono",Monaco,"Courier New",Courier,monospace;
 }
 
 /* SUBMIT ROW */
@@ -204,14 +201,6 @@ body.popup .submit-row {
     margin-right: 2px;
 }
 
-.vDateField {
-    min-width: 6.85em;
-}
-
-.vTimeField {
-    min-width: 4.7em;
-}
-
 .vURLField {
     width: 30em;
 }
@@ -236,10 +225,6 @@ body.popup .submit-row {
     width: 5em;
 }
 
-.vBigIntegerField {
-    width: 10em;
-}
-
 .vForeignKeyRawIdAdminField {
     width: 5em;
 }
@@ -248,12 +233,11 @@ body.popup .submit-row {
 
 .inline-group {
     padding: 0;
-    border: 1px solid #ccc;
-    margin: 10px 0;
+    border: 0px;
+    margin: 5px 0;
 }
 
 .inline-group .aligned label {
-    font: 11pt Verdana, Geneva, sans-serif;
     width: 8em;
 }
 
@@ -266,8 +250,7 @@ body.popup .submit-row {
     color: #666;
     padding: 3px 5px;
     font-size: 11px;
-    background: #e1e1e1 url(../img/nav-bg.gif) top left repeat-x;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 0px ;
 }
 
 .inline-related h3 span.delete {
@@ -283,7 +266,6 @@ body.popup .submit-row {
     margin: 0;
     background: #fff;
     border: none;
-    width: 100%;
 }
 
 .inline-related fieldset.module h3 {
@@ -292,13 +274,12 @@ body.popup .submit-row {
     font-size: 11px;
     text-align: left;
     font-weight: bold;
-    background: #bcd;
     color: #fff;
 }
 
-.inline-group .tabular fieldset.module {
+.inline-group .tabular > fieldset.module {
     border: none;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 0px;
 }
 
 .inline-related.tabular fieldset.module table {
@@ -350,9 +331,9 @@ body.popup .submit-row {
 .inline-group div.add-row,
 .inline-group .tabular tr.add-row td {
     color: #666;
-    padding: 3px 5px;
-    border-bottom: 1px solid #ddd;
-    background: #e1e1e1 url(../img/nav-bg.gif) top left repeat-x;
+    padding: 1px 1px;
+    border-bottom: 0px;
+
 }
 
 .inline-group .tabular tr.add-row td {
@@ -367,6 +348,26 @@ body.popup .submit-row {
     padding-left: 14px;
     font-size: 11px;
     outline: 0; /* Remove dotted border around link */
+}
+
+.nested-inline {
+	margin: 5px;
+}
+
+td > .nested-inline {
+	margin: 0px;
+}
+
+.nested-inline-bottom-border {
+	border-bottom: 1px solid #DDDDDD;
+}
+
+.no-bottom-border.row1 > td {
+	border-bottom: solid #EDF3FE 1px;
+}
+
+.no-bottom-border.row2 > td {
+	border-bottom: solid white 1px;
 }
 
 .empty-form {

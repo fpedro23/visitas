@@ -205,7 +205,7 @@ class Clasificacion(models.Model):
 
 
 class Actividad(models.Model):
-    tipo_actividad = models.ForeignKey(TipoActividad, verbose_name='Tipo de Actividad')
+    tipo_actividad = models.ForeignKey(TipoActividad, verbose_name='Tipo')
     descripcion = models.CharField(max_length=200, verbose_name='Descripción')
     clasificacion = models.ForeignKey(Clasificacion, verbose_name='Clasificación')
     visita = models.ForeignKey(Visita, default=1)
@@ -276,8 +276,8 @@ class ProblematicaSocial(models.Model):
 
 
 class ParticipanteLocal(models.Model):
-    nombre = models.CharField(max_length=200, verbose_name='Nombre de participante local')
-    cargo = models.CharField(max_length=200, verbose_name='Cargo del participante local')
+    nombre = models.CharField(max_length=200, verbose_name='Nombre')
+    cargo = models.CharField(max_length=200, verbose_name='Cargo')
     actividad = models.ForeignKey(Actividad)
 
     def __str__(self):

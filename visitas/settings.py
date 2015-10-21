@@ -51,7 +51,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'oauth2_provider',
     'visitas_stg',
     'nested_inline',
 
@@ -119,5 +118,5 @@ TEMPLATE_DIRS = (
 )
 
 TEMPLATETAGS_DIRS = (
-    os.path.join(BASE_DIR, 'obras/templatetags/'),
+    os.path.join(BASE_DIR, 'visitas_stg/templatetags/'),
 )

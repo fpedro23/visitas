@@ -1,0 +1,25 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static %}
+{% block extrastyle %}{{ block.super }}
+
+    <link href="{% static "assets/css/menu.css" %}" rel="stylesheet">
+{% endblock %}
+{% block breadcrumbs %}
+        {% endblock %}
+
+{% block content %}
+
+  <div id = "regresarBTN" onclick="window.history.go(-1);">
+  </div>
+
+  <div id="welcome">
+    	M O V I M I E N T O S
+  </div>
+
+  <div class="altaOBRA" onclick="location.href='/admin/visitas_stg/visita/add/'">
+  </div>
+
+  <div class="modificarOBRA" on onclick="location.href='/admin/visitas_stg/visita/add/?m=1'">
+  </div>
+
+{% endblock %}
