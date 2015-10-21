@@ -18,21 +18,23 @@ from visitas_stg.models import *
 class ProblematicaSocialInLine(NestedStackedInline):
     model = ProblematicaSocial
     extra = 1
-
+    can_delete = False
 
 class ParticipanteLocalInline(NestedStackedInline):
     model = ParticipanteLocal
     extra = 1
-
+    can_delete = False
 
 class CapitalizacionInline(NestedStackedInline):
     model = Capitalizacion
     extra = 1
+    can_delete = False
 
 
 class ActividadInLine(NestedStackedInline):
     model = Actividad
     extra = 1
+    can_delete = False
     inlines = [CapitalizacionInline, ParticipanteLocalInline, ProblematicaSocialInLine]
     fieldsets = [
         (None, {'fields': ['tipo_actividad', 'descripcion', 'clasificacion', ]}),

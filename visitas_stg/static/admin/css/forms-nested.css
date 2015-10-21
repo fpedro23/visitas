@@ -4,7 +4,7 @@
 
 .form-row {
     overflow: hidden;
-    padding: 4px 6px;
+    padding: 2px;
     font-size: 11px;
 }
 
@@ -359,7 +359,7 @@ td > .nested-inline {
 }
 
 .nested-inline-bottom-border {
-	border-bottom: 1px solid #DDDDDD;
+	border-bottom: 0px solid #DDDDDD;
 }
 
 .no-bottom-border.row1 > td {

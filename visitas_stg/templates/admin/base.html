@@ -324,16 +324,14 @@
         }
     </script>
 
-    <div class="FUA" id="FUA">
-{% if not user.is_active %} {% now "l d \d\e F \d\e\l Y, H:i." %} {% endif %}
-        </div>
+
 
 </div>
 <!--finaliza el contenedor-->
 
-<div class="FUA">
-       	  Fecha de Última Actualización: DD/MM/AAAA
-</div>
+ <div class="FUA" id="FUA">
+{% if not user.is_active %} {% now "l d \d\e F \d\e\l Y, H:i." %} {% endif %}
+        </div>
 
 </div>
     {% block footer %}<!-- Editar contenido aqui, no es necesario hacer mas clases cointainer, siempre dejar la misma estructura de row seguido por col-lo que sea.  -->
