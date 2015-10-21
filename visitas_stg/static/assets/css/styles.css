@@ -42,11 +42,7 @@
     cursor: pointer;
 }
 
-.obraBTN{
-	width: 61px;
-	height: 20px;
-	background-image: url(../img-botones/bigBackground.fw.png);
-	background-position: -1063px -1926px;
+
 .visitasBTN{
 	width: 66px;
 	height: 15px;
@@ -60,11 +56,7 @@
 	background-position: -1063px -1950px;
     cursor: pointer;
 }
-.estadoBTN{
-	width: 60px;
-	height: 20px;
-	background-image: url(../img-botones/bigBackground.fw.png);
-	background-position: -998px -1926px;
+
 .visitasBTN:hover{
 	background-position: -1227px -202px;
     cursor: pointer;

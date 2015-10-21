@@ -929,47 +929,6 @@
 	top: 30px;
 }
 
-.listarBTN{
-	width: 85px;
-	height: 21px;
-	background-image: url(../imagenes/bigBACK.png);
-	background-position: -1084px -256px;
-	position: absolute;
-	top: 220px;
-	left: 710px;
-}
-
-.listarBTN:hover{
-	background-position: -1084px -280px;
-}
-
-.limpiarBTN{
-	width: 85px;
-	height: 21px;
-	background-image: url(../imagenes/bigBACK.png);
-	background-position: -758px -256px;
-	position: absolute;
-	top: 219px;
-	left: 824px;
-}
-
-.limpiarBTN:hover{
-	background-position: -758px -280px;
-}
-
-.consultarBTN{
-	width: 90px;
-	height: 21px;
-	background-image: url(../imagenes/bigBACK.png);
-	background-position: -850px -256px;
-	position: absolute;
-	top: 219px;
-	left: 919px;
-}
-
-.consultarBTN:hover{
-	background-position: -850px -281px;
-}
 
 #resultados{
 	border: 2px solid #626262;
@@ -1001,33 +960,7 @@
 	left: 724px;
 }
 
-.exportarBTN{
-	width: 26px;
-	height: 26px;
-	background-image: url(../imagenes/bigBACK.png);
-	background-position: -1356px -234px;
-	position: absolute;
-	top: 5px;
-	left: 229px;
-}
 
-.exportarBTN:hover{
-	background-position: -1356px -262px;
-}
-
-.graficoBTN{
-	width: 26px;
-	height: 26px;
-	background-image: url(../imagenes/bigBACK.png);
-	background-position: -1385px -235px;
-	position: absolute;
-	top: 5px;
-	left: 260px;
-}
-
-.graficoBTN:hover{
-	background-position:-1385px -265px;
-}
 /*ELEMENTOS CORRESPONDIENTES AL BODY DE CONSULTA MEDIANTE FILTROS*/
 
 

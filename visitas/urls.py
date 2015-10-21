@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
-from visitas_stg import  views
+from visitas_stg import  views, endpoints
 
 
 urlpatterns = patterns('',
