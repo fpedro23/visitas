@@ -23,7 +23,7 @@
             center: new google.maps.LatLng(22.6526121, -100.1780452),
               mapTypeId: google.maps.MapTypeId.SATELLITE
           }
-          var map = new google.maps.Map(document.getElementById('mapa'),
+          var map = new google.maps.Map(document.getElementById('mapaVISITAS'),
                                         mapOptions);
 
           //setMarkers(map, beaches);
@@ -54,7 +54,7 @@
 
       <div id="anioVISITAS">
       	<div id="anioTITULO">
-        	Visitas por Estado 2015
+        	Cargando gráfica...
         </div>
       </div>
 
@@ -68,9 +68,9 @@
         	Apariciones en TV 2015
         </div>
 
-        <div class="medioNUM_DEF">
+        <div class="medioNUM_DEF" id="medioTV">
             <p>
-            	52213
+
             </p>
         </div>
 
@@ -83,7 +83,7 @@
         	Apariciones en Radio 2015
         </div>
 
-        <div class="medioNUM_DEF">
+        <div class="medioNUM_DEF" id="medioRadio">
         	<p>
             	12545
             </p>
@@ -98,7 +98,7 @@
         	Apariciones en Periódico 2015
         </div>
 
-        <div class="medioNUM_DEF">
+        <div class="medioNUM_DEF" id="medioPeriodico">
         	<p>
             	89101
             </p>
@@ -113,7 +113,7 @@
         	Apariciones en Internet 2015
         </div>
 
-        <div class="medioNUM_DEF">
+        <div class="medioNUM_DEF" id="medioInternet">
         	<p>
             	11121
             </p>

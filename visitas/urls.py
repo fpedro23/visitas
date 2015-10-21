@@ -28,6 +28,8 @@ urlpatterns = patterns('',
 
 
 
+    url(r'^api/ReportePP', endpoints.PptxReporteEndpoint.as_view()),
+    url(r'^api/PptxVista', endpoints.PptxEndpoint.as_view()),
     url(r'^api/buscador', endpoints.BuscarVisitasEndpoint.as_view()),
     url(r'^api/regiones', endpoints.RegionesEndpoint.as_view()),
     url(r'^api/estados', endpoints.EstadosForRegionesEndpoint.as_view()),

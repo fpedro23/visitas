@@ -66,7 +66,7 @@ function getMunicipiosForEstado(estadoId, onSuccess) {
     );
 
     // Get an Oauth2 access token and then do the ajax call, because SECURITY
-    $.get('/obras/register-by-token', function(ans) {
+    $.get('/visitas/register-by-token', function(ans) {
         // TODO: add a failure function
         var ajaxData = { access_token: ans.access_token, estados: estadoId };
 

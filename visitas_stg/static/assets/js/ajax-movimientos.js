@@ -11,7 +11,7 @@ var ajax_datatoken = {
 
 
     $j.ajax({
-        url: '/obras/register-by-token',
+        url: '/visitas/register-by-token',
         type: 'get',
         data: ajax_datatoken,
         success: function(data) {
@@ -43,7 +43,7 @@ function main_consulta() {
     $j('#id_dependencia').on('change', setImage);
     $j('#imprimirBTN').on('click', imprimeFicha);
     //valida_token();
-    $.get("/obras/register-by-token", function(respu) {
+    $.get("/visitas/register-by-token", function(respu) {
         newToken=respu.access_token;
         setImage();
     });

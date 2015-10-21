@@ -85,50 +85,57 @@ def listar_visitas(request):
     sheet = book.add_worksheet('Visitas')
 
     if resultados:
-            # Add a bold format to use to highlight cells.
-            bold = book.add_format({'bold': True})
-            # encabezados
-            sheet.write(0, 0, "Tipo de Obra", bold)
-            sheet.write(0, 1, "id Unico", bold)
-            sheet.write(0, 2, "Dependencia/Organismo", bold)
-            sheet.write(0, 3, "Sub Dependencia", bold)
-            sheet.write(0, 4, "Estado", bold)
-            sheet.write(0, 5, "Denominacion", bold)
-            sheet.write(0, 6, "Descripcion", bold)
-            sheet.write(0, 7, "Municipio", bold)
-            sheet.write(0, 8, "Fecha Inicio", bold)
-            sheet.write(0, 9, "Fecha Termino", bold)
-            sheet.write(0, 10, "Avance Fisico %", bold)
-            sheet.write(0, 11, "F", bold)
-            sheet.write(0, 12, "E", bold)
-            sheet.write(0, 13, "M", bold)
-            sheet.write(0, 14, "S", bold)
-            sheet.write(0, 15, "P", bold)
-            sheet.write(0, 16, "O", bold)
-            sheet.write(0, 17, "Inversion Total", bold)
-            sheet.write(0, 18, "Tipo Moneda MDP/MDD", bold)
-            sheet.write(0, 19, "Registro de Cartera", bold)        #**************
-            sheet.write(0, 20, "Poblacion Objetivo", bold)
-            sheet.write(0, 21, "Numero de Beneficiarios", bold)
-            sheet.write(0, 22, "Impacto", bold)
-            sheet.write(0, 23, "CG", bold)
-            sheet.write(0, 24, "PNG", bold)
-            sheet.write(0, 25, "PM", bold)
-            sheet.write(0, 26, "PNI", bold)
-            sheet.write(0, 27, "CNCH", bold)
-            sheet.write(0, 28, "OI", bold)
-            sheet.write(0, 29, "Senalizacion", bold)
-            sheet.write(0, 30, "Observaciones", bold)
-            sheet.write(0, 31, "Inaugurado por:", bold)
-            sheet.write(0, 32, "Inaugurado:", bold)
-            sheet.write(0, 33, "Foto Antes", bold)
-            sheet.write(0, 34, "Foto Durante", bold)
-            sheet.write(0, 35, "Foto Despues", bold)
-            sheet.write(0, 36, "Latitud", bold)
-            sheet.write(0, 37, "Longitud", bold)
+        # Add a bold format to use to highlight cells.
+        bold = book.add_format({'bold': True})
+        # encabezados
+        sheet.write(0, 0, "id Unico", bold)
+        sheet.write(0, 1, "Dependencia", bold)
+        sheet.write(0, 2, "Fecha", bold)
+        sheet.write(0, 3, "Region", bold)
+        sheet.write(0, 4, "Entidad", bold)
+        sheet.write(0, 5, "Municipio", bold)
+        sheet.write(0, 6, "Distrito Electoral", bold)
+        sheet.write(0, 7, "Partido Gobernante", bold)
+        sheet.write(0, 8, "Funcionario", bold)
+        sheet.write(0, 9, "Cargo de Funcionario", bold)
+        sheet.write(0, 10, "Tipo de Actividad", bold)
+        sheet.write(0, 11, "Descripcion", bold)
+        sheet.write(0, 12, "Cargo de Funcionario", bold)
 
+        i = 1
+        for obra in json_ans['visitas']:
+            sheet.write(i, 0, obra['identificador_unico'])
+            sheet.write(i, 1, obra['dependencia']['nombreDependencia'])
+            sheet.write(i, 2, obra['fecha_visita'])
+            sheet.write(i, 3, obra['region']['numeroRegion'])
+            sheet.write(i, 4, obra['entidad']['nombreEstado'])
+            sheet.write(i, 5, obra['municipio']['nombreMunicipio'])
+            sheet.write(i, 6, obra['distrito_electoral']['nombre_distrito_electoral'])
+            sheet.write(i, 7, obra['partido_gobernante']['nombre_partido_gobernante'])
+            sheet.write(i, 8, obra['cargo']['nombre_funcionario'])
+            sheet.write(i, 9, obra['cargo']['nombre_cargo'])
 
-    return HttpResponse(resultados)
+            for actividad in obra['actividades']:
+                sheet.write(i, 10, actividad['tipo_actividad']['nombre_actividad'])
+                sheet.write(i, 11, actividad['descripcion'])
+                sheet.write(i, 12, actividad['clasificacion']['nombre_clasificacion'])
+                i += 1
+
+        book.close()
+    else:
+        sheet.write(0, 0,
+                   "Los filtros seleccionados no arrojaron informacion alguna sobre las obras, cambie los filtros para una nueva consulta.")
+        book.close()
+
+    response = StreamingHttpResponse(FileWrapper(output),
+                                    content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename="listado_obras.xlsx"'
+    response['Content-Length'] = output.tell()
+
+    output.seek(0)
+
+    return response
+
 
 def buscar_visitas_web(request):
     buscador = BuscarVisitas(ids_dependencia=get_array_or_none(request.GET.get('dependencia')),

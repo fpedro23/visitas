@@ -12,7 +12,7 @@ var ajax_datatoken = {
 
 
     $i.ajax({
-        url: '/obras/register-by-token',
+        url: '/visitas/register-by-token',
         type: 'get',
         data: ajax_datatoken,
         success: function(data) {
