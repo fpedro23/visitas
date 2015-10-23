@@ -62,6 +62,7 @@ class Municipio(models.Model):
     latitud = models.FloatField()
     longitud = models.FloatField()
     estado = models.ForeignKey(Estado, null=False, blank=False)
+    distrito_electoral = models.ForeignKey(DistritoElectoral, default=1)
 
     def __str__(self):
         return self.nombreMunicipio
@@ -101,10 +102,10 @@ class Cargo(models.Model):  # Cargo de la persona que hace la actividad
     dependencia = models.ForeignKey(Dependencia, default=1)
 
     def __str__(self):
-        return self.nombre_cargo + " - " + self.nombre_funcionario + " - " + self.dependencia.nombreDependencia
+        return self.nombre_cargo
 
     def __unicode__(self):
-        return self.nombre_cargo + " - " + self.nombre_funcionario + " - " + self.dependencia.nombreDependencia
+        return self.nombre_cargo
 
     def to_serializable_dict(self):
         return {'id': self.id, 'nombre_cargo': self.nombre_cargo, 'nombre_funcionario': self.nombre_funcionario,
@@ -205,8 +206,8 @@ class Clasificacion(models.Model):
 
 
 class Actividad(models.Model):
-    tipo_actividad = models.ForeignKey(TipoActividad, verbose_name='Tipo')
-    descripcion = models.CharField(max_length=200, verbose_name='Descripción')
+    tipo_actividad = models.ForeignKey(TipoActividad, verbose_name='Tipo de Actividad')
+    descripcion = models.TextField(max_length=500, verbose_name='Descripción')
     clasificacion = models.ForeignKey(Clasificacion, verbose_name='Clasificación')
     visita = models.ForeignKey(Visita, default=1)
 
@@ -276,8 +277,8 @@ class ProblematicaSocial(models.Model):
 
 
 class ParticipanteLocal(models.Model):
-    nombre = models.CharField(max_length=200, verbose_name='Nombre')
-    cargo = models.CharField(max_length=200, verbose_name='Cargo')
+    nombre = models.CharField(max_length=200, verbose_name='Nombre de participante local')
+    cargo = models.CharField(max_length=200, verbose_name='Cargo del participante local')
     actividad = models.ForeignKey(Actividad)
 
     def __str__(self):
@@ -339,6 +340,7 @@ class Capitalizacion(models.Model):
     cantidad = models.PositiveIntegerField()
     evidencia_grafica = models.FileField(null=True, blank=True)
     actividad = models.ForeignKey(Actividad)
+
 
     def __str__(self):
         return self.tipo_capitalizacion.nombre_tipo_capitalizacion + ' - ' + self.medio.nombre_medio
