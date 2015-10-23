@@ -1,6 +1,6 @@
 {% load app_filters admin_static%}
-{{ fieldset.name }}
-{% if fieldset.name == "('Personal info',)" %}
+
+{% if fieldset.name == "Personal info" %}
 <fieldset class="module aligned {{ fieldset.classes }}" style="border: 0px;">
      <div class="datosGENERALES">
      <div id="tituloCUADROS" style="height: 39px;">
@@ -79,7 +79,7 @@
 
                     <div class="col-md-4"  >
 
-                        <label class="required" for="id_username"><span class="error__msg">*</span> Usuario:</label>
+                        <label class="" for="id_username"><span class="error__msg">*</span> Usuario:</label>
                     </div>
 
                     <div class="col-md-8" >
@@ -100,7 +100,7 @@
 
                     <div class="col-md-4">
 
-                        <label class="required" for="id_password1"><span class="error__msg">*</span> Contraseña:</label>
+                        <label class="" for="id_password1"><span class="error__msg">*</span> Contraseña:</label>
                     </div>
                     <div class="col-md-8" >
 
@@ -123,7 +123,7 @@
 
                     <div class="col-md-4">
 
-                        <label class="required" for="id_password2"><span class="error__msg">*</span> Contraseña:</label>
+                        <label class="" for="id_password2"><span class="error__msg">*</span> Contraseña:</label>
                     </div>
                     <div class="col-md-8" >
                         <input id="id_password1" name="password2" type="password" value="{{ field.field.value|default_if_none:"" }}"/>

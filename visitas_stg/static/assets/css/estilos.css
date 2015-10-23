@@ -270,6 +270,7 @@
 	position: absolute;
 	top: 155px;
 	left: 55px;
+    color: #080808;
 }
 
 .tituloFiltros{
@@ -293,9 +294,7 @@
 	top: 207px;
 	left: 56px;
 
-	border: #CFCFDB;
-	border-style:solid;
-	border-width:2px;
+
 }
 
 .texto02{
@@ -310,9 +309,7 @@
 	top: 241px;
 	left: 56px;
 
-	border: #CFCFDB;
-	border-style: solid;
-	border-width: 2px;
+
 }
 
 #entrar{
@@ -714,7 +711,7 @@
 	border: 2px solid #626262;
 	border-radius: 2px;
 	width: 1010px;
-	height: 99px;
+	height: 103px;
 	position: absolute;
 	left: 2px;
 	top: 30px;
@@ -747,10 +744,11 @@
 	border: 2px solid #626262;
 	border-radius: 2px;
 	width: 1010px;
-	height: 218px;
+	height: 415px;
 	position: absolute;
 	left: 2px;
 	top: 140px;
+    overflow: scroll;
 }
 
 #actividadDIV{
@@ -793,6 +791,7 @@
 	background-image: url(../imagenes/bigBACK.png);
 	background-position: -1476px -234px;
 	top: 72px;
+    background-color: #DFDFDF;
 }
 
 .masICOP02{
@@ -803,6 +802,7 @@
 	background-image: url(../imagenes/bigBACK.png);
 	background-position: -1476px -234px;
 	top: 145px;
+    background-color: #DFDFDF;
 }
 
 #botEXAMINAR{
@@ -1513,9 +1513,9 @@ ul li {
     display:none;
 }
 
-select, textarea, input[type=text]{
+select, textarea, input[type=text], input{
     width:95%;
-    height: 98%;
+    height: 20px;
 }
 
 #alta03{
@@ -1535,4 +1535,76 @@ select, textarea, input[type=text]{
 	font-size: 12px;
 	color:#0D0D1E;
     background-color: #DFDFDF;
+}
+
+.salirVBTN{
+	width: 68px;
+	height: 21px;
+	background-image: url(../imagenes/bigBACK.png);
+	background-position: -403px -256px;
+	position: absolute;
+	top: 559px;
+	left: 847px;
+}
+
+.salirVBTN:hover{
+	background-position: -403px -280px;
+}
+
+.guardarVBTN{
+	width: 85px;
+	height: 21px;
+	background-image: url(../imagenes/bigBACK.png);
+	background-position: -479px -256px;
+	position: absolute;
+	top: 559px;
+	left: 925px;
+}
+
+.guardarVBTN:hover{
+	background-position: -479px -280px;
+}
+
+.add-row {
+    background-color: #DFDFDF;
+}
+
+.addproblematicasocial_set {
+    position: absolute;
+    width: 252px;
+    left: 0px;
+    left:-4px;
+}
+
+.addcapitalizacion_set{
+     position: absolute;
+    width: 495px;
+    left: 2px;
+    background-position: right;
+}
+
+.add{
+    position: relative;
+    width: 20px;
+    left: 984px;
+    background-color: transparent;
+}
+
+a{
+    color:#6A6B6C;
+    text-decoration: underline;
+}
+a:focus {
+  outline: thin dotted;
+    color: #8e8f90;
+}
+
+.required label, label.required {
+    font-weight: normal !important;
+    color: #333 !important;
+}
+
+.field-problematica_social{
+    padding: 0px;
+    left:0px;
 }

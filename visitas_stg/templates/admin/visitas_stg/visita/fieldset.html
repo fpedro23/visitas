@@ -2,20 +2,34 @@
 
 {% for line in fieldset %}
      {% for field in line %}
+         {% if field.field.name == "identificador_unico" %}
+             <div id="alta01">
+                 <table width="1008px" border="0px">
+                    <tr valign="top">
+                        <td width="252px">
+                            <fieldset class="module ">
+                                <table width="252px" border="0px" >
+                                    <tr>
+                                        <td class="tituloTABLA" colspan="2">Información General</td>
+                                    </tr>
+                                     <tr>
+                                        <td class="contenidoTABLA" width="147px">
+                                              {% if change %}
+                                                  No. de Control Interno:<input type="hidden" id="idobraUNICO" value="{% if field.contents  != "(Nada)"  %} {{ field.contents }}{% endif %}">
+                                              {% else %}
+                                                 &nbsp;
+                                              {% endif %}
+                                        </td>
+                                        <td width="105px">
+                                            {% if change %}
+                                                  {% if field.contents  != "(Nada)"  %} {{ field.contents }}{% endif %}<label id="id_identificador_unico" name="identificador_unico" >{{ field.field.value|default_if_none:"" }}</label>
+                                            {% else %}
+                                                 &nbsp;
+                                             {% endif %}
+                                        </td>
+                                    </tr>
+         {% endif %}
          {% if field.field.name == "dependencia" %}
-            <div id="alta01">
-             <table width="1008px" border="0px">
-                <tr valign="top">
-                    <td width="252px">
-                        <fieldset class="module ">
-                            <table width="252px" border="0px" >
-                                <tr>
-                                    <td class="tituloTABLA" colspan="2">Información básica</td>
-                                </tr>
-                                 <tr>
-                                    <td class="contenidoTABLA" width="147px">No. de Control Interno:</td>
-                                    <td width="105px">&nbsp;</td>
-                                </tr>
                                 <tr>
                                     <td width="147px">
                                          <label class="contenidoTABLA" for="id_dependencia">Dependencia:</label>
@@ -44,7 +58,7 @@
                           <fieldset class="module">
                             <table width="252px" border="0px">
                                 <tr>
-                                    <td class="tituloTABLA" colspan="2">Geolocalización</td>
+                                    <td class="tituloTABLA" colspan="2">Ubicación</td>
                                 </tr>
                                 <tr class="field-id_region">
                                     <td width="126px">

@@ -23,7 +23,7 @@ urlpatterns = patterns('',
     url(r'^visitas/busqueda-filtros', views.buscar_visitas_web, name='consulta_filtros'),
     url(r'^visitas/register-by-token$',views.register_by_access_token),
     url(r'^visitas/listar-visitas', views.listar_visitas, name='listar_visitas'),
-
+    url(r'^visitas/usuarios$', 'visitas_stg.views.usuarios', name='usuarios'),
 
 
 

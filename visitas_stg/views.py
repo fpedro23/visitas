@@ -182,6 +182,10 @@ def movimientos(request):
     return render_to_response('admin/visitas_stg/movimientos.html', locals(),
                                  context_instance=RequestContext(request))
 
+def usuarios(request):
+    return render_to_response('admin/visitas_stg/usuarios.html', locals(),
+                                 context_instance=RequestContext(request))
+
 def consulta_filtros(request):
 
     template = loader.get_template('admin/visitas_stg/consulta_filtros/consulta-filtros.html')

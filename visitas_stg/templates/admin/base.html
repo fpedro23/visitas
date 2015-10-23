@@ -110,8 +110,8 @@
                     <div class="pto001">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="pto01" aria-hidden="true"></span></a>
                                     <ul class="dropdown-menu" style="left:-155px; top:29px;">
-                                      <li><a href="/admin/visitas_stg/visita/add/">Alta de Obra</a></li>
-                                      <li><a href="/admin/visitas_stg/visita/add/?m=1">Modificar Obra</a></li>
+                                      <li><a href="/admin/visitas_stg/visita/add/">Alta de Visita</a></li>
+                                      <li><a href="/admin/visitas_stg/visita/add/?m=1">Modificar Visita</a></li>
                                     </ul>
                     </div>
               </li>
@@ -125,7 +125,7 @@
                                      <ul class="dropdown-menu" style="left:-170px; top:29px;">
                                         <li><a href="/obras/consulta_filtros">Consultar por Filtro</a></li>
                                         <li><a href="/obras/consulta_predefinidos">Consultar Predefinida</a></li>
-                                         <li><a href="/admin/obras/obra/">Lista de Obras</a></li>
+                                         <li><a href="/admin/obras/obra/">Lista de Visitas</a></li>
                                     </ul>
                         </div>
                     </li>
@@ -134,21 +134,13 @@
                         <div class="pto003">
                             <a href="/catalogo" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="pto03"></span></a>
                                 <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu" style="left:-165px; top:29px;">
-                                  <li class="dropdown-submenu" ><a tabindex="-1" href="#" class="dropdown-toggle" data-toggle="dropdown">De Clasificación</a>
-                                      <ul class="dropdown-menu" style="left:217px; top:9px;">
-                                          <li><a href="/admin/visitas_stg/clasificacion/add">Crear</a></li>
-                                          <li><a href="/admin/visitas_stg/clasificacion/">Buscar</a></li>
-                                          <li><a href="/admin/visitas_stg/clasificacion/?e=2">Modificar</a></li>
-                                          <li><a href="/admin/visitas_stg/clasificacion/?e=1">Eliminar</a></li>
-                                    </ul>
-                                  </li>
-                                  <li class="dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">De Tipo de Actividad</a>
-                                    <ul class="dropdown-menu" style="left:217px; top:8px;" >
-                                          <li><a href="/admin/visitas_stg/tipoactividad/add">Crear</a></li>
-                                          <li><a href="/admin/visitas_stg/tipoactividad/">Buscar</a></li>
-                                          <li><a href="/admin/visitas_stg/tipoactividad/?e=2">Modificar</a></li>
-                                          <li><a href="/admin/visitas_stg/tipoactividad/?e=1">Eliminar</a></li>
-                                    </ul>
+                                    <li class="dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">De Funcionarios</a>
+                                      <ul class="dropdown-menu" style="left:217px; top:8px;">
+                                          <li><a tabindex="-1" href="/admin/visitas_stg/cargo/add/?s=1">Crear</a></li>
+                                          <li><a href="/admin/visitas_stg/cargo/">Buscar</a></li>
+                                          <li><a href="/admin/visitas_stg/cargo/?e=2">Modificar</a></li>
+                                          <li><a href="/admin/visitas_stg/cargo/?e=1">Eliminar</a></li>
+                                      </ul>
                                   </li>
                                   <li class="dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">De Medios</a>
                                     <ul class="dropdown-menu" style="left:217px; top:8px;">
@@ -156,6 +148,14 @@
                                           <li><a href="/admin/visitas_stg/medio/">Buscar</a></li>
                                           <li><a href="/admin/visitas_stg/medio/?e=2">Modificar</a></li>
                                           <li><a href="/admin/visitas_stg/medio/?e=1">Eliminar</a></li>
+                                    </ul>
+                                  </li>
+                                   <li class="dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">De Tipo de Actividad</a>
+                                    <ul class="dropdown-menu" style="left:217px; top:8px;" >
+                                          <li><a href="/admin/visitas_stg/tipoactividad/add">Crear</a></li>
+                                          <li><a href="/admin/visitas_stg/tipoactividad/">Buscar</a></li>
+                                          <li><a href="/admin/visitas_stg/tipoactividad/?e=2">Modificar</a></li>
+                                          <li><a href="/admin/visitas_stg/tipoactividad/?e=1">Eliminar</a></li>
                                     </ul>
                                   </li>
                                   <li class="dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">De Tipo de Capitalización</a>
@@ -166,20 +166,20 @@
                                               <li><a href="/admin/visitas_stg/tipocapitalizacion/?e=1">Eliminar</a></li>
                                       </ul>
                                   </li>
-
-                                    <li class="dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">De Cargos</a>
-                                      <ul class="dropdown-menu" style="left:217px; top:8px;">
-                                          <li><a tabindex="-1" href="/admin/visitas_stg/cargo/add/?s=1">Crear</a></li>
-                                          <li><a href="/admin/visitas_stg/cargo/">Buscar</a></li>
-                                          <li><a href="/admin/visitas_stg/cargo/?e=2">Modificar</a></li>
-                                          <li><a href="/admin/visitas_stg/cargo/?e=1">Eliminar</a></li>
-                                      </ul>
-                                  </li>
-                           </ul>
+                                     <!-- <li class="dropdown-submenu" ><a tabindex="-1" href="#" class="dropdown-toggle" data-toggle="dropdown">De Clasificación</a>
+                                                              <ul class="dropdown-menu" style="left:217px; top:9px;">
+                                                                  <li><a href="/admin/visitas_stg/clasificacion/add">Crear</a></li>
+                                                                  <li><a href="/admin/visitas_stg/clasificacion/">Buscar</a></li>
+                                                                  <li><a href="/admin/visitas_stg/clasificacion/?e=2">Modificar</a></li>
+                                                                  <li><a href="/admin/visitas_stg/clasificacion/?e=1">Eliminar</a></li>
+                                                            </ul>
+                                                          </li>
+                                     -->
+                            </ul>
                     </div>
 
 
-                <div class="USUARIOS" onclick="location.href='/obras/usuarios'"></div>
+                <div class="USUARIOS" onclick="location.href='/visitas/usuarios'"></div>
                   <li class="dropdown right-text" style="list-style-type: none;">
                     <div class="pto004">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="pto04"></span></a>
@@ -324,16 +324,14 @@
         }
     </script>
 
-    <div class="FUA" id="FUA">
-{% if not user.is_active %} {% now "l d \d\e F \d\e\l Y, H:i." %} {% endif %}
-        </div>
+
 
 </div>
 <!--finaliza el contenedor-->
 
-<div class="FUA">
-       	  Fecha de Última Actualización: DD/MM/AAAA
-</div>
+ <div class="FUA" id="FUA">
+{% if not user.is_active %} {% now "l d \d\e F \d\e\l Y, H:i." %} {% endif %}
+        </div>
 
 </div>
     {% block footer %}<!-- Editar contenido aqui, no es necesario hacer mas clases cointainer, siempre dejar la misma estructura de row seguido por col-lo que sea.  -->

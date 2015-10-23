@@ -367,8 +367,10 @@ body.popup .submit-row {
     padding-left: 14px;
     font-size: 11px;
     outline: 0; /* Remove dotted border around link */
+
 }
 
 .empty-form {
     display: none;
 }
+
