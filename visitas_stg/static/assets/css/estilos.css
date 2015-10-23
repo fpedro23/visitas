@@ -1568,9 +1568,9 @@ select, textarea, input[type=text], input{
 
 .addproblematicasocial_set {
     position: absolute;
-    width: 251px;
-    left: -4px;
-    background-position: right;
+    width: 252px;
+    left: 0px;
+    left:-4px;
 }
 
 .addcapitalizacion_set{
@@ -1599,4 +1599,9 @@ a:focus {
 .required label, label.required {
     font-weight: normal !important;
     color: #333 !important;
+}
+
+.field-problematica_social{
+    padding: 0px;
+    left:0px;
 }
