@@ -8,36 +8,70 @@ from visitas_stg.forms import AddVisitaForm
 from visitas_stg.models import *
 
 
-
-
-
-
 # Register your models here.
 
 
 class ProblematicaSocialInLine(NestedStackedInline):
     model = ProblematicaSocial
-    extra = 1
+
+    def get_extra(self, request, obj=None, **kwargs):
+        try:
+            if obj.visita is not None:
+                return 0
+            else:
+                return 1
+        except Exception as e:
+            print e
+            return 1
 
 
 class ParticipanteLocalInline(NestedStackedInline):
     model = ParticipanteLocal
-    extra = 1
+
+    def get_extra(self, request, obj=None, **kwargs):
+        try:
+            if obj.visita is not None:
+                return 0
+            else:
+                return 1
+        except Exception as e:
+            print e
+            return 1
 
 
 class CapitalizacionInline(NestedStackedInline):
     model = Capitalizacion
-    extra = 1
+
+    def get_extra(self, request, obj=None, **kwargs):
+        try:
+            if obj.visita is not None:
+                return 0
+            else:
+                return 1
+        except Exception as e:
+            print e
+            return 1
+
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        if db_field.name is 'cantidad':
+            from django.forms.widgets import NumberInput
+
+            kwargs['widget'] = NumberInput
+        return super(CapitalizacionInline, self).formfield_for_dbfield(db_field, **kwargs)
 
 
 class ActividadInLine(NestedStackedInline):
     model = Actividad
-    extra = 1
     inlines = [ParticipanteLocalInline, CapitalizacionInline, ProblematicaSocialInLine]
     fieldsets = [
         (None, {'fields': ['tipo_actividad', 'descripcion', 'clasificacion', ]}),
-
     ]
+
+    def get_extra(self, request, obj=None, **kwargs):
+        if obj is None:
+            return 1
+        else:
+            return 0
 
 
 class FuncionarioAdmin(admin.ModelAdmin):
@@ -56,7 +90,7 @@ class VisitaAdmin(NestedModelAdmin):
     inlines = [ActividadInLine]
     form = AddVisitaForm
     list_display = (
-        '__str__', 'identificador_unico', 'dependencia', 'region', 'entidad', 'municipio', 'cargo',
+        'identificador_unico', '__str__', 'dependencia', 'region', 'entidad', 'municipio', 'cargo',
         'partido_gobernante',
         'distrito_electoral', )
 
