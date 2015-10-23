@@ -72,8 +72,14 @@ class Municipio(models.Model):
     def to_serializable_dict(self):
         ans = {}
         ans['nombreMunicipio'] = self.nombreMunicipio
-        ans['latitud'] = self.latitud
-        ans['longitud'] = self.longitud
+        if self.latitud:
+            ans['latitud'] = self.latitud
+        else:
+            ans['latidud'] = None
+        if self.longitud:
+            ans['longitud'] = self.longitud
+        else:
+            ans['longitud'] = None
         ans['estado'] = self.estado.to_serialzable_dict()
         return ans
 

@@ -1,4 +1,4 @@
-from django.db.models import Q, Count
+from django.db.models import Q, Count, Sum
 
 __author__ = 'Pedro'
 
@@ -115,9 +115,11 @@ class BuscarVisitas:
 
         # Reporte Dependencia
         reporte_dependencia = visitas.values('dependencia__nombreDependencia').annotate(
-            numero_visitas=Count('dependencia'))
+            numero_visitas=Count('dependencia'), numero_apariciones=Sum('actividad__capitalizacion__cantidad'))
 
-        reporte_estado = visitas.values('entidad__nombreEstado').annotate(numero_visitas=Count('entidad'))
+        reporte_estado = visitas.values('entidad__nombreEstado').annotate(numero_visitas=Count('entidad'),
+                                                                          numero_apariciones=Sum(
+                                                                              'actividad__capitalizacion__cantidad'))
 
         reporte_general = {
             'visitas_totales': visitas_totales,

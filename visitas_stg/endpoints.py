@@ -1,5 +1,4 @@
 from django.db.models import Sum, IntegerField, Q
-from django.db.models import F
 from django.http import HttpResponse
 from oauth2_provider.views import ProtectedResourceView
 from BuscarVisitas import BuscarVisitas
@@ -42,7 +41,7 @@ class ReporteInicioEndpoint(ProtectedResourceView):
         for tipo_medio in Medio.objects.all():
             reporte_medio = {'medio': tipo_medio.to_serializable_dict(),
                              'total_apariciones': capitalizaciones.filter(medio=tipo_medio).aggregate(
-                                 total=Sum('cantidad', output_field=IntegerField()))['total']}
+                                 total=Sum('cantidad'))['total']}
             # 'total_apariciones': capitalizaciones.filter(medio=tipo_medio).count()}
             reporte['medios'].append(reporte_medio)
 
@@ -249,7 +248,8 @@ class BuscarVisitasEndpoint(ProtectedResourceView):
         json_ans['reporte_estado'] = []
         for estado in ans['reporte_estado']:
             json_map = {'estado': estado['entidad__nombreEstado'],
-                        'numero_visitas': estado['numero_visitas']}
+                        'numero_visitas': estado['numero_visitas'],
+                        }
             json_ans['reporte_estado'].append(json_map)
 
         json_ans['reporte_dependencia'] = []
