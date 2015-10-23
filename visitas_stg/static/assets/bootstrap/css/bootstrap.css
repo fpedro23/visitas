@@ -943,16 +943,6 @@ pre code {
   clear: both;
 }
 
-.rowP:before,
-.rowP:after {
-  display: table;
-  content: " ";
-}
-
-.rowP:after {
-  clear: both;
-}
-
 
 .col-xs-1,
 .col-sm-1,

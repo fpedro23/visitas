@@ -287,7 +287,7 @@
 }
 
 .textoEXPORTAR{
-	font-family: 'soberana_sanslight';
+	font-family: Verdana, Geneva, sans-serif;
 	color: #FFFFFF;
 	font-size: 15px;
 	text-align: center;
@@ -295,14 +295,14 @@
 }
 
 .exportarALERTA{
-	font-family: 'soberana_titularbold';
+	font-family: Verdana, Geneva, sans-serif;
 	font-size: 24px;
 	text-align: center;
 	color: #FFFFFF;
 
 }
 .titulo{
-	font-family: 'soberana_titularbold';
+	font-family: Verdana, Geneva, sans-serif;
 	font-size:24px;
 	color: #6A6B6C;
 
@@ -329,7 +329,7 @@
 	position: absolute;
 	top: 2px;
 	left: 302px;
-	font-family: 'soberana_textoitalic';
+	font-family: Verdana, Geneva, sans-serif;
 }
 
 .principioFLECHA{
@@ -508,7 +508,7 @@
 }
 
 #textoDESCRI{
-	font-family:"Soberana Texto";
+	font-family:Verdana, Geneva, sans-serif;
 	font-size: 15px;
 	font-weight:normal;
 	color:#000000;

@@ -273,9 +273,10 @@
 }
 
 .tituloFiltros{
-	font-family: 'Verdana, Geneva, sans-serif';
-	font-size:20px;
-	color: #6A6B6C;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size:18px;
+	font-weight:bold;
+	color:#0D0D1E;
 
 }
 

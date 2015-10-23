@@ -68,6 +68,15 @@
             noneSelectedText: 'Región',
             selectedText: '# Regiones'
         });
+
+        // off
+        $l("#msPartidos").multiselect({
+            header: true,
+            checkAllText: 'Marcar todos',
+            uncheckAllText: 'Desmarcar todos',
+            noneSelectedText: 'Partido Gobernante',
+            selectedText: '# Partidos'
+        });
         // off
         $l("#msDependencias").multiselect({
             header: true,
@@ -454,7 +463,7 @@ et$(function() {
 
 
 
-<body style="font: 110% soberana_textoregular;height: 600px;">
+<body style="font: 110% Verdana, Geneva, sans-serif;height: 600px;">
 
 <div id="editor"></div>
 <!--<button id="cmd">generate PDF</button> -->
@@ -663,17 +672,16 @@ et$(function() {
 
     <div id="welcome">Consulta Mediante Filtros</div>
 
-
-                <div class="row" style="padding-bottom: 4px;">
-                    <div class="rowP" style="height: 200px;padding-right: 5px;padding-left: 3px; padding-bottom: 0px; padding-top: 0px ">
-                    <div class="col-md-12 tituloFiltros">
-                        <div class="row">
-                            <div class="col-md-6">
-                                Par&aacute;metros de Consulta
-                            </div>
-                        </div>
+    <div class="row" style="padding-bottom: 4px;">
+        <div class="rowP" style="height: auto;padding-right: 5px;padding-left: 3px; padding-bottom: 0px; padding-top: 0px ">
+            <div class="col-md-12 tituloFiltros">
+                <div class="row">
+                    <div class="col-md-6">
+                        Par&aacute;metros de Consulta
                     </div>
-                    <div class="col-md-2" style="padding-right: 3px; padding-left: 3px; padding-bottom: 0px; padding-top: 0px ">
+                </div>
+            </div>
+                    <div class="col-md-3" style="padding-right: 3px; padding-left: 3px; padding-bottom: 0px; padding-top: 0px ">
                         <div class="panel panel-default panel-table" style="padding-right: 3px; padding-left: 3px; padding-bottom: 0px; padding-top: 0px ">
                             <div class="panel-body" style="padding-right: 4px; padding-left: 4px; padding-bottom: 4px; padding-top: 4px ">
                                 <div class="tr" style="padding-right: 4px; padding-left: 4px; padding-bottom: 3px; padding-top: 3px ">
@@ -690,19 +698,26 @@ et$(function() {
 
                                     <div class="row" >
                                         <div class="col-md-12" style="padding-right: 4px; padding-left: 15px; padding-bottom: 1px; padding-top: 1px ">
-                                            <center>Rango de Fecha</center>
+                                            Descripción.
                                         </div>
                                     </div>
-                                    <div class="row" ><center>
-                                        <div class="col-md-12" style="padding-right: 15px; padding-left: 15px; padding-bottom: 4px; padding-top: 1px ">
-                                            <input type="text" class="form-control2" id="fechaInicial1" placeholder="Desde" >
-                                        </div></center>
+                                    <div class="row">
+                                        <div class="col-md-12" style="padding-right: 15px; padding-left: 15px; padding-bottom: 4px; padding-top: 1px "><center>
+                                            <input type="text" class="form-control2" id="descripcion" placeholder="Descripción"></center>
+                                        </div>
                                     </div>
-                                    <div class="row" ><center>
-                                        <div class="col-md-12" style="padding-right: 15px; padding-left: 15px; padding-bottom: 0px; padding-top: 1px ">
-                                            <input type="text" class="form-control2" id="fechaInicial2" placeholder="Hasta">
-                                        </div></center>
+                                    <div class="row" >
+                                        <div class="col-md-12" style="padding-right: 4px; padding-left: 15px; padding-bottom: 1px; padding-top: 1px ">
+                                            Problemática Sociopolítica.
+                                        </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-md-12" style="padding-right: 15px; padding-left: 15px; padding-bottom: 4px; padding-top: 1px "><center>
+                                            <input type="text" class="form-control2" id="problematica" placeholder="Problemática Sociopolítica"></center>
+                                        </div>
+                                    </div>
+
+
 
                                 </div>
                             </div>
@@ -713,13 +728,50 @@ et$(function() {
                          <div class="panel panel-default panel-table ">
                             <div class="panel-body " style="padding-right: 4px; padding-left: 4px; padding-bottom: 4px; padding-top: 4px ">
                                 <div class="tr">
+                                    <div class="row" >
+                                        <div class="col-md-12" style="padding-right: 4px; padding-left: 15px; padding-bottom: 1px; padding-top: 1px ">
+                                            <center>Fecha Inicial</center>
+                                        </div>
+                                    </div>
+                                    <div class="row" ><center>
+                                        <div class="col-md-12" style="padding-right: 15px; padding-left: 15px; padding-bottom: 4px; padding-top: 1px ">
+                                            <input type="text" class="form-control2" id="fechaInicial1" placeholder="Desde" >
+                                        </div></center>
+                                    </div>
+                                    <div class="row" >
+                                        <div class="col-md-12" style="padding-right: 4px; padding-left: 15px; padding-bottom: 1px; padding-top: 1px ">
+                                            <center>Fecha Final</center>
+                                        </div>
+                                    </div>
+                                    <div class="row" ><center>
+                                        <div class="col-md-12" style="padding-right: 15px; padding-left: 15px; padding-bottom: 0px; padding-top: 1px ">
+                                            <input type="text" class="form-control2" id="fechaInicial2" placeholder="Hasta">
+                                        </div></center>
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+
+                    <div class="col-md-2" style="padding-right: 4px; padding-left: 4px; padding-bottom: 0px; padding-top: 0px ">
+                        <div class="panel panel-default panel-table">
+                            <div class="panel-body" style="padding-right: 4px; padding-left: 4px; padding-bottom: 4px; padding-top: 4px ">
+                                <div class="tr">
+                                    <div class="row">
+                                        <div class="col-md-10"  style="padding-right: 4px; padding-left: 15px; padding-bottom: 0px; padding-top: 0px ">
+                                            <select id="msDependencias" multiple="multiple" style="width: 100%;height: auto;">
+                                                {% for dep in dependencias %}
+                                                     <option value={{dep.id}}>{{dep.nombreDependencia}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-10" style="padding-right: 4px; padding-left: 15px; padding-bottom: 2px; padding-top: 0px ">
-
-                                            <select id="msEstados" multiple="multiple" style="width: 100%;height: auto;">
-                                                {% for obj in Estados %}
-                                                     <option value={{obj.id}}>{{obj.nombreEstado}}</option>
-                                                {% endfor %}
+                                            <select id="msFuncionarios" multiple="multiple"  style="width: 100%;height: auto;">
+                                                 {% for obj in Funcionarios %}
+                                                       <option value={{obj.id}}>{{obj.nombre_cargo}}</option>
+                                                 {% endfor %}
                                             </select>
                                         </div>
                                     </div>
@@ -733,70 +785,21 @@ et$(function() {
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <div class="col-md-10" style="padding-right: 4px; padding-left: 15px; padding-bottom: 2px; padding-top: 0px ">
+
+                                            <select id="msEstados" multiple="multiple" style="width: 100%;height: auto;">
+                                                {% for obj in Estados %}
+                                                     <option value={{obj.id}}>{{obj.nombreEstado}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
                                         <div class="col-md-10" id="divMunicipios" style="padding-right: 4px; padding-left: 15px; padding-bottom: 2px; padding-top: 0px ">
                                             <select id="msMunicipios" multiple="multiple" style="width: 100%;height: auto;">
 
                                             </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-10" style="padding-right: 4px; padding-left: 15px; padding-bottom: 2px; padding-top: 0px ">
-                                            <select id="msDistritos" multiple="multiple" style="width: 100%;height: auto;">
-                                                {% for obj in Distritos %}
-                                                     <option value={{obj.id}}>{{obj.nombre_distrito_electoral}}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-10"  style="padding-right: 4px; padding-left: 15px; padding-bottom: 0px; padding-top: 0px ">
-                                            <select id="msDependencias" multiple="multiple" style="width: 100%;height: auto;">
-                                                {% for dep in dependencias %}
-                                                     <option value={{dep.id}}>{{dep.nombreDependencia}}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                    </div>
-
-
-
-                                </div>
-                            </div>
-                         </div>
-                    </div>
-
-                    <div class="col-md-3" style="padding-right: 4px; padding-left: 4px; padding-bottom: 0px; padding-top: 0px ">
-                        <div class="panel panel-default panel-table">
-                            <div class="panel-body" style="padding-right: 4px; padding-left: 4px; padding-bottom: 4px; padding-top: 4px ">
-                                <div class="tr">
-                                    <div class="row" >
-                                        <div class="col-md-12" style="padding-right: 4px; padding-left: 15px; padding-bottom: 1px; padding-top: 1px ">
-                                            Partido Gobernante.
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12" style="padding-right: 15px; padding-left: 15px; padding-bottom: 4px; padding-top: 1px "><center>
-                                            <input type="text" class="form-control2" id="partido" placeholder="Partido Gobernante"></center>
-                                        </div>
-                                    </div>
-                                    <div class="row" >
-                                        <div class="col-md-12" style="padding-right: 4px; padding-left: 15px; padding-bottom: 1px; padding-top: 1px ">
-                                            Problemática Sociopolítica.
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12" style="padding-right: 15px; padding-left: 15px; padding-bottom: 4px; padding-top: 1px "><center>
-                                            <input type="text" class="form-control2" id="problematica" placeholder="Problemática Sociopolítica"></center>
-                                        </div>
-                                    </div>
-                                    <div class="row" >
-                                        <div class="col-md-12" style="padding-right: 4px; padding-left: 15px; padding-bottom: 1px; padding-top: 1px ">
-                                            Descripción.
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12" style="padding-right: 15px; padding-left: 15px; padding-bottom: 4px; padding-top: 1px "><center>
-                                            <input type="text" class="form-control2" id="descripcion" placeholder="Descripción"></center>
                                         </div>
                                     </div>
 
@@ -812,13 +815,60 @@ et$(function() {
                                 <div class="panel panel-default panel-table">
                                     <div class="panel-body" style="padding-right: 4px; padding-left: 4px; padding-bottom: 4px; padding-top: 4px ">
                                         <div class="tr">
-
-
                                             <div class="row">
                                                 <div class="col-md-10" style="padding-right: 4px; padding-left: 15px; padding-bottom: 2px; padding-top: 0px ">
-                                                    <select id="msFuncionarios" multiple="multiple"  style="width: 100%;height: auto;">
-                                                        {% for obj in Funcionarios %}
-                                                             <option value={{obj.id}}>{{obj.nombre_cargo}}</option>
+                                                    <select id="msPartidos" multiple="multiple" style="width: 100%;height: auto;">
+                                                        {% for obj in Partidos %}
+                                                             <option value={{obj.id}}>{{obj.nombre_partido_gobernante}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-10" style="padding-right: 4px; padding-left: 15px; padding-bottom: 2px; padding-top: 0px ">
+                                                    <select id="msDistritos" multiple="multiple" style="width: 100%;height: auto;">
+                                                        {% for obj in Distritos %}
+                                                             <option value={{obj.id}}>{{obj.nombre_distrito_electoral}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-10" style="padding-right: 4px; padding-left: 15px; padding-bottom: 2px; padding-top: 0px ">
+                                                    <select id="msTipoActividad" multiple="multiple" style="width: 100%;height: auto;">
+                                                        {% for dep in TipoActividad %}
+                                                             <option value={{dep.id}}>{{dep.nombre_actividad}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-10" style="padding-right: 4px; padding-left: 15px; padding-bottom: 2px; padding-top: 0px ">
+
+                                                    <select id="msClasificaciones" multiple="multiple" style="width: 100%;height: auto;">
+                                                        {% for obj in clasificaciones %}
+                                                             <option value={{obj.id}}>{{obj.nombre_clasificacion}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="padding-right: 10px; padding-left: 6px; padding-bottom: 0px; padding-top: 0px ">
+                                <div class="panel panel-default panel-table">
+                                    <div class="panel-body" style="padding-right: 4px; padding-left: 4px; padding-bottom: 4px; padding-top: 4px ">
+                                        <div class="tr">
+
+                                            <div class="row">
+                                                <div class="col-md-10" style="padding-right: 4px; padding-left: 15px; padding-bottom: 0px; padding-top: 0px ">
+                                                    <select id="msTipoCapitalizacion" multiple="multiple" style="width: 100%;height: auto;">
+                                                        {% for obj in TipoCapitalizacion %}
+                                                             <option value={{obj.id}}>{{obj.nombre_tipo_capitalizacion}}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
@@ -842,44 +892,6 @@ et$(function() {
                                                     <input type="text" class="form-control2" id="nombreMedio" placeholder="Nombre del Medio"></center>
                                                 </div>
                                             </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6" style="padding-right: 10px; padding-left: 6px; padding-bottom: 0px; padding-top: 0px ">
-                                <div class="panel panel-default panel-table">
-                                    <div class="panel-body" style="padding-right: 4px; padding-left: 4px; padding-bottom: 4px; padding-top: 4px ">
-                                        <div class="tr">
-                                            <div class="row">
-                                                <div class="col-md-10" style="padding-right: 4px; padding-left: 15px; padding-bottom: 2px; padding-top: 0px ">
-                                                    <select id="msTipoActividad" multiple="multiple" style="width: 100%;height: auto;">
-                                                        {% for dep in TipoActividad %}
-                                                             <option value={{dep.id}}>{{dep.nombre_actividad}}</option>
-                                                        {% endfor %}
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-10" style="padding-right: 4px; padding-left: 15px; padding-bottom: 2px; padding-top: 0px ">
-
-                                                    <select id="msClasificaciones" multiple="multiple" style="width: 100%;height: auto;">
-                                                        {% for obj in clasificaciones %}
-                                                             <option value={{obj.id}}>{{obj.nombre_clasificacion}}</option>
-                                                        {% endfor %}
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-10" style="padding-right: 4px; padding-left: 15px; padding-bottom: 0px; padding-top: 0px ">
-                                                    <select id="msTipoCapitalizacion" multiple="multiple" style="width: 100%;height: auto;">
-                                                        {% for obj in TipoCapitalizacion %}
-                                                             <option value={{obj.id}}>{{obj.nombre_tipo_capitalizacion}}</option>
-                                                        {% endfor %}
-                                                    </select>
-                                                </div>
-                                            </div>
-
 
                                         </div>
                                     </div>
@@ -909,7 +921,7 @@ et$(function() {
                              </div>
                         </div>
                     </div>
-                </div>
+        </div>
     </div>
 
 
