@@ -1586,3 +1586,17 @@ select, textarea, input[type=text], input{
     left: 984px;
     background-color: transparent;
 }
+
+a{
+    color:#6A6B6C;
+    text-decoration: underline;
+}
+a:focus {
+  outline: thin dotted;
+    color: #8e8f90;
+}
+
+.required label, label.required {
+    font-weight: normal !important;
+    color: #333 !important;
+}

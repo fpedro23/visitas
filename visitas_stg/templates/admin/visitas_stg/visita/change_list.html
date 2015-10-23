@@ -28,6 +28,11 @@
         $("tr input.action-select").actions();
     });
 })(django.jQuery);
+
+$(document).ready(function($) {
+    $('.action-checkbox-column').hide();
+             $('.action-checkbox').hide();
+});
 </script>
 {% endif %}{% endif %}
 {% endblock %}
@@ -37,10 +42,8 @@
 {% if not is_popup %}
 {% block breadcrumbs %}
 <div class="breadcrumbs">
-<a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
-&rsaquo; <a href="{% url 'admin:app_list' app_label=cl.opts.app_label %}">{{ cl.opts.app_config.verbose_name }}</a>
-&rsaquo; {{ cl.opts.verbose_name_plural|capfirst }}
-</div>
+<div id = "regresarBTN" onclick="window.history.go(-1);">
+  </div>
 {% endblock %}
 {% endif %}
 
@@ -54,9 +57,7 @@
           {% block object-tools-items %}
             <li>
               {% url cl.opts|admin_urlname:'add' as add_url %}
-              <a href="{% add_preserved_filters add_url is_popup to_field %}" class="addlink">
-                {% blocktrans with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktrans %}
-              </a>
+
             </li>
           {% endblock %}
         </ul>
@@ -87,7 +88,7 @@
       {% endif %}
 
       {% block result_list %}
-          {% if action_form and actions_on_top and cl.full_result_count %}{% admin_actions %}{% endif %}
+
           {% result_list cl %}
           {% if action_form and actions_on_bottom and cl.full_result_count %}{% admin_actions %}{% endif %}
       {% endblock %}

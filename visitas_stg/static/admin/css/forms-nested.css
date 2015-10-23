@@ -333,7 +333,6 @@ body.popup .submit-row {
     color: #666;
     padding: 1px 1px;
     border-bottom: 0px;
-
 }
 
 .inline-group .tabular tr.add-row td {
@@ -348,6 +347,7 @@ body.popup .submit-row {
     padding-left: 14px;
     font-size: 11px;
     outline: 0; /* Remove dotted border around link */
+
 }
 
 .nested-inline {

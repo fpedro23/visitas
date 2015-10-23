@@ -5,9 +5,54 @@
 <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
 <link href="{% static "assets/bootstrap/css/bootstrap-datepicker3.min.css"%}" rel="stylesheet">
 {{ media }}
-{% endblock %}
+ <script type="text/javascript">
+(
+        function($) {
 
-{% block extrastyle %}{{ block.super }}
+            function $_GET(param) {
+                /* Obtener la url completa */
+                url = document.URL;
+                /* Buscar a partir del signo de interrogación ? */
+                url = String(url.match(/\?+.+/));
+                /* limpiar la cadena quitándole el signo ? */
+                url = url.replace("?", "");
+                /* Crear un array con parametro=valor */
+                url = url.split("&");
+                 /*
+                Recorrer el array url
+                obtener el valor y dividirlo en dos partes a través del signo =
+                0 = parametro
+                1 = valor
+                Si el parámetro existe devolver su valor
+                */
+                x = 0;
+                while (x < url.length)
+                {
+                    p = url[x].split("=");
+                     if (p[0] == param)
+                     {
+                         return decodeURIComponent(p[1]);
+                      }
+                    x++;
+                }
+
+            }
+
+    $(document).ready(function($) {
+        if ($_GET("m") == 1 || (window.location.href).search('add') < 0) {
+            $("#walta").hide();
+            $("#wmod").show();
+        }
+        else {
+            $("#walta").show();
+            $("#wmod").hide();
+        }
+    });
+    })(django.jQuery);
+ </script>
+{%endblock %}
+
+{% block extrastyle %}{{block.super }}
     <link rel="stylesheet" type="text/css" href="{% static "assets/css/estilos.css" %}" />
 {% endblock %}
 
@@ -24,10 +69,15 @@
 {% endblock %}
 {% endif %}
 
-{% block content %}<div id="content-main">
-<div id="welcome">
-    	Alta de Visita de Funcionario
-      </div>
+{% block content %}
+    <div id="content-main">
+        <div id="welcome">
+            <span id="walta" hidden="true">Alta de Visita de Funcionario</span>
+
+            <span id="wmod" hidden="true">Modificación de Visita de Funcionario</span>
+
+        </div>
+
 <div class="imprimirBTN">
       </div>
 {% block object-tools %}
@@ -66,7 +116,7 @@
 
 {% block inline_field_sets %}
     <div id="alta02" style="overflow: scroll;">
-        <div class="tituloTABLA">Registro de Visita</div>
+        <div class="tituloTABLA">Actividades</div>
   {% for inline_admin_formset in inline_admin_formsets %}
     {% include inline_admin_formset.opts.template %}
 {% endfor %}

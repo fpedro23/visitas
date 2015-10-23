@@ -97,6 +97,7 @@ class VisitaAdmin(NestedModelAdmin):
 
 class UserProfileInline(admin.StackedInline):
     model = UserProfile
+    verbose_name_plural = 'Usuario'
 
 
 class CustomUserAdmin(UserAdmin):
@@ -104,10 +105,10 @@ class CustomUserAdmin(UserAdmin):
     list_display = ('username', 'first_name', 'last_name', 'email', 'get_dependencia', 'get_rol', )
 
     add_fieldsets = (
-        (None, {'fields': ('username', 'password1', 'password2')}),
-        (('Personal info', ), {'fields': ('first_name', 'last_name', 'email')}),
-        (('Permissions', ), {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
-        (('Important dates', ), {'fields': ('last_login', 'date_joined')}),
+        (('AuthInfo'), {'fields': ('username', 'password1', 'password2')}),
+        (('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
+        (('Permissions'), {'fields': ('is_active',)}),
+        (('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
 
     def f(self, x):

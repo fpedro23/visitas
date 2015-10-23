@@ -37,7 +37,7 @@ label {
 }
 
 .required label, label.required {
-    font-weight: bold !important;
+    font-weight: normal;
     color: #333 !important;
 }
 
