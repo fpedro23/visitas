@@ -79,7 +79,7 @@ function datosConcluidas() {
 
 function graficas(){
 
-    titulo="Visitas por Estado 2015";
+    titulo="Visitas por Estado";
 
 
     Highcharts.setOptions({
@@ -139,14 +139,14 @@ function pieGrafica(datas,titulo,dona,nombreData) {
             },
             style: {
                  color: '#FFFFFF',
-                 fontFamily: 'soberana_sanslight',
+                 fontFamily: 'Verdana, Geneva, sans-serif',
                  fontSize: '15px'
             }
         },
         title: {
             style: {
                  color: '#FFFFFF',
-                 fontFamily: 'soberana_sanslight'
+                 fontFamily: 'Verdana, Geneva, sans-serif'
             },
             text: titulo
         },
@@ -154,7 +154,7 @@ function pieGrafica(datas,titulo,dona,nombreData) {
             enabled: false
         },
         tooltip: {
-            style: { fontFamily: 'soberana_sanslight', fontSize: '15px' },
+            style: { fontFamily: 'Verdana, Geneva, sans-serif', fontSize: '15px' },
             pointFormat: 'Número de visitas: <b>{point.y}</b><br>Porcentaje del Total: <b>{point.percentage:.2f}%</b>'
 
             //    var comment = myComments[serieI];
@@ -163,14 +163,14 @@ function pieGrafica(datas,titulo,dona,nombreData) {
         },
         plotOptions: {
             pie: {
-                style: { fontFamily: 'soberana_sanslight',color: 'white' ,fontSize: '12px' },
+                style: { fontFamily: 'Verdana, Geneva, sans-serif',color: '#FFFFFF' ,fontSize: '12px' },
                 innerSize: dona,
                 allowPointSelect: true,
                 cursor: 'pointer',
                 depth: 35,
                 dataLabels: {
                     enabled: true,
-                    style: { fontFamily: 'soberana_sanslight',color: 'white' ,fontSize: '12px' },
+                    style: { fontFamily: 'Verdana, Geneva, sans-serif',color: '#FFFFFF' ,fontSize: '12px' },
                     format: '{point.name}'
                 }
             }

@@ -196,6 +196,7 @@ def consulta_filtros(request):
         'TipoCapitalizacion': TipoCapitalizacion.objects.all(),
         'Medios': Medio.objects.all(),
         'Clasificaciones': Clasificacion.objects.all(),
+        'Partidos': PartidoGobernante.objects.all(),
     })
     return HttpResponse(template.render(context))
     return render_to_response('admin/visitas_stg/consulta_filtros/consulta-filtros.html', locals(),

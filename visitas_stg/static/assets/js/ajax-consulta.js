@@ -275,7 +275,13 @@ function PptxObras() {
     var fechaFin2 = $l("#fechaFinal2").val();
     var inversionInicial = $l("#inversionInicial").val();
     var inversionFinal = $l("#inversionFinal").val();
-    var denominacion = $l("#denominacion").val();
+
+    var descripcion = $l("#denominacion").val();
+    var problematica = $l("#denominacion").val();
+    var nombreMedio = $l("#denominacion").val();
+    var identificador_unico = $l("#identificador_unico").val();
+    var arrayPartidos = $l("#msPartidos").multiselect("getChecked").map(function(){return this.value;}).get();
+
 
     if (fechaInicio1!=""){fechaInicio1 = myDateFormatter($dp('#fechaInicial1').datepicker("getDate"));}
     if (fechaInicio2!=""){ fechaInicio2 = myDateFormatter($dp('#fechaInicial2').datepicker("getDate"));}
@@ -379,7 +385,12 @@ function verDatos() {
     var fechaFin2 = $l("#fechaFinal2").val();
     var inversionInicial = $l("#inversionInicial").val();
     var inversionFinal = $l("#inversionFinal").val();
-    var denominacion = $l("#denominacion").val();
+
+    var descripcion = $l("#descripcion").val();
+    var problematica = $l("#problematica").val();
+    var nombreMedio = $l("#nombreMedio").val();
+    var identificador_unico = $l("#identificador_unico").val();
+    var arrayPartidos = $l("#msPartidos").multiselect("getChecked").map(function(){return this.value;}).get();
 
     if (fechaInicio1!=""){fechaInicio1 = myDateFormatter($dp('#fechaInicial1').datepicker("getDate"));}
     if (fechaInicio2!=""){ fechaInicio2 = myDateFormatter($dp('#fechaInicial2').datepicker("getDate"));}
@@ -399,15 +410,21 @@ function verDatos() {
     if(arrayFuncionarios.toString()!=""){ajax_data.cargoEjecuta=arrayFuncionarios.toString();}
     if(arrayDistritos.toString()!=""){ajax_data.distritoElectoral=arrayDistritos.toString();}
     if(arrayEstados.toString()!=""){ajax_data.estado=arrayEstados.toString();}
-    if(arrayClasificacion.toString()!=""){ajax_data.clasificacion=arrayClasificacion.toString();}
-    if(arrayTipoCapitalizacion.toString()!=""){ajax_data.capitalizacion=arrayTipoCapitalizacion.toString();}
+    if(arrayClasificacion.toString()!=""){ajax_data.tipoClasificacion=arrayClasificacion.toString();}
+    if(arrayTipoCapitalizacion.toString()!=""){ajax_data.tipoCapitalizacion=arrayTipoCapitalizacion.toString();}
     if(arrayTipoActividad.toString()!=""){ajax_data.tipoactividad=arrayTipoActividad.toString();}
-    if(arrayMedios.toString()!=""){ajax_data.medio=arrayMedios.toString();}
+    if(arrayMedios.toString()!=""){ajax_data.tipoMedio=arrayMedios.toString();}
     if(fechaInicio1!=""){ajax_data.fechaInicio=fechaInicio1;}
     if(fechaInicio2!=""){ajax_data.fechaFin=fechaInicio2;}
 
     if(inversionInicial!=""){ajax_data.inversionMinima=inversionInicial;}
     if(inversionFinal!=""){ajax_data.inversionMaxima=inversionFinal;}
+
+    if(arrayPartidos.toString()!=""){ajax_data.partido=arrayDependencias.toString();}
+    if(descripcion!=""){ajax_data.descripcion=descripcion;}
+    if(problematica!=""){ajax_data.problematica=problematica;}
+    if(nombreMedio!=""){ajax_data.nombreMedio=nombreMedio;}
+    if(identificador_unico!=""){ajax_data.identificador_unico=identificador_unico;}
 
 
 
