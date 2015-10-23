@@ -50,10 +50,9 @@ class ReporteInicioEndpoint(ProtectedResourceView):
 
 class ReporteEstadosEndpoint(ProtectedResourceView):
     def get(self, request):
-        estado_id = request.GET.get('estado_id')
-        if estado_id is not None:
-            estado = Estado.objects.get(id=estado_id)
-
+        ans = []
+        estados = Estado.objects.all()
+        for estado in estados:
             map = {}
             map['estado'] = estado.to_serialzable_dict()
             map['estado']['distritos_electorales'] = DistritoElectoral.objects.filter(estado_id=estado.id).count()
@@ -90,17 +89,16 @@ class ReporteEstadosEndpoint(ProtectedResourceView):
                     medio_map['tipos_capitalizacion'].append(tipo_map)
                 map['medios'].append(medio_map)
 
-            return HttpResponse(json.dumps(map), 'application/json')
-        else:
-            return HttpResponse('{"error": "Debes ingresar un estado"}')
+            ans.append(map)
+
+        return HttpResponse(json.dumps(ans), 'application/json')
 
 
 class ReporteDependenciasEndpoint(ProtectedResourceView):
     def get(self, request):
-        dependencia_id = request.GET.get('dependencia_id')
-
-        if dependencia_id is not None:
-            dependencia = Dependencia.objects.get(id=request.GET.get('dependencia_id'))
+        dependencias = Dependencia.objects.all()
+        ans = []
+        for dependencia in dependencias:
             visitas = Visita.objects.filter(dependencia_id=dependencia.id)
 
             map = {}
@@ -145,9 +143,9 @@ class ReporteDependenciasEndpoint(ProtectedResourceView):
                         medio_map['tipos_capitalizacion'].append(tipo_map)
                     map['medios'].append(medio_map)
 
-            return HttpResponse(json.dumps(map), 'application/json')
-        else:
-            return HttpResponse('{"error": "Debes ingresar un id de dependencia"}')
+                ans.append(map)
+
+        return HttpResponse(json.dumps(ans), 'application/json')
 
 
 class IdUnicoEndpoint(ProtectedResourceView):
