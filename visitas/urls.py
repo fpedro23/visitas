@@ -28,4 +28,5 @@ urlpatterns = patterns('',
     url(r'^api/tipos_capitalizacion', endpoints.TipoCapitalizacionEndpoint.as_view()),
     url(r'^api/reporte_inicio', endpoints.ReporteInicioEndpoint.as_view()),
     url(r'^api/reporte_estado', endpoints.ReporteEstadosEndpoint.as_view()),
+    url(r'^api/reporte_dependencia', endpoints.ReporteDependenciasEndpoint.as_view()),
 )
