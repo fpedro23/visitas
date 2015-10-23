@@ -140,6 +140,27 @@ class ReporteDependenciasEndpoint(ProtectedResourceView):
 
             return HttpResponse(json.dumps(map), 'application/json')
 
+
+class IdUnicoEndpoint(ProtectedResourceView):
+    def get(self, request):
+        identificador_unico = request.GET.get('identificador_unico')
+        ans = {'error': None, 'visita': None}
+        if identificador_unico is not None:
+            visita = Visita.objects.filter(identificador_unico=identificador_unico)
+            if visita is not None and visita.count() > 0:
+                visita = visita.first()
+                dependencia_usuario = get_usuario_for_token(request.GET.get('access_token')).dependencia_id
+                if dependencia_usuario is None or dependencia_usuario == visita.dependencia_id:
+                    ans['visita'] = visita.first().to_serializable_dict()
+                else:
+                    ans['error'] = 'Privilegios insuficientes'
+            else:
+                ans['error'] = 'No se encontro la visita'
+        else:
+            ans['error'] = 'Debes ingresar un identificador unico'
+        return HttpResponse(json.dumps(ans), 'application/json')
+
+
 class RegionesEndpoint(ProtectedResourceView):
     def get(self, request):
         return HttpResponse(json.dumps(map(lambda region: region.to_serializable_dict(), Region.objects.all())),
