@@ -1,10 +1,10 @@
-from django.db.models import Sum, IntegerField
+from django.db.models import Sum, IntegerField, Q
 from django.db.models import F
 from django.http import HttpResponse
 from oauth2_provider.views import ProtectedResourceView
 from BuscarVisitas import BuscarVisitas
 from models import Estado, Municipio, TipoCapitalizacion, DistritoElectoral, Region, Cargo, Dependencia, \
-    TipoActividad, Clasificacion, Medio, Visita, Capitalizacion
+    TipoActividad, Clasificacion, Medio, Visita, Capitalizacion, Actividad, ParticipanteLocal
 import json
 from oauth2_provider.models import AccessToken
 from views import get_array_or_none
@@ -41,12 +41,54 @@ class ReporteInicioEndpoint(ProtectedResourceView):
         reporte['medios'] = []
         for tipo_medio in Medio.objects.all():
             reporte_medio = {'medio': tipo_medio.to_serializable_dict(),
-                             'total_apariciones': capitalizaciones.filter(medio=tipo_medio).count()}
-                             # 'total_apariciones': capitalizaciones.filter(medio=tipo_medio).aggregate(
-                             #  total=Sum(F('cantidad'), output_field=IntegerField()))['total']}
-            reporte['medios'] = reporte_medio
+                             'total_apariciones': capitalizaciones.filter(medio=tipo_medio).aggregate(
+                                 total=Sum('cantidad', output_field=IntegerField()))['total']}
+            # 'total_apariciones': capitalizaciones.filter(medio=tipo_medio).count()}
+            reporte['medios'].append(reporte_medio)
 
         return HttpResponse(json.dumps(reporte), 'application/json')
+
+
+class ReporteEstadosEndpoint(ProtectedResourceView):
+    def get(self, request):
+        estado = Estado.objects.get(id=request.GET.get('estado_id'))
+
+        map = {}
+        map['estado'] = estado.to_serialzable_dict()
+        map['estado']['distritos_electorales'] = DistritoElectoral.objects.filter(estado_id=estado.id).count()
+        map['estado']['municipios'] = Municipio.objects.filter(estado_id=estado.id).count()
+
+        map['dependencias'] = []
+        dependencias = Dependencia.objects.all()
+        for dependencia in dependencias:
+            dependencia_map = dependencia.to_serializable_dict()
+            dependencia_map['funcionarios_federales'] = Cargo.objects.filter(dependencia_id=dependencia.id).count()
+            dependencia_map['visitas'] = Visita.objects.filter(
+                Q(dependencia_id=dependencia.id) & Q(entidad_id=estado.id)).count()
+            dependencia_map['actividades'] = Actividad.objects.filter(
+                Q(visita__dependencia_id=dependencia.id) & Q(visita__entidad_id=dependencia.id)).count()
+            dependencia_map['participantes_locales'] = ParticipanteLocal.objects.filter(
+                Q(actividad__visita__dependencia_id=dependencia.id) & Q(actividad__visita__entidad_id=estado.id))
+            dependencia_map['capitalizaciones'] = Capitalizacion.objects.filter(Q(actividad__visita__entidad_id=estado.id) & Q(
+                actividad__visita__dependencia_id=dependencia.id)).count()
+            map['dependencias'].append(dependencia_map)
+
+        map['medios'] = []
+        medios = Medio.objects.all()
+        for medio in medios:
+            medio_map = medio.to_serializable_dict()
+
+            medio_map['tipos_capitalizacion'] = []
+            tipos_capitalizacion = TipoCapitalizacion.objects.all()
+            for tipo_capitalizacion in tipos_capitalizacion:
+                tipo_map = tipo_capitalizacion.to_serializable_dict()
+                tipo_map['numero'] = Capitalizacion.objects.filter(
+                    Q(tipo_capitalizacion_id=tipo_capitalizacion.id) & Q(medio_id=medio.id) & Q(
+                        actividad__visita__entidad_id=estado.id)).count()
+                medio_map['tipos_capitalizacion'].append(tipo_map)
+            map['medios'].append(medio_map)
+
+        return HttpResponse(json.dumps(map), 'application/json')
 
 
 class RegionesEndpoint(ProtectedResourceView):
