@@ -27,4 +27,5 @@ urlpatterns = patterns('',
     url(r'^api/medios', endpoints.MediosEndpoint.as_view()),
     url(r'^api/tipos_capitalizacion', endpoints.TipoCapitalizacionEndpoint.as_view()),
     url(r'^api/reporte_inicio', endpoints.ReporteInicioEndpoint.as_view()),
+    url(r'^api/reporte_estado', endpoints.ReporteEstadosEndpoint.as_view()),
 )
