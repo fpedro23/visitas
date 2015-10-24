@@ -16,7 +16,7 @@ function main_consulta() {
 		}
 	});
 
-    $j('#historialICO').on('click', verHistoria);
+    $j('#historialBTN').on('click', verHistoria);
 	$j('#buscarICO').on('click', verDatos);
     $j('#imprimirBTN').on('click', imprimeFicha);
 
@@ -37,7 +37,6 @@ function imprimeFicha(){
 
 function verDatos() {
     var idUnico = $j("#idvisita").val();
-    alert(idUnico);
 
     if (idUnico.toString() != "") {
         $.get('/visitas/register-by-token', function (ans) {
@@ -121,7 +120,7 @@ function verHistoria() {
         success: function(data) {
 
 
-            if (data.id!=null){location.href='/admin/visitas_stg/visita/'+data.id+'/history';
+            if (data.visita!=null){location.href='/admin/visitas_stg/visita/'+data.visita.id+'/history';
             }
             else {
                 //alert('No existen registros con el ID Único ' + idUnico);

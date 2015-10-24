@@ -1615,7 +1615,7 @@ select, textarea, input[type=text], input{
 }
 
 .salirVBTN:hover{
-	background-position: -403px -280px;
+	background-position: -403px -283px;
 }
 
 .guardarVBTN{
@@ -1629,7 +1629,7 @@ select, textarea, input[type=text], input{
 }
 
 .guardarVBTN:hover{
-	background-position: -479px -280px;
+	background-position: -479px -283x;
 }
 
 .add-row {
@@ -1854,3 +1854,29 @@ label {
     height:260px;
     left:440px;
 }
+
+.rendFile{
+      font-family: Verdana, Geneva, sans-serif;
+    font-size: 11px;
+    width: 100%;
+     height: 16px;
+    padding: 0px 0px;
+}
+
+input[type=file] {
+    font-family: "soberana_sanslight";
+     font-size: 11px;
+     width: 90%;
+     height: 100%;
+
+}
+
+.errornote {
+        font-family: Verdana, Geneva, sans-serif;
+        font-size: 10px !important;
+        font-weight: bold;
+       top:15px;
+    left: 100px;
+        color: #c11;
+    position: absolute;
+    }

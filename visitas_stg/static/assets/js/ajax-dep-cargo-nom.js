@@ -20,7 +20,14 @@ $j(document).on('ready', function() {
                 populateCargosSelect(ans);
                 $('#id_cargo').val(cargoId);
             });
+            if (cargoId != "") {
+                getNombresForCargo(parseInt(cargoId), function (ans) {
+                        populateNombreSelect(ans);
+                    $('#id_nombre_funcionario').val(nombreId);
+                });
+            }
         }
+
     }
 
     if (dependenciaId != "") {
@@ -28,6 +35,12 @@ $j(document).on('ready', function() {
                 populateCargosSelect(ans);
                 $('#id_cargo').val(cargoId);
             });
+             if (cargoId != "") {
+                 getNombresForCargo(parseInt(cargoId), function (ans) {
+                     populateNombreSelect(ans);
+                     $('#id_nombre_funcionario').val(nombreId);
+                 });
+             }
      }
 
     $('#id_dependencia').on('change', function() {

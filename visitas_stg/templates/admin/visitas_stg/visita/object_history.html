@@ -1,0 +1,42 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls admin_static%}
+
+{% block extrahead %}{{ block.super }}
+{% endblock %}
+
+{% block breadcrumbs %}
+
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+<div class="module">
+  <div id="regresarBTN" onclick="window.history.go(-1);">
+   </div>
+
+{% if action_list %}
+    <br>
+    <table id="change-history">
+        <thead>
+        <tr>
+            <th scope="col">{% trans 'Date/time' %} </th>
+            <th scope="col">&nbsp;  {% trans 'User' %} </th>
+            <th scope="col">&nbsp;  {% trans 'Action' %} </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for action in action_list %}
+        <tr>
+            <th scope="row">{{ action.action_time|date:"DATETIME_FORMAT" }} </th>
+            <td>&nbsp;  {{ action.user.get_username }}  {% if action.user.get_full_name %} ({{ action.user.get_full_name }}){% endif %}</td>
+            <td>&nbsp; {{ action.change_message }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p align="center"><br><br>El ID de la Obra no tiene cambios. Presione el botón Regresar.</p>
+{% endif %}
+</div>
+</div>
+{% endblock %}
