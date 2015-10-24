@@ -198,28 +198,32 @@ jQuery.fn.reset = function () {
 }
 
 function listarObras() {
-    var arrayTipoInversion = $l("#msTipoInversion").multiselect("getChecked").map(function(){return this.value;}).get();
-    var arrayEstatusObra = $l("#msEstatusObra").multiselect("getChecked").map(function(){return this.value;}).get();
-    var arrayInstanciaEjecutora = $l("#msInstanciaEjecutora").multiselect("getChecked").map(function(){return this.value;}).get();
+    var tipoReporte = $j('input:radio[name=tipoReporte]:checked').val();
+
     var arrayDependencias = $l("#msDependencias").multiselect("getChecked").map(function(){return this.value;}).get();
-    var arraySubDependencias = $l("#msSubDependencias").multiselect("getChecked").map(function(){return this.value;}).get();
-    var arrayMunicipios = $l("#msMunicipios").multiselect("getChecked").map(function(){return this.value;}).get();
-    var arrayEstados = $l("#msEstados").multiselect("getChecked").map(function(){return this.value;}).get();
-    var arrayClasificacion = $l("#msClasificacion").multiselect("getChecked").map(function(){return this.value;}).get();
-    var arrayImpacto = $l("#msImpacto").multiselect("getChecked").map(function(){return this.value;}).get();
-    var arrayInaugurador = $l("#msInaugurador").multiselect("getChecked").map(function(){return this.value;}).get();
-    var arrayInaugurador = $l("#msInaugurador").multiselect("getChecked").map(function(){return this.value;}).get();
     var fechaInicio1 = $l("#fechaInicial1").val();
     var fechaInicio2 = $l("#fechaInicial2").val();
+    var arrayRegion = $l("#msRegiones").multiselect("getChecked").map(function(){return this.value;}).get();
+    var arrayEstados = $l("#msEstados").multiselect("getChecked").map(function(){return this.value;}).get();
+    var arrayMunicipios = $l("#msMunicipios").multiselect("getChecked").map(function(){return this.value;}).get();
+    var arrayFuncionarios= $l("#msFuncionarios").multiselect("getChecked").map(function(){return this.value;}).get();
+    var arrayDistritos= $l("#msDistritos").multiselect("getChecked").map(function(){return this.value;}).get();
+    var arrayClasificacion = $l("#msClasificaciones").multiselect("getChecked").map(function(){return this.value;}).get();
+    var arrayTipoCapitalizacion = $l("#msTipoCapitalizacion").multiselect("getChecked").map(function(){return this.value;}).get();
+    var arrayTipoActividad = $l("#msTipoActividad").multiselect("getChecked").map(function(){return this.value;}).get();
+    var arrayMedios = $l("#msMedios").multiselect("getChecked").map(function(){return this.value;}).get();
+
     var fechaFin1 = $l("#fechaFinal1").val();
     var fechaFin2 = $l("#fechaFinal2").val();
     var inversionInicial = $l("#inversionInicial").val();
     var inversionFinal = $l("#inversionFinal").val();
-    var denominacion = $l("#denominacion").val();
 
-    var URL="/obras/api/listar?access_token=" + newToken
+    var descripcion = $l("#descripcion").val();
+    var problematica = $l("#problematica").val();
+    var nombreMedio = $l("#nombreMedio").val();
+    var identificador_unico = $l("#identificador_unico").val();
+    var arrayPartidos = $l("#msPartidos").multiselect("getChecked").map(function(){return this.value;}).get();
 
-    ;
 
     if (fechaInicio1!=""){fechaInicio1 = myDateFormatter($dp('#fechaInicial1').datepicker("getDate"));}
     if (fechaInicio2!=""){ fechaInicio2 = myDateFormatter($dp('#fechaInicial2').datepicker("getDate"));}
@@ -227,28 +231,29 @@ function listarObras() {
     if (fechaFin2!=""){fechaFin2 = myDateFormatter($dp('#fechaFinal2').datepicker("getDate"));}
 
 
+    var URL="/visitas/listar-visitas?access_token=" + newToken;
 
     if(arrayDependencias.toString()!=""){URL += "&dependencia=" + arrayDependencias.toString();}
-
-    if(arraySubDependencias.toString()!=""){URL += "&subdependencias=" + arraySubDependencias.toString();}
-    if(arrayMunicipios.toString()!=""){URL += "&municipios=" + arrayMunicipios.toString();}
-
-    if(arrayEstatusObra.toString()!=""){URL += "&tipoDeObra=" + arrayEstatusObra.toString();}
-    if(arrayInstanciaEjecutora.toString()!=""){URL += "&instanciaEjecutora=" + arrayInstanciaEjecutora.toString();}
+    if(arrayRegion.toString()!=""){URL += "&region=" +arrayRegion.toString();}
+    if(arrayMunicipios.toString()!=""){URL += "&municipio=" + arrayMunicipios.toString();}
+    if(arrayFuncionarios.toString()!=""){URL += "&cargoEjecuta=" + arrayFuncionarios.toString();}
+    if(arrayDistritos.toString()!=""){URL += "&distritoElectoral=" + arrayDistritos.toString();}
     if(arrayEstados.toString()!=""){URL += "&estado=" + arrayEstados.toString();}
     if(arrayClasificacion.toString()!=""){URL += "&clasificacion=" + arrayClasificacion.toString();}
-    if(arrayTipoInversion.toString()!=""){URL += "&tipoDeInversion=" + arrayTipoInversion.toString();}
-    if(arrayInaugurador.toString()!=""){URL += "&inaugurador=" + arrayInaugurador.toString();}
-    if(arrayImpacto.toString()!=""){URL += "&impacto=" + arrayImpacto.toString();}
+    if(arrayTipoCapitalizacion.toString()!=""){URL += "capitalizacion=" + arrayTipoCapitalizacion.toString();}
+    if(arrayTipoActividad.toString()!=""){URL += "&tipoactividad=" + arrayTipoActividad.toString();}
+    if(arrayMedios.toString()!=""){URL += "&medio=" + arrayMedios.toString();}
     if(fechaInicio1!=""){URL += "&fechaInicio=" + fechaInicio1;}
-    if(fechaInicio2!=""){URL += "&fechaInicioSegunda=" + fechaInicio2;}
-    if(fechaFin1!=""){URL += "&fechaFin=" + fechaFin1;}
-    if(fechaFin2!=""){URL += "&fechaFinSegunda=" + fechaFin2;}
+    if(fechaInicio2!=""){URL += "&fechaFin=" + fechaInicio2;}
+
     if(inversionInicial!=""){URL += "&inversionMinima=" + inversionInicial;}
     if(inversionFinal!=""){URL += "&inversionMaxima=" + inversionFinal;}
-    if(denominacion!=""){URL += "&denominacion=" + denominacion.toUpperCase();}
-    if($j('#inauguradas').is(':checked')){URL += "&inaugurada =" +  $j('#inauguradas').is(':checked');}
 
+    if(arrayPartidos.toString()!=""){URL += "&partido=" + arrayDependencias.toString();}
+    if(descripcion!=""){URL += "&descripcion=" + descripcion;}
+    if(problematica!=""){URL += "&problematica=" + problematica;}
+    if(nombreMedio!=""){URL += "&nombreMedio=" + nombreMedio;}
+    if(identificador_unico!=""){URL += "&identificador_unico=" + identificador_unico;}
 
     location.href = URL
 
@@ -276,9 +281,9 @@ function PptxObras() {
     var inversionInicial = $l("#inversionInicial").val();
     var inversionFinal = $l("#inversionFinal").val();
 
-    var descripcion = $l("#denominacion").val();
-    var problematica = $l("#denominacion").val();
-    var nombreMedio = $l("#denominacion").val();
+    var descripcion = $l("#descripcion").val();
+    var problematica = $l("#problematica").val();
+    var nombreMedio = $l("#nombreMedio").val();
     var identificador_unico = $l("#identificador_unico").val();
     var arrayPartidos = $l("#msPartidos").multiselect("getChecked").map(function(){return this.value;}).get();
 
@@ -307,6 +312,11 @@ function PptxObras() {
     if(inversionInicial!=""){URL += "&inversionMinima=" + inversionInicial;}
     if(inversionFinal!=""){URL += "&inversionMaxima=" + inversionFinal;}
 
+    if(arrayPartidos.toString()!=""){URL += "&partido=" + arrayDependencias.toString();}
+    if(descripcion!=""){URL += "&descripcion=" + descripcion;}
+    if(problematica!=""){URL += "&problematica=" + problematica;}
+    if(nombreMedio!=""){URL += "&nombreMedio=" + nombreMedio;}
+    if(identificador_unico!=""){URL += "&identificador_unico=" + identificador_unico;}
 
     location.href = URL
 
@@ -332,7 +342,12 @@ function PptxObrasReporte() {
     var fechaFin2 = $l("#fechaFinal2").val();
     var inversionInicial = $l("#inversionInicial").val();
     var inversionFinal = $l("#inversionFinal").val();
-    var denominacion = $l("#denominacion").val();
+
+    var descripcion = $l("#descripcion").val();
+    var problematica = $l("#problematica").val();
+    var nombreMedio = $l("#nombreMedio").val();
+    var identificador_unico = $l("#identificador_unico").val();
+    var arrayPartidos = $l("#msPartidos").multiselect("getChecked").map(function(){return this.value;}).get();
 
     if (fechaInicio1!=""){fechaInicio1 = myDateFormatter($dp('#fechaInicial1').datepicker("getDate"));}
     if (fechaInicio2!=""){ fechaInicio2 = myDateFormatter($dp('#fechaInicial2').datepicker("getDate"));}
@@ -359,6 +374,11 @@ function PptxObrasReporte() {
     if(inversionInicial!=""){URL += "&inversionMinima=" + inversionInicial;}
     if(inversionFinal!=""){URL += "&inversionMaxima=" + inversionFinal;}
 
+    if(arrayPartidos.toString()!=""){URL += "&partido=" + arrayDependencias.toString();}
+    if(descripcion!=""){URL += "&descripcion=" + descripcion;}
+    if(problematica!=""){URL += "&problematica=" + problematica;}
+    if(nombreMedio!=""){URL += "&nombreMedio=" + nombreMedio;}
+    if(identificador_unico!=""){URL += "&identificador_unico=" + identificador_unico;}
 
     location.href = URL
 
@@ -648,7 +668,7 @@ function graficas(){
         for (var i = 0; i < datosJson.reporte_dependencia.length; i++) {
             categorias.push(datosJson.reporte_dependencia[i].dependencia);
             datas.push(datosJson.reporte_dependencia[i].numero_visitas);
-            montos.push(0);
+            montos.push(datosJson.reporte_dependencia[i].numero_apariciones);
             titulo="Número de visitas por Dependencia";
         }
         Series=jsonSeries(datosJson,tipoReporte);
@@ -658,7 +678,7 @@ function graficas(){
          for (var i = 0; i < datosJson.reporte_estado.length; i++) {
                 categorias.push(datosJson.reporte_estado[i].estado);
                 datas.push(datosJson.reporte_estado[i].numero_visitas);
-                montos.push(0);
+                montos.push(datosJson.reporte_estado[i].numero_apariciones);
                 titulo = "Número de visitas por Estado";
          }
          Series = jsonSeries(datosJson, tipoReporte);
@@ -687,14 +707,14 @@ function graficas(){
             if(datosGrafica=="Numero"){
                 columnaGrafica(categorias,datas,titulo,"Número de visitas");
             }else{
-                columnaGrafica(categorias,montos,titulo,"Monto Total");
+                columnaGrafica(categorias,montos,titulo,"Apariciones Totales");
             }
             break;
         case "Columna2D":
             if(datosGrafica=="Numero"){
                 columna2DGrafica(categorias,datas,titulo,"Número de visitas");
             }else{
-                columna2DGrafica(categorias,montos,titulo,"Monto Total");
+                columna2DGrafica(categorias,montos,titulo,"Apariciones Totales");
             }
 
             break;
@@ -702,28 +722,28 @@ function graficas(){
             if(datosGrafica=="Numero") {
                 pieGrafica(arregloDataGrafica(datosJson, tipoReporte,datosGrafica), titulo, 0,"Número de visitas");
             }else{
-                pieGrafica(arregloDataGrafica(datosJson, tipoReporte,datosGrafica), titulo, 0,"Monto Total");
+                pieGrafica(arregloDataGrafica(datosJson, tipoReporte,datosGrafica), titulo, 0,"Apariciones Totales");
             }
             break;
         case "Dona":
             if(datosGrafica=="Numero") {
                 pieGrafica(arregloDataGrafica(datosJson, tipoReporte,datosGrafica), titulo, 100,"Número de Visitas");
             }else{
-                pieGrafica(arregloDataGrafica(datosJson, tipoReporte,datosGrafica), titulo, 100,"Monto Total");
+                pieGrafica(arregloDataGrafica(datosJson, tipoReporte,datosGrafica), titulo, 100,"Apariciones Totales");
             }
             break;
         case "Barra":
             if(datosGrafica=="Numero"){
                 barraGrafica(categorias,datas,titulo,"Número de visitas","Mil"," Mil");
             }else{
-                barraGrafica(categorias,montos,titulo,"Monto Total","Millones"," MDP");
+                barraGrafica(categorias,montos,titulo,"Apariciones Totales","cientos"," cien");
             }
             break;
         case "columnaTipeada":
             if(datosGrafica=="Numero") {
                 columnaTipeada(SeriesTipeadas,"Número de visitas");
             }else{
-                columnaTipeada(SeriesTipeadas,"Total Invertido");
+                columnaTipeada(SeriesTipeadas,"Apariciones Totales");
             }
             break;
         case "BarraApiladaBarra":
@@ -766,7 +786,7 @@ function jsonSeriesTipeada(Datos,tipoReporte,datosGrafica) {
             if(datosGrafica=="Numero") {
                 arregloSimple.push([Datos.reporte_dependencia[i].dependencia, Datos.reporte_dependencia[i].numero_visitas]);
             }else{
-                arregloSimple.push([Datos.reporte_dependencia[i].dependencia, 0]);
+                arregloSimple.push([Datos.reporte_dependencia[i].dependencia, Datos.reporte_dependencia[i].numero_apariciones]);
             }
         }
         Series.serie.push({
@@ -791,7 +811,7 @@ function jsonSeriesTipeada(Datos,tipoReporte,datosGrafica) {
             if(datosGrafica=="Numero") {
                 arregloSimple.push([Datos.reporte_estado[i].estado, Datos.reporte_estado[i].numero_visitas]);
             }else{
-                arregloSimple.push([Datos.reporte_estado[i].estado, 0]);
+                arregloSimple.push([Datos.reporte_estado[i].estado, Datos.reporte_estado[i].numero_apariciones]);
             }
         }
         Series.serie.push({
@@ -827,7 +847,7 @@ function jsonSeriesCategorias(Datos,tipoReporte) {
 
     if (tipoReporte == "Dependencia") {
         for (var i = 0; i < Datos.reporte_dependencia.length; i++) {
-            arregloTotal.push(0);
+            arregloTotal.push(Datos.reporte_dependencia[i].numero_apariciones);
             arregloSimple.push(-1*Datos.reporte_dependencia[i].numero_visitas);
             arregloCategoria.push(Datos.reporte_dependencia[i].dependencia);
         }
@@ -836,7 +856,7 @@ function jsonSeriesCategorias(Datos,tipoReporte) {
            'data': arregloSimple
         });
         Series.serie.push({
-           'name': 'Total Invertido',
+           'name': 'Apariciones Totales',
            'data': arregloTotal
         });
         Series.categories.push(arregloCategoria);
@@ -844,7 +864,7 @@ function jsonSeriesCategorias(Datos,tipoReporte) {
     } else {
         for (var i = 0; i < datosJson.reporte_estado.length; i++) {
             arregloSimple.push(-1*Datos.reporte_estado[i].numero_visitas);
-            arregloTotal.push(0);
+            arregloTotal.push(Datos.reporte_estado[i].numero_apariciones);
             arregloCategoria.push(Datos.reporte_estado[i].estado);
         }
         Series.serie.push({
@@ -852,7 +872,7 @@ function jsonSeriesCategorias(Datos,tipoReporte) {
            'data': arregloSimple
         });
         Series.serie.push({
-           'name': 'Total Invertido',
+           'name': 'Apariciones Totales',
            'data': arregloTotal
         });
         Series.categories.push(arregloCategoria);
@@ -870,11 +890,11 @@ function jsonSeries(Datos,tipoReporte) {
 
     if (tipoReporte=="Dependencia") {
         for(var i= 0;i<Datos.reporte_dependencia.length;i++){
-            Series.serie.push({ 'name': Datos.reporte_dependencia[i].dependencia, 'data': [Datos.reporte_dependencia[i].numero_visitas,0] });
+            Series.serie.push({ 'name': Datos.reporte_dependencia[i].dependencia, 'data': [Datos.reporte_dependencia[i].numero_visitas,Datos.reporte_dependencia[i].numero_apariciones] });
         }
     }else{
         for (var i = 0; i < datosJson.reporte_estado.length; i++) {
-            Series.serie.push({ 'name': Datos.reporte_estado[i].estado, 'data': [Datos.reporte_estado[i].numero_visitas,0]});
+            Series.serie.push({ 'name': Datos.reporte_estado[i].estado, 'data': [Datos.reporte_estado[i].numero_visitas,Datos.reporte_estado[i].numero_apariciones]});
         }
     }
     //console.log(Series.serie);
@@ -893,7 +913,7 @@ function arregloDataGrafica(Datos,tipoReporte,datosGrafica) {
             if(datosGrafica=="Numero") {
                 arregloSimple.push(Datos.reporte_dependencia[i].numero_visitas);
             }else{
-                arregloSimple.push(0);
+                arregloSimple.push(Datos.reporte_dependencia[i].numero_apariciones);
             }
             arregloDoble.push(arregloSimple);
         }
@@ -904,7 +924,7 @@ function arregloDataGrafica(Datos,tipoReporte,datosGrafica) {
             if(datosGrafica=="Numero") {
                 arregloSimple.push(Datos.reporte_estado[i].numero_visitas);
             }else{
-                arregloSimple.push(0);
+                arregloSimple.push(Datos.reporte_estado[i].numero_apariciones);
             }
             arregloDoble.push(arregloSimple);
         }
@@ -926,7 +946,7 @@ function arregloDataMapa(Datos) {
             if(datosGrafica=="Numero") {
                 arregloSimple.push("value:" +Datos.reporte_estado[i].numero_visitas);
             }else{
-                arregloSimple.push("value:" +0);
+                arregloSimple.push("value:" +Datos.reporte_estado[i].numero_apariciones);
             }
             arregloDoble.push(arregloSimple);
         }
@@ -1171,7 +1191,7 @@ function Area(Series) {
             text: 'Area'
         },
         xAxis: {
-            categories: ['No.Visitas', 'Total invertido']
+            categories: ['No.Visitas', 'Apariciones Totales']
         },
         credits: {
             enabled: false
@@ -1192,7 +1212,7 @@ function Piramide(Series) {
                 panKey: 'shift'
             },
             title: {
-                text: 'Pirámide para Número de visitas y Total Invertido'
+                text: 'Pirámide para Número de visitas y Apariciones Totales'
             },
             credits: {
                 enabled: false
@@ -1260,12 +1280,12 @@ function barrasApiladas(series,tipo) {
             enabled: false
         },
         xAxis: {
-            categories: ['No. visitas', 'Total Invertido']
+            categories: ['No. visitas', 'Apariciones Totales']
         },
         yAxis: {
             min: 0,
             title: {
-                text: 'Número de visitas y Total Invertido'
+                text: 'Número de visitas y Apariciones Totales'
             }
         },
         legend: {
@@ -1512,9 +1532,9 @@ function puntosMapa(Datos) {
     var arregloObjeto = new Object();
     for(var i= 0;i<Datos.reporte_estado.length;i++){
         var arregloSimple=new Array();
-        arregloSimple.push(Datos.visitas[i].entidad.nombreEstado + ", id. de visita : " + Datos.visitas[i].identificador_unico);
-        arregloSimple.push(Datos.visitas[i].entidad.latitud);
-        arregloSimple.push(Datos.visitas[i].entidad.longitud);
+        arregloSimple.push(Datos.visitas[i].municipio.nombreMunicipio + ", " + Datos.visitas[i].entidad.nombreEstado + ", id. de visita : " + Datos.visitas[i].identificador_unico);
+        arregloSimple.push(Datos.visitas[i].municipio.latitud);
+        arregloSimple.push(Datos.visitas[i].municipio.longitud);
         arregloSimple.push(i);
         arregloDoble.push(arregloSimple);
     }
@@ -1713,7 +1733,7 @@ function tablaD(Datos){
                         +'<tr>'
                             +'<th>Origen</th>'
                             +'<th>No. de visitas</th>'
-                            +'<th>Monto</th>'
+                            +'<th>Capitalizaciones</th>'
                         +'</tr>'
                 +'</thead>'
                 +'<tbody>';
@@ -1729,14 +1749,14 @@ function tablaD(Datos){
                         +'<tr>'
                             +'<th width= "60%">Origen</th>'
                             +'<th width= "20%">No. de Visitas</th>'
-                            +'<th width= "20%">Monto</th>'
+                            +'<th width= "20%">Capitalizaciones</th>'
                         +'</tr>'
                     +'</thead>'
                     +'<tfoot>'
                         +'<tr>'
                             +'<th>TOTALES</th>'
                             +'<th align="right">'+ formato_numero(Datos.reporte_general.visitas_totales, 0, '.', ',') +'</th>'
-                            +'<th align="right">'+ formato_numero(0, 2, '.', ',') +'</th>'
+                            +'<th align="right">'+ formato_numero(Datos.reporte_general.numero_apariciones, 2, '.', ',') +'</th>'
                         +'</tr>'
 
                         +'<tr><td class="pager" id="pagerD" colspan="3">'
@@ -1762,13 +1782,13 @@ function tablaD(Datos){
             sHtml += '<tr>'
             + '<td width= "60%">' + Datos.reporte_dependencia[i].dependencia + '</td>'
             + '<td width= "20%" align="right">' + formato_numero(Datos.reporte_dependencia[i].numero_visitas, 0, '.', ',') + '</td>'
-            + '<td width= "20%" align="right">' + formato_numero(0, 2, '.', ',') + '</td>'
+            + '<td width= "20%" align="right">' + formato_numero(Datos.reporte_dependencia[i].numero_apariciones, 2, '.', ',') + '</td>'
             + '</tr>'
 
             sHtmlExporta += '<tr>'
             + '<td width= "60%">' + Datos.reporte_dependencia[i].dependencia + '</td>'
             + '<td width= "20%" align="right">' + formato_numero(Datos.reporte_dependencia[i].numero_visitas, 0, '.', ',') + '</td>'
-            + '<td width= "20%" align="right">' + formato_numero(0, 2, '.', ',') + '</td>'
+            + '<td width= "20%" align="right">' + formato_numero(Datos.reporte_dependencia[i].numero_apariciones, 2, '.', ',') + '</td>'
             + '</tr>'
         }
     }
@@ -1781,13 +1801,13 @@ function tablaD(Datos){
             sHtml += '<tr>'
             + '<td>' + Datos.reporte_estado[i].estado + '</td>'
             + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_visitas, 0, '.', ',') + '</td>'
-            + '<td align="right">' + formato_numero(0, 2, '.', ',') + '</td>'
+            + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_apariciones, 2, '.', ',') + '</td>'
             + '</tr>'
 
             sHtmlExporta += '<tr>'
             + '<td>' + Datos.reporte_estado[i].estado + '</td>'
             + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_visitas, 0, '.', ',') + '</td>'
-            + '<td align="right">' + formato_numero(0, 2, '.', ',') + '</td>'
+            + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_apariciones, 2, '.', ',') + '</td>'
             + '</tr>'
         }
     }
@@ -1891,14 +1911,14 @@ $j.tablaGrafica = function(Datos){
                         +'<tr>'
                             +'<th>Origen</th>'
                             +'<th>No. de Visitas</th>'
-                            +'<th>Monto</th>'
+                            +'<th>Capitalizaciones</th>'
                         +'</tr>'
                     +'</thead>'
                     +'<tfoot>'
                         +'<tr>'
                             +'<th>TOTALES</th>'
                             +'<th align="right">'+ formato_numero(Datos.reporte_general.visitas_totales, 0, '.', ',') +'</th>'
-                            +'<th align="right">'+ formato_numero(0, 2, '.', ',') +'</th>'
+                            +'<th align="right">'+ formato_numero(0, 2, '.', ',') +'</th>'//numero_apariciones
                         +'</tr>'
 
                         +'<tr><td class="pager" id="pagerG" colspan="3">'
@@ -1927,7 +1947,7 @@ $j.tablaGrafica = function(Datos){
             sHtml += '<tr>'
             + '<td>' + Datos.reporte_dependencia[i].dependencia + '</td>'
             + '<td align="right">' + formato_numero(Datos.reporte_dependencia[i].numero_visitas, 0, '.', ',') + '</td>'
-            + '<td align="right">' + formato_numero(0, 2, '.', ',') + '</td>'
+            + '<td align="right">' + formato_numero(Datos.reporte_dependencia[i].numero_apariciones, 2, '.', ',') + '</td>'
             + '</tr>'
         }
     }
@@ -1939,7 +1959,7 @@ $j.tablaGrafica = function(Datos){
             sHtml += '<tr>'
             + '<td>' + Datos.reporte_estado[i].estado + '</td>'
             + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_visitas, 0, '.', ',') + '</td>'
-            + '<td align="right">' + formato_numero(0, 2, '.', ',') + '</td>'
+            + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_apariciones, 2, '.', ',') + '</td>'
             + '</tr>'
         }
     }

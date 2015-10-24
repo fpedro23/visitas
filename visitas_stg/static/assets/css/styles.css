@@ -75,77 +75,7 @@
     cursor: pointer;
 }
 
-.limpiarBTN{
-	width: 85px;
-	height: 23px;
-	background-image: url(../imagenes/bigBACK.png);
-	background-position: -758px -256px;
-	position: relative;
-    display: inline-block;
-}
 
-.limpiarBTN:hover{
-	background-position: -758px -279px;
-    cursor: pointer;
-}
-
-.consultarBTN{
-	width: 90px;
-	height: 23px;
-	background-image: url(../imagenes/bigBACK.png);
-	background-position: -850px -256px;
-	position: relative;
-    display: inline-block;
-}
-
-.consultarBTN:hover{
-	background-position: -850px -279px;
-    cursor: pointer;
-}
-
-
-.listarBTN{
-	width: 88px;
-	height: 23px;
-	background-image: url(../imagenes/bigBACK.png);
-	background-position: -1086px -256px;
-	position: relative;
-    display: inline-block;
-}
-
-.listarBTN:hover {
-    background-position: -1086px -279px;
-    cursor: pointer;
-}
-
-.salirBTNpop{
-	width: 65px;
-	height: 23px;
-	background-image: url(../imagenes/bigBACK.png);
-	background-position: -402px -256px;
-	position: relative;
-    display: inline-block;
-}
-
-.salirBTNpop:hover{
-	background-position: -402px -279px;
-    cursor: pointer;
-}
-
-
-.exportarBTN{
-	width: 28px;
-	height: 30px;
-	background-image: url(../imagenes/bigBACK.png);
-	background-position: -1355px -233px;
-	position: relative;
-	display: inline-block;
-}
-
-.exportarBTN:hover{
-	background-position: -1357px -263px;
-    cursor: pointer;
-}
 
 .fondoExporta{
     width: 100%;
@@ -154,19 +84,7 @@
     background-repeat: no-repeat;
 }
 
-.graficoBTN{
-	width: 30px;
-	height: 30px;
-	background-image: url(../imagenes/bigBACK.png);
-	background-position: -1384px -234px;
-	position: relative;
-	display: inline-block;
-}
 
-.graficoBTN:hover{
-	background-position:-1384px -264px;
-    cursor: pointer;
-}
 
 .imprimePDF{
 	width: 77px;
@@ -286,21 +204,6 @@
 
 }
 
-.textoEXPORTAR{
-	font-family: Verdana, Geneva, sans-serif;
-	color: #FFFFFF;
-	font-size: 15px;
-	text-align: center;
-	position: relative;
-}
-
-.exportarALERTA{
-	font-family: Verdana, Geneva, sans-serif;
-	font-size: 24px;
-	text-align: center;
-	color: #FFFFFF;
-
-}
 .titulo{
 	font-family: Verdana, Geneva, sans-serif;
 	font-size:24px;

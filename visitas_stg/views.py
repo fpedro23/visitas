@@ -5,7 +5,11 @@ from visitas_stg.models import *
 from visitas_stg.tools import *
 from oauth2_provider.views import ProtectedResourceView
 
+import os, sys
 from pptx import Presentation
+from django.core.servers.basehttp import FileWrapper
+import mimetypes
+from django.http import StreamingHttpResponse
 from pptx.util import Inches
 from pptx.util import Pt
 from pptx.dml.color import RGBColor
@@ -19,7 +23,7 @@ from django.core.servers.basehttp import FileWrapper
 from django.http import StreamingHttpResponse
 
 # Create your views here.
-from BuscarVisitas import BuscarVisitas
+from BuscarVisitas import BuscarVisitas, BuscaVisita
 
 def get_user_for_token(token):
     if token:
@@ -242,3 +246,69 @@ def consulta_filtros(request):
     return HttpResponse(template.render(context))
     return render_to_response('admin/visitas_stg/consulta_filtros/consulta-filtros.html', locals(),
                               context_instance=RequestContext(request))
+
+def fichaTecnica(request):
+        #prs = Presentation('/home/obrasapf/djangoObras/obras/static/ppt/FichaTecnicaObras.pptx')
+        prs = Presentation('visitas_stg/static/ppt/fichaTecnica_sisef.pptx')
+        usuario = request.user.userprofile
+        buscador = BuscaVisita(
+            identificador_unico=request.GET.get('identificador_unico', None)
+        )
+        resultados = buscador.busca()
+
+        json_map = {}
+        json_map['visitas'] = []
+        for visita in resultados['visitas']:
+            json_map['visitas'].append(visita.to_serializable_dict())
+
+        #generales
+        prs.slides[0].shapes[3].text_frame.paragraphs[0].font.size = Pt(8)
+        prs.slides[0].shapes[3].text = json_map['visitas'][0]['identificador_unico']
+        prs.slides[0].shapes[4].text_frame.paragraphs[0].font.size = Pt(8)
+        prs.slides[0].shapes[4].text = json_map['visitas'][0]['dependencia']['nombreDependencia']
+        prs.slides[0].shapes[5].text_frame.paragraphs[0].font.size = Pt(8)
+        prs.slides[0].shapes[5].text = json_map['visitas'][0]['fecha_visita']
+        prs.slides[0].shapes[6].text_frame.paragraphs[0].font.size = Pt(8)
+        prs.slides[0].shapes[6].text = json_map['visitas'][0]['region']['numeroRegion']
+        prs.slides[0].shapes[7].text_frame.paragraphs[0].font.size = Pt(8)
+        prs.slides[0].shapes[7].text = json_map['visitas'][0]['entidad']['nombreEstado']
+        prs.slides[0].shapes[8].text_frame.paragraphs[0].font.size = Pt(8)
+        prs.slides[0].shapes[8].text = json_map['visitas'][0]['municipio']['nombreMunicipio']
+        prs.slides[0].shapes[9].text_frame.paragraphs[0].font.size = Pt(8)
+        prs.slides[0].shapes[9].text = json_map['visitas'][0]['distrito_electoral']['nombre_distrito_electoral']
+        prs.slides[0].shapes[10].text_frame.paragraphs[0].font.size = Pt(8)
+        prs.slides[0].shapes[10].text = json_map['visitas'][0]['cargo']['nombre_funcionario']
+        prs.slides[0].shapes[11].text_frame.paragraphs[0].font.size = Pt(8)
+        prs.slides[0].shapes[11].text = json_map['visitas'][0]['partido_gobernante']['nombre_partido_gobernante']
+        prs.slides[0].shapes[12].text_frame.paragraphs[0].font.size = Pt(8)
+        prs.slides[0].shapes[12].text = json_map['visitas'][0]['cargo']['nombre_cargo']
+
+        #detalles
+        prs.slides[0].shapes[15].text_frame.paragraphs[0].font.size = Pt(8)
+        prs.slides[0].shapes[15].text = json_map['visitas'][0]['actividades'][0]['participantes_locales'][0]['nombre']
+        prs.slides[0].shapes[16].text_frame.paragraphs[0].font.size = Pt(8)
+        prs.slides[0].shapes[16].text = json_map['visitas'][0]['actividades'][0]['participantes_locales'][0]['cargo']
+        prs.slides[0].shapes[17].text_frame.paragraphs[0].font.size = Pt(8)
+        prs.slides[0].shapes[17].text = json_map['visitas'][0]['actividades'][0]['problematicas_sociales'][0]['problematica_social']
+        prs.slides[0].shapes[18].text_frame.paragraphs[0].font.size = Pt(8)
+        prs.slides[0].shapes[18].text = json_map['visitas'][0]['actividades'][0]['capitalizaciones'][0]['medio']['nombre_medio']
+        prs.slides[0].shapes[20].text_frame.paragraphs[0].font.size = Pt(8)
+        prs.slides[0].shapes[20].text = json_map['visitas'][0]['actividades'][0]['capitalizaciones'][0]['nombre_medio']
+        prs.slides[0].shapes[19].text_frame.paragraphs[0].font.size = Pt(8)
+        prs.slides[0].shapes[19].text = json_map['visitas'][0]['actividades'][0]['capitalizaciones'][0]['tipo_capitalizacion']['nombre_tipo_capitalizacion']
+        prs.slides[0].shapes[21].text_frame.paragraphs[0].font.size = Pt(8)
+        prs.slides[0].shapes[21].text = str(json_map['visitas'][0]['actividades'][0]['capitalizaciones'][0]['cantidad'])
+
+
+
+        prs.save('visitas_stg/static/ppt/ppt-generados/FichaTecnicaObras_' + str(usuario.user.id) + '.pptx')
+
+        the_file = 'visitas_stg/static/ppt/ppt-generados/FichaTecnicaObras_' + str(usuario.user.id) + '.pptx'
+
+        filename = os.path.basename(the_file)
+        chunk_size = 8192
+        response = StreamingHttpResponse(FileWrapper(open(the_file,"rb"), chunk_size),
+                               content_type=mimetypes.guess_type(the_file)[0])
+        response['Content-Length'] = os.path.getsize(the_file)
+        response['Content-Disposition'] = "attachment; filename=%s" % filename
+        return response

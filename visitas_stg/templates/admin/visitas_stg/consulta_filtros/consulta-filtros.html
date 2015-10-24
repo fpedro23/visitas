@@ -620,8 +620,8 @@ et$(function() {
                                                <article id="ver_grafica_datos">
                                                     {% csrf_token %}
                                                     <select id="datosGrafica">
-                                                          <option value="Numero">N&uacute;mero de visitas</option>
-
+                                                        <option value="Numero">N&uacute;mero de visitas</option>
+                                                        <option value="Monto">N&uacute;mero de apariciones</option>
                                                     </select>
                                                </article>
                                             </div>
@@ -848,7 +848,7 @@ et$(function() {
                                                 <div class="col-md-10" style="padding-right: 4px; padding-left: 15px; padding-bottom: 2px; padding-top: 0px ">
 
                                                     <select id="msClasificaciones" multiple="multiple" style="width: 100%;height: auto;">
-                                                        {% for obj in clasificaciones %}
+                                                        {% for obj in Clasificaciones %}
                                                              <option value={{obj.id}}>{{obj.nombre_clasificacion}}</option>
                                                         {% endfor %}
                                                     </select>

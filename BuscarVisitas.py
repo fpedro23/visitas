@@ -1,4 +1,4 @@
-from django.db.models import Q, Count
+from django.db.models import Q, Count, Sum
 
 __author__ = 'Pedro'
 
@@ -115,9 +115,10 @@ class BuscarVisitas:
 
         # Reporte Dependencia
         reporte_dependencia = visitas.values('dependencia__nombreDependencia').annotate(
-            numero_visitas=Count('dependencia'))
+            numero_visitas=Count('dependencia'), numero_apariciones=Sum('actividad__capitalizacion__cantidad'))
 
-        reporte_estado = visitas.values('entidad__nombreEstado').annotate(numero_visitas=Count('entidad'))
+        reporte_estado = visitas.values('entidad__nombreEstado').annotate(numero_visitas=Count('entidad')).annotate(
+            numero_apariciones=Sum('actividad__capitalizacion__cantidad'))
 
         reporte_general = {
             'visitas_totales': visitas_totales,
@@ -128,6 +129,32 @@ class BuscarVisitas:
             'reporte_general': reporte_general,
             'reporte_dependencia': reporte_dependencia,
             'reporte_estado': reporte_estado,
+        }
+
+        return reportes
+
+
+class BuscaVisita:
+    def __init__(
+            self,
+            identificador_unico,
+    ):
+        self.identificador_unico = identificador_unico
+
+    def busca(self):
+        query = Q()
+
+        if self.identificador_unico is not None:
+            query = query & Q(identificador_unico=self.identificador_unico)
+
+
+        if query is not None:
+            visitas = Visita.objects.filter(query).distinct()
+
+
+
+        reportes = {
+            'visitas': visitas,
         }
 
         return reportes

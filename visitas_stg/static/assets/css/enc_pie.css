@@ -532,13 +532,7 @@ a:hover {
 	top: 48px;
 }
 
-.alertaVENTANA{
-	width: 400px;
-	height:250px;
-	background-image:url(../img/bigBackground.fw.png);
-	background-position:-721px -2000px;
-    position: relative;
-}
+
 
 .textoALERTA{
 	font-family: 'soberana_sansregular';

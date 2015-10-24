@@ -25,6 +25,7 @@ urlpatterns = patterns('',
     url(r'^visitas/register-by-token$',views.register_by_access_token),
     url(r'^visitas/listar-visitas', views.listar_visitas, name='listar_visitas'),
     url(r'^visitas/usuarios$', 'visitas_stg.views.usuarios', name='usuarios'),
+    url('^visitas/ficha', views.fichaTecnica),
 
 
 
@@ -42,5 +43,8 @@ urlpatterns = patterns('',
     url(r'^api/clasificaciones', endpoints.ClasificacionEndpoint.as_view()),
     url(r'^api/medios', endpoints.MediosEndpoint.as_view()),
     url(r'^api/tipos_capitalizacion', endpoints.TipoCapitalizacionEndpoint.as_view()),
-    url(r'^api/Inicio', endpoints.ReporteInicioEndpoint.as_view()),      
+    url(r'^api/Inicio', endpoints.ReporteInicioEndpoint.as_view()),
+    url(r'^api/reporte_estado', endpoints.ReporteEstadosEndpoint.as_view()),
+    url(r'^api/reporte_dependencia', endpoints.ReporteDependenciasEndpoint.as_view()),
+
     )
