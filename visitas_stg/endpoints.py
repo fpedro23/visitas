@@ -116,6 +116,18 @@ class CargosForDependenciasEndpoint(ProtectedResourceView):
         return HttpResponse(json.dumps(map(lambda cargo: cargo.to_serializable_dict(), cargos)), 'application/json')
 
 
+class CargosForNombreEndpoint(ProtectedResourceView):
+    def get(self, request):
+        cargo_ids = get_array_or_none(request.GET.get('id_cargo'))
+
+        if cargo_ids is not None and len(cargo_ids) > 0:
+            cargos = Cargo.objects.filter(id__in=cargo_ids)
+        else:
+            cargos = Cargo.objects.all()
+
+        return HttpResponse(json.dumps(map(lambda cargo: cargo.to_serializable_dict(), cargos)), 'application/json')
+
+
 class CargosForCargosEndpoint(ProtectedResourceView):
     def get(self, request):
         cargos_string = request.GET.get('cargos', None)
@@ -131,6 +143,26 @@ class CargosForCargosEndpoint(ProtectedResourceView):
             cargos = Cargo.objects.filter(nombre_cargo__in=cargos_nombres)
 
         return HttpResponse(json.dumps(map(lambda cargo: cargo.to_serializable_dict(), cargos)), 'application/json')
+
+
+class IdUnicoEndpoint(ProtectedResourceView):
+    def get(self, request):
+        identificador_unico = request.GET.get('identificador_unico')
+        ans = {'error': None, 'visita': None}
+        if identificador_unico is not None:
+            visita = Visita.objects.filter(identificador_unico=identificador_unico)
+            if visita is not None and visita.count() > 0:
+                visita = visita.first()
+                dependencia_usuario = get_usuario_for_token(request.GET.get('access_token')).dependencia_id
+                if dependencia_usuario is None or dependencia_usuario == visita.dependencia_id:
+                    ans['visita'] = visita.to_serializable_dict()
+                else:
+                    ans['error'] = 'Privilegios insuficientes'
+            else:
+                ans['error'] = 'No se encontro la visita'
+        else:
+            ans['error'] = 'Debes ingresar un identificador unico'
+        return HttpResponse(json.dumps(ans), 'application/json')
 
 
 class BuscarVisitasEndpoint(ProtectedResourceView):

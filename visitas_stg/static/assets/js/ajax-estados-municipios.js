@@ -13,7 +13,7 @@ $j(document).on('ready', function() {
         this is used for the edit form
      */
 
-    var estadoId = $('#id_estado').find('option:selected').val();
+    var estadoId = $('#id_entidad').find('option:selected').val();
     var municipioId = $('#id_municipio').find('option:selected').val();
 
     if ( municipioId == "")
@@ -36,7 +36,7 @@ $j(document).on('ready', function() {
      }
 
     // I know, I'm calling this again, I'll get around to fixingt it
-    $('#id_estado').on('change', function() {
+    $('#id_entidad').on('change', function() {
         var option = $(this).find('option:selected');
 
         if (option != null) {
@@ -71,7 +71,7 @@ function getMunicipiosForEstado(estadoId, onSuccess) {
         var ajaxData = { access_token: ans.access_token, estados: estadoId };
 
         $j.ajax({
-            url: '/obras/api/municipios_por_estado',
+            url: '/api/municipios',
             type: 'get',
             data: ajaxData,
             success: onSuccess

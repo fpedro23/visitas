@@ -15,7 +15,7 @@
                                      <tr>
                                         <td class="contenidoTABLA" width="147px">
                                               {% if change %}
-                                                  No. de Control Interno:<input type="hidden" id="idobraUNICO" value="{% if field.contents  != "(Nada)"  %} {{ field.contents }}{% endif %}">
+                                                  No. de Control Interno:<input type="hidden" id="idvisitaUNICO" value="{% if field.contents  != "(Nada)"  %} {{ field.contents }}{% endif %}">
                                               {% else %}
                                                  &nbsp;
                                               {% endif %}
@@ -99,7 +99,7 @@
                         <fieldset class="module">
                             <table width="252px" border="0px">
                                 <tr>
-                                    <td class="tituloTABLA" colspan="2">Datos Electorales</td>
+                                    <td class="tituloTABLA" colspan="2">Información Adicional</td>
                                 </tr>
                                 <tr class="field-distrito_electoral">
                                     <td width="140px">
@@ -132,20 +132,36 @@
                         <fieldset class="module">
                             <table width="252px" border="0px">
                                 <tr>
-                                    <td class="tituloTABLA" colspan="2">Funcionario</td>
+                                    <td colspan="2" class="tituloTABLA" colspan="2">Funcionario</td>
                                 </tr>
                                 <tr class="field-cargo" align="center">
-                                    <td width="252px" align="left">
-                                        <label class="contenidoTABLA" for="id_cargo" style="width: auto;">Nombre/Cargo:</label>
+                                    <td width="70px" align="left">
+                                        <label class="contenidoTABLA" for="id_cargo" style="width: auto;">Cargo:</label>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td width="252px">
+                                    <td width="182px" align="left">
                                         {{ field.field }}
                                     </td>
                                 </tr>
+
                                 <tr>
-                                    <td width="252px">&nbsp;</td>
+                                    <td width="70px">
+                                         <label class="contenidoTABLA" for="id_nombre_funcionario" style="width: auto;">Nombre:</label>
+                                    </td>
+                                     <td width="182px"><select id="id_nombre_funcionario" name="nombre_funcionario">
+                                        <option value="">---------</option></select>
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td  width="70px">
+                                       &nbsp;
+
+                                    </td>
+                                    <td  width="182px">
+                                       &nbsp;
+
+                                    </td>
                                 </tr>
                             </table>
                         </fieldset>

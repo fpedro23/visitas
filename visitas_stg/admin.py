@@ -15,7 +15,7 @@ from visitas_stg.models import *
 
 class ProblematicaSocialInLine(NestedStackedInline):
     model = ProblematicaSocial
-
+    can_delete = False
     def get_extra(self, request, obj=None, **kwargs):
         try:
             if obj.visita is not None:
@@ -29,7 +29,7 @@ class ProblematicaSocialInLine(NestedStackedInline):
 
 class ParticipanteLocalInline(NestedStackedInline):
     model = ParticipanteLocal
-
+    can_delete = False
     def get_extra(self, request, obj=None, **kwargs):
         try:
             if obj.visita is not None:
@@ -43,7 +43,7 @@ class ParticipanteLocalInline(NestedStackedInline):
 
 class CapitalizacionInline(NestedStackedInline):
     model = Capitalizacion
-
+    can_delete = False
     def get_extra(self, request, obj=None, **kwargs):
         try:
             if obj.visita is not None:
@@ -65,6 +65,7 @@ class CapitalizacionInline(NestedStackedInline):
 class ActividadInLine(NestedStackedInline):
     model = Actividad
     inlines = [ParticipanteLocalInline, CapitalizacionInline, ProblematicaSocialInLine]
+    can_delete = False
     fieldsets = [
         (None, {'fields': ['tipo_actividad', 'descripcion', 'clasificacion', ]}),
 

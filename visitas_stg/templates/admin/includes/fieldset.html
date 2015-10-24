@@ -1,3 +1,4 @@
+{% load  admin_static app_filters%}
 <fieldset class="module aligned {{ fieldset.classes }}">
     {% if fieldset.name %}<h2>{{ fieldset.name }}</h2>{% endif %}
     {% if fieldset.description %}
@@ -15,14 +16,14 @@
 
                   {% elif field.field.name == "descripcion" %}
 
-                              <div class="contenidoTABLA2" style="width: 99px; height: 25px; left:252px; top:22px; position: absolute;"><label class="contenidoTABLA" for="id_actividad_set-0-descripcion">Descripción:</label></div>
-                              <div class="contenidoTABLA2" style="width: 156px; height: 25px; left:351px; top:22px; position: absolute; padding-top:2px;">{{ field.field }}</div>
+                              <div class="contenidoTABLA2" style="width: 93px; height: 25px; left:252px; top:22px; position: absolute;"><label class="contenidoTABLA" for="id_actividad_set-0-descripcion">Descripción:</label></div>
+                              <div class="contenidoTABLA2" style="width: 173px; height: 45px; left:334px; top:22px; position: absolute; padding-top:2px;">{{ field.field|addcss:"txtdesc" }}</div>
 
                   {% elif  field.field.name == "clasificacion" %}
                               <div class="contenidoTABLA2" style="width: 100px; height: 22px; top: 45px; position: absolute;"><label class="contenidoTABLA" for="id_actividad_set-0-clasificacion">Clasificación:</label></div>
                               <div class="contenidoTABLA2" style="width: 152px; height: 22px; left:101px; top:45px; position: absolute;">{{ field.field }}</div>
-                              <div class="contenidoTABLA2" style="width: 100px; height: 22px; left:253px; top:45px; position: absolute;">&nbsp;</div>
-                              <div class="contenidoTABLA2" style="width: 155px; height: 22px; left:352px; top:45px; position: absolute;">&nbsp;</div>
+                              <div class="contenidoTABLA2" style="width: 81px; height: 22px; left:253px; top:45px; position: absolute;">&nbsp;</div>
+
 
                   {% elif field.field.name == "nombre" %}
 
@@ -33,8 +34,8 @@
                               <div class="contenidoTABLA2" style="width: 152px; height: 22px; left:100px; top:46px; position: absolute;">{{ field.field }}</div>
                   {% elif  field.field.name == "problematica_social" %}
 
-                              <div class="contenidoTABLA2" style="width: 252px; height: 22px; left:-4px; top:23px; position: absolute;">&nbsp;{{ field.field }}</div>
-                              <div class="contenidoTABLA2" style="width: 252px; height: 22px; left:-4px; top:45px; position: absolute;">&nbsp;<br></div>
+                              <div class="contenidoTABLA2" style="width: 252px; height: 44px; left:-4px; top:23px; position: absolute;">&nbsp;{{ field.field|addcss:"txtps" }}</div>
+
                   {% elif field.field.name == "medio" %}
 
                               <div class="contenidoTABLA2" style="width: 118px; height: 42px; top:22px; position: absolute; padding-top: 12px;"><label class="contenidoTABLA" for="id_actividad_set-0-capitalizacion_set-0-medio">Medio:</label></div>
@@ -50,8 +51,8 @@
                               <div class="contenidoTABLA2" style="width: 127px; height: 42px; left:253px; top:63px; position: absolute; padding-top: 12px;"><label class="contenidoTABLA" for="id_actividad_set-0-capitalizacion_set-0-cantidad" style="width:129px;padding-right: 0px;">No. de Apariciones:</label></div>
                               <div class="contenidoTABLA2" style="width: 119px; height: 42px; left:378px; top:63px; position: absolute; padding-top: 12px;">{{ field.field }}</div>
                   {% elif  field.field.name == "evidencia_grafica" %}
-                              <div class="contenidoTABLA2" style="width: 120px; height: 42px; top: 105px; position: absolute; padding-top: 12px;"><label class="contenidoTABLA" for="id_actividad_set-0-capitalizacion_set-0-evidencia_grafica" style="width:118px; padding-right: 0px;">Evidencia Gráfica:</label></div>
-                              <div class="contenidoTABLA2" style="width: 350px; height: 42px; left:119px; top:105px; position: absolute; padding-top: 12px;">{{ field.field }}</div>
+                              <div class="contenidoTABLA2" style="width: 120px; height: 38px; top: 105px; position: absolute; padding-top: 12px;"><label class="contenidoTABLA" for="id_actividad_set-0-capitalizacion_set-0-evidencia_grafica" style="width:118px; padding-right: 0px;">Evidencia Gráfica:</label></div>
+                              <div class="contenidoTABLA2" style="width: 350px; height: 38px; left:119px; top:105px; position: absolute; padding-top: 12px; overflow-y: scroll">{{ field.field }}</div>
                               <div class="contenidoTABLA2" style="width: 32px; height: 42px; left:465px; top:105px; position: absolute; padding-top: 12px;"></div>
 
 
