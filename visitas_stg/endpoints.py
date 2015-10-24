@@ -58,14 +58,16 @@ class ReporteEstadosEndpoint(ProtectedResourceView):
         dependencias = Dependencia.objects.values('id', 'nombreDependencia')
 
         for estado in estados:
+            visitas = Visita.objects.filter(entidad_id=estado['id'])
+
             map = {}
             map['estado'] = estado
-            map['estado']['distritos_electorales'] = DistritoElectoral.objects.filter(estado_id=estado['id']).count()
+            map['estado']['distritos_electorales'] = DistritoElectoral.objects.filter(Q(estado_id=estado['id'])).count()
+            map['estado']['distritos_electorales_visitados'] = visitas.values('distrito_electoral_id').distinct().count()
             map['estado']['municipios'] = Municipio.objects.filter(estado_id=estado['id']).count()
+            map['estado']['municipios_visitados'] = visitas.values('municipio_id').distinct().count()
 
             map['dependencias'] = []
-
-            visitas = Visita.objects.filter(entidad_id=estado['id'])
 
             for dependencia in dependencias:
                 dependencia_map = dependencia
