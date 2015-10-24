@@ -1,4 +1,4 @@
-from django.db.models import Sum, IntegerField, Q
+from django.db.models import Sum, IntegerField, Q, Count
 from django.http import HttpResponse
 from oauth2_provider.views.generic import ProtectedResourceView
 from BuscarVisitas import BuscarVisitas
@@ -68,7 +68,8 @@ class ReporteEstadosEndpoint(ProtectedResourceView):
                 dependencia_map['actividades'] = Actividad.objects.filter(
                     Q(visita__dependencia_id=dependencia.id) & Q(visita__entidad_id=dependencia.id)).count()
                 dependencia_map['participantes_locales'] = ParticipanteLocal.objects.filter(
-                    Q(actividad__visita__dependencia_id=dependencia.id) & Q(actividad__visita__entidad_id=estado.id)).count()
+                    Q(actividad__visita__dependencia_id=dependencia.id) & Q(
+                        actividad__visita__entidad_id=estado.id)).count()
                 dependencia_map['capitalizaciones'] = Capitalizacion.objects.filter(
                     Q(actividad__visita__entidad_id=estado.id) & Q(
                         actividad__visita__dependencia_id=dependencia.id)).count()
@@ -96,52 +97,64 @@ class ReporteEstadosEndpoint(ProtectedResourceView):
 
 class ReporteDependenciasEndpoint(ProtectedResourceView):
     def get(self, request):
-        dependencias = Dependencia.objects.all()
+        dependencias = Dependencia.objects.values('nombreDependencia', 'id')
+        # estados = Estado.objects.values('nombreEstado', 'id')
+        medios = Medio.objects.values('id', 'nombre_medio')
+        tipos_capitalizacion = TipoCapitalizacion.objects.values('nombre_tipo_capitalizacion', 'id')
         ans = []
         for dependencia in dependencias:
-            visitas = Visita.objects.filter(dependencia_id=dependencia.id)
-
+            print 'Reporte paral ' + dependencia['nombreDependencia']
+            visitas = Visita.objects.filter(dependencia_id=dependencia['id'])
             map = {}
-            map['dependencia'] = dependencia.to_serializable_dict()
+            map['dependencia'] = dependencia
             map['dependencia']['estados_visitados'] = visitas.values('entidad_id').distinct().count()
-            map['dependencia']['municipios_visitados'] = visitas.values('entidad_id').distinct().count()
+            map['dependencia']['municipios_visitados'] = visitas.values('municipio_id').distinct().count()
             map['dependencia']['distritos_electorales_visitados'] = visitas.values(
                 'distrito_electoral_id').distinct().count()
 
+            estados = visitas.values('id', 'entidad__nombreEstado').distinct().annotate(
+                total_visitas_funcionarios_federales=Count('id', distintct=True),
+                # total_actividades=Count('actividad'),
+                municipios=Count('municipio_id', distinct=True),
+                # capitalizaciones=Count('actividad__capitalizacion', distinct=True)
+            )
             map['estados'] = []
-            estados = Estado.objects.all()
+            print '\tReportec para estados'
             for estado in estados:
-                estado_map = estado.to_serialzable_dict()
-                estado_map['total_visitas_funcionarios_federales'] = Visita.objects.filter(
-                    Q(cargo__dependencia_id=dependencia.id) & Q(entidad_id=estado.id)).count()
-                estado_map['total_visitas'] = Visita.objects.filter(
-                    Q(dependencia_id=dependencia.id) & Q(entidad_id=estado.id)).count()
+                estado_map = estado
+                # estado_map['total_visitas_funcionarios_federales'] = Visita.objects.filter(
+                # Q(cargo__dependencia_id=dependencia['id']) & Q(entidad_id=estado['id'])).count() # Maybe cannot be optimizer
+                estado_map['total_visitas'] = visitas.filter(Q(entidad_id=estado['id'])).count()
                 estado_map['total_actividades'] = Actividad.objects.filter(
-                    Q(visita__entidad_id=estado.id) & Q(visita__dependencia_id=dependencia.id)).count()
-                estado_map['municipios'] = Visita.objects.filter(
-                    Q(dependencia_id=dependencia.id) & Q(entidad_id=dependencia.id)).values(
-                    'municipio_id').distinct().count()
+                    Q(visita__entidad_id=estado['id']) & Q(visita__dependencia_id=dependencia['id'])).count()
+                # estado_map['municipios'] = Visita.objects.filter(
+                #     Q(dependencia_id=dependencia['id']) & Q(entidad_id=estado['id'])).values(
+                #     'municipio_id').distinct().count()
                 estado_map['participantes_locales'] = ParticipanteLocal.objects.filter(
-                    Q(actividad__visita__dependencia_id=dependencia.id) & Q(
-                        actividad__visita__entidad_id=estado.id)).count()
+                    Q(actividad__visita__dependencia_id=dependencia['id']) & Q(
+                        actividad__visita__entidad_id=estado['id'])).count()
                 estado_map['capitalizaciones'] = Capitalizacion.objects.filter(
-                    Q(actividad__visita__dependencia_id=dependencia.id) & Q(actividad__visita__entidad_id=estado.id)).count()
+                    Q(actividad__visita__dependencia_id=dependencia['id']) & Q(
+                        actividad__visita__entidad_id=estado['id'])).count()
                 map['estados'].append(estado_map)
 
-                map['medios'] = []
-                medios = Medio.objects.all()
-                for medio in medios:
-                    medio_map = medio.to_serializable_dict()
+            # print '\tReportec para medios'
+            map['medios'] = []
+            for medio in medios:
+                medio_map = medio
 
-                    medio_map['tipos_capitalizacion'] = []
-                    tipos_capitalizacion = TipoCapitalizacion.objects.all()
-                    for tipo_capitalizacion in tipos_capitalizacion:
-                        tipo_map = tipo_capitalizacion.to_serializable_dict()
-                        tipo_map['numero'] = Capitalizacion.objects.filter(
-                            Q(tipo_capitalizacion_id=tipo_capitalizacion.id) & Q(medio_id=medio.id) & Q(
-                                actividad__visita__entidad_id=estado.id)).count()
-                        medio_map['tipos_capitalizacion'].append(tipo_map)
-                    map['medios'].append(medio_map)
+                # print '\t\tReportec para tipos capitalizacion'
+                medio_map['tipos_capitalizacion'] = []
+                # medio_map['tipos_capitalizacion'] = visitas.values(
+                # 'actividad__capitalizacion__tipo_capitalizacion').distinct().annotate(
+                #     numero=Count('actividad__capitalizacion'))
+                for tipo_capitalizacion in tipos_capitalizacion:
+                    tipo_map = tipo_capitalizacion
+                    tipo_map['numero'] = Capitalizacion.objects.filter(
+                        Q(tipo_capitalizacion_id=tipo_capitalizacion['id']) & Q(medio_id=medio['id']) & Q(
+                            actividad__visita__dependencia_id=dependencia['id'])).count()
+                    medio_map['tipos_capitalizacion'].append(tipo_map)
+                map['medios'].append(medio_map)
 
             ans.append(map)
 

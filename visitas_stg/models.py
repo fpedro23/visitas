@@ -42,7 +42,7 @@ class Estado(models.Model):
 
 class DistritoElectoral(models.Model):
     nombre_distrito_electoral = models.CharField(max_length=200, verbose_name='Distrito Electoral')
-    estado = models.ForeignKey(Estado, default=1)
+    estado = models.ForeignKey(Estado, default=1, db_index=True)
 
     def __str__(self):
         return self.nombre_distrito_electoral
@@ -61,7 +61,7 @@ class Municipio(models.Model):
     nombreMunicipio = models.CharField(max_length=200)
     latitud = models.FloatField()
     longitud = models.FloatField()
-    estado = models.ForeignKey(Estado, null=False, blank=False)
+    estado = models.ForeignKey(Estado, null=False, blank=False, db_index=True)
 
     def __str__(self):
         return self.nombreMunicipio
@@ -136,12 +136,12 @@ class PartidoGobernante(models.Model):
 
 class Visita(models.Model):
     identificador_unico = models.SlugField(unique=True, null=True, verbose_name='Identificador Único')
-    dependencia = models.ForeignKey(Dependencia, default=1, verbose_name='Dependencia')
+    dependencia = models.ForeignKey(Dependencia, default=1, verbose_name='Dependencia', db_index=True)
     fecha_visita = models.DateField(verbose_name='Fecha de Visita')
     region = models.ForeignKey(Region, verbose_name='Región')
-    entidad = models.ForeignKey(Estado, verbose_name='Entidad')
+    entidad = models.ForeignKey(Estado, verbose_name='Entidad', db_index=True)
     municipio = models.ForeignKey(Municipio, verbose_name='Municipio')
-    cargo = models.ForeignKey(Cargo, verbose_name='Cargo que ejecuta')
+    cargo = models.ForeignKey(Cargo, verbose_name='Cargo que ejecuta', db_index=True)
     distrito_electoral = models.ForeignKey(DistritoElectoral, default=0, verbose_name='Distrito electoral')
     partido_gobernante = models.ForeignKey(PartidoGobernante, null=True, blank=True, verbose_name='Partido Gobernante')
 
@@ -214,7 +214,7 @@ class Actividad(models.Model):
     tipo_actividad = models.ForeignKey(TipoActividad, verbose_name='Tipo de Actividad')
     descripcion = models.TextField(max_length=500, verbose_name='Descripción')
     clasificacion = models.ForeignKey(Clasificacion, verbose_name='Clasificación')
-    visita = models.ForeignKey(Visita, default=1)
+    visita = models.ForeignKey(Visita, default=1, db_index=True)
 
     def to_serializabe_dict(self):
         ans = {}
