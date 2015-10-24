@@ -277,13 +277,14 @@ class BuscarVisitasEndpoint(ProtectedResourceView):
         for estado in ans['reporte_estado']:
             json_map = {'estado': estado['entidad__nombreEstado'],
                         'numero_visitas': estado['numero_visitas'],
-                        }
+                        'numero_apariciones': estado['numero_apariciones']}
             json_ans['reporte_estado'].append(json_map)
 
         json_ans['reporte_dependencia'] = []
         for dependencia in ans['reporte_dependencia']:
             json_map = {'dependencia': dependencia['dependencia__nombreDependencia'],
-                        'numero_visitas': dependencia['numero_visitas']}
+                        'numero_visitas': dependencia['numero_visitas'],
+                        'numero_apariciones': dependencia['numero_apariciones']}
             json_ans['reporte_dependencia'].append(json_map)
 
         return HttpResponse(json.dumps(json_ans), 'application/json')
