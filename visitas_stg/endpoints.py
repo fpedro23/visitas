@@ -55,46 +55,43 @@ class ReporteEstadosEndpoint(ProtectedResourceView):
 
         estados = Estado.objects.values('id', 'nombreEstado')
         medios = Medio.objects.values('id', 'nombre_medio')
+        dependencias = Dependencia.objects.values('id', 'nombreDependencia')
 
         for estado in estados:
             map = {}
-            map['estado'] = estado.to_serialzable_dict()
-            map['estado']['distritos_electorales'] = DistritoElectoral.objects.filter(estado_id=estado.id).count()
-            map['estado']['municipios'] = Municipio.objects.filter(estado_id=estado.id).count()
+            map['estado'] = estado
+            map['estado']['distritos_electorales'] = DistritoElectoral.objects.filter(estado_id=estado['id']).count()
+            map['estado']['municipios'] = Municipio.objects.filter(estado_id=estado['id']).count()
 
             map['dependencias'] = []
 
             visitas = Visita.objects.filter(entidad_id=estado['id'])
-            dependencias = visitas.values('dependencia_id', 'dependencia__nombreDependencia').annotate(
-
-            )
 
             for dependencia in dependencias:
-                dependencia_map = dependencia.to_serializable_dict()
-                dependencia_map['funcionarios_federales'] = Cargo.objects.filter(dependencia_id=dependencia.id).count()
-                dependencia_map['visitas'] = Visita.objects.filter(
-                    Q(dependencia_id=dependencia.id) & Q(entidad_id=estado.id)).count()
+                dependencia_map = dependencia
+                dependencia_map['funcionarios_federales'] = Cargo.objects.filter(dependencia_id=dependencia['id']).count()
+                dependencia_map['visitas'] = visitas.filter(dependencia_id=dependencia['id']).count()
                 dependencia_map['actividades'] = Actividad.objects.filter(
-                    Q(visita__dependencia_id=dependencia.id) & Q(visita__entidad_id=dependencia.id)).count()
+                    Q(visita__dependencia_id=dependencia['id']) & Q(visita__entidad_id=dependencia['id'])).count()
                 dependencia_map['participantes_locales'] = ParticipanteLocal.objects.filter(
-                    Q(actividad__visita__dependencia_id=dependencia.id) & Q(
-                        actividad__visita__entidad_id=estado.id)).count()
+                    Q(actividad__visita__dependencia_id=dependencia['id']) & Q(
+                        actividad__visita__entidad_id=estado['id'])).count()
                 dependencia_map['capitalizaciones'] = Capitalizacion.objects.filter(
-                    Q(actividad__visita__entidad_id=estado.id) & Q(
-                        actividad__visita__dependencia_id=dependencia.id)).count()
+                    Q(actividad__visita__entidad_id=estado['id']) & Q(
+                        actividad__visita__dependencia_id=dependencia['id'])).count()
                 map['dependencias'].append(dependencia_map)
 
             map['medios'] = []
             for medio in medios:
-                medio_map = medio.to_serializable_dict()
+                medio_map = medio
 
                 medio_map['tipos_capitalizacion'] = []
-                tipos_capitalizacion = TipoCapitalizacion.objects.all()
+                tipos_capitalizacion = TipoCapitalizacion.objects.values('id', 'nombre_tipo_capitalizacion')
                 for tipo_capitalizacion in tipos_capitalizacion:
-                    tipo_map = tipo_capitalizacion.to_serializable_dict()
+                    tipo_map = tipo_capitalizacion
                     tipo_map['numero'] = Capitalizacion.objects.filter(
-                        Q(tipo_capitalizacion_id=tipo_capitalizacion.id) & Q(medio_id=medio.id) & Q(
-                            actividad__visita__entidad_id=estado.id)).count()
+                        Q(tipo_capitalizacion_id=tipo_capitalizacion['id']) & Q(medio_id=medio['id']) & Q(
+                            actividad__visita__entidad_id=estado['id'])).count()
                     medio_map['tipos_capitalizacion'].append(tipo_map)
                 map['medios'].append(medio_map)
 
@@ -111,11 +108,6 @@ class ReporteDependenciasEndpoint(ProtectedResourceView):
         medios = Medio.objects.values('id', 'nombre_medio')
         tipos_capitalizacion = TipoCapitalizacion.objects.values('nombre_tipo_capitalizacion', 'id')
 
-        ans['estados'] = []
-        all_states = Estado.objects.all().values('id', 'nombreEstado')
-        for estado in all_states:
-            ans['estados'].append({'id': estado['id'], 'nombreEstado': estado['nombreEstado']})
-
         ans['dependencias'] = []
         for dependencia in dependencias:
             visitas = Visita.objects.filter(dependencia_id=dependencia['id'])
@@ -129,9 +121,7 @@ class ReporteDependenciasEndpoint(ProtectedResourceView):
             estados = visitas.values('entidad_id', 'entidad__nombreEstado').distinct().annotate(
                 total_visitas_funcionarios_federales=Count('id', distintct=True),
                 total_visitas=Count('id', distinct=True),
-                # total_actividades=Count('actividad'),
                 municipios=Count('municipio_id', distinct=True)
-                # capitalizaciones=Count('actividad__capitalizacion', distinct=True)
             )
             map['estados'] = []
             for estado in estados:
@@ -206,6 +196,7 @@ class EstadosForRegionesEndpoint(ProtectedResourceView):
             estados = Estado.objects.filter(region_id__in=region_ids)
         else:
             estados = Estado.objects.all()
+        estados.order_by('nombreEstado')
 
         return HttpResponse(json.dumps(map(lambda estado: estado.to_serialzable_dict(), estados)), 'application/json')
 
@@ -217,6 +208,7 @@ class MunicipiosForEstadosEndpoint(ProtectedResourceView):
             municipios = Municipio.objects.filter(estado_id__in=estado_ids)
         else:
             municipios = Municipio.objects.all()
+        municipios.order_by('nombreMunicipio')
 
         the_list = []
         for municipio in municipios.values('id', 'nombreMunicipio'):
