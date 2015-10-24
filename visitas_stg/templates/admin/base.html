@@ -256,82 +256,14 @@
         <br class="clear" />
 
     <!-- END Content -->
-    <script>
-        var $ff = jQuery.noConflict();
-        $ff(document).on('ready', last_act_data);
-        function last_act_data() {
-             $ff.ajaxSetup({
-                beforeSend: function(xhr, settings) {
-                    if(settings.type == "POST"){
-                        xhr.setRequestHeader("X-CSRFToken", $ff('[name="csrfmiddlewaretoken"]').val());
-                    }
-                    if(settings.type == "GET"){
-                        xhr.setRequestHeader("X-CSRFToken", $ff('[name="csrfmiddlewaretoken"]').val());
-                    }
-                }
-            });
-                ActFecUltAct();
 
-        }
-
-        function ActFecUltAct(){
-             $ff.get("/visitas/register-by-token", function(respu) {
-                var ajax_data = {
-                    "access_token": respu.access_token
-                };
-                 var mes ='';
-                $ff.ajax({
-                    url: '/obras/api/hora_ultima_actualizacion',
-                    type: 'get',
-                    data: ajax_data,
-                    success: function(data) {
-                        switch (data.mes){
-                              case "01": mes='Enero';
-                                break;
-                             case "02": mes='Febrero';
-                                break;
-                             case "03": mes='Marzo';
-                                break;
-                             case "04": mes='Abril';
-                                break;
-                             case "05": mes='Mayo';
-                                break;
-                             case "06": mes='Junio';
-                                break;
-                             case "07": mes='Julio';
-                                break;
-                             case "08": mes='Agosto';
-                                break;
-                             case "09": mes='Septiembre';
-                                break;
-                             case "10": mes='Octubre';
-                                break;
-                             case "11": mes='Noviembre';
-                                break;
-                             case "12": mes='Diciembre';
-                                break;
-                        }
-                        sHtml= 'Fecha de última actualización: ' + data.dia + ' de ' + mes + " del   " + data.ano + ', ' + data.hora + ':' + data.minuto + ':' + data.segundo + '.';
-                        $ff('#FUA').html(sHtml);
-                        },
-                    error: function(data) {
-                            console.log(data.status+"err");
-                             sHtml= 'Fecha de última actualización: ';
-                             $ff('#FUA').html(sHtml);
-                        }
-                    });
-             });
-        }
-    </script>
 
 
 
 </div>
 <!--finaliza el contenedor-->
 
- <div class="FUA" id="FUA">
-{% if not user.is_active %} {% now "l d \d\e F \d\e\l Y, H:i." %} {% endif %}
-        </div>
+
 
 </div>
     {% block footer %}<!-- Editar contenido aqui, no es necesario hacer mas clases cointainer, siempre dejar la misma estructura de row seguido por col-lo que sea.  -->

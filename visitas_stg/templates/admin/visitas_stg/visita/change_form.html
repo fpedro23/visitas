@@ -4,6 +4,10 @@
 {% block extrahead %}{{ block.super }}
 <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
 <link href="{% static "assets/bootstrap/css/bootstrap-datepicker3.min.css"%}" rel="stylesheet">
+<script type="text/javascript" src="{% static "assets/js/ajax-dep-cargo-nom.js"%}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/ajax-movimientos.js' %}"></script>
+     <script type="text/javascript" src="{% static 'assets/js/ajax-estados-municipios.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/bootstrap/js/bootstrap.file-input.js' %}"></script>
 {{ media }}
  <script type="text/javascript">
 (
@@ -42,10 +46,16 @@
         if ($_GET("m") == 1 || (window.location.href).search('add') < 0) {
             $("#walta").hide();
             $("#wmod").show();
+            $(".historialBTN").show();
+            $("#buscar").show();
+            $("#buscarICO").show();
         }
         else {
             $("#walta").show();
             $("#wmod").hide();
+            $(".historialBTN").hide();
+            $("#buscar").hide();
+            $("#buscarICO").hide();
         }
     });
     })(django.jQuery);
@@ -77,8 +87,15 @@
             <span id="wmod" hidden="true">Modificación de Visita de Funcionario</span>
 
         </div>
-
-<div class="imprimirBTN">
+<div id="buscar" hidden="true">
+        <input type="hidden" id="tok" value="{% csrf_token %}">
+        <input class="buscar" type="text" name="idvisita" value="" id="idvisita">
+  	  </div>
+    <div id="buscarICO" hidden="true">
+      </div>
+    <div class="historialBTN" id="historialBTN" hidden="true">
+      </div>
+<div class="imprimirBTN" id="imprimirBTN">
       </div>
 {% block object-tools %}
 {% if change %}{% if not is_popup %}
@@ -86,7 +103,7 @@
     {% block object-tools-items %}
     <li>
         {% url opts|admin_urlname:'history' original.pk|admin_urlquote as history_url %}
-        <a href="{% add_preserved_filters history_url %}" class="historylink">{% trans "History" %}</a>
+
     </li>
     {% if has_absolute_url %}<li><a href="{{ absolute_url }}" class="viewsitelink">{% trans "View on site" %}</a></li>{% endif%}
     {% endblock %}
@@ -101,8 +118,14 @@
 {% if errors %}
     <p class="errornote">
     {% if errors|length == 1 %}{% trans "Please correct the error below." %}{% else %}{% trans "Please correct the errors below." %}{% endif %}
+
+
+     <img id="imgerr-errornote" src="{% static "assets/imagenes/iconoExclamacion.gif" %}" data-toggle="tooltip" data-placement="left"  width="13px" height="13px">
+        <script type="text/javascript" src="{% static 'assets/bootstrap/js/bootstrap.js' %}"></script>
+        <script> $(document).ready(function($) {
+        var $te = jQuery.noConflict();
+        $te('#imgerr-errornote').tooltip({html:true});});</script>
     </p>
-    {{ errors }}
     {{ adminform.form.non_field_errors }}
 {% endif %}
 
@@ -142,6 +165,11 @@
             $(document).ready(function() {
                 $('form#{{ opts.model_name }}_form :input:visible:enabled:first').focus()
             });
+
+            var $infl=jQuery.noConflict();
+    $infl('input[type=file]').bootstrapFileInput();
+    $infl('.file-inputs').bootstrapFileInput();
+
         })(django.jQuery);
     </script>
 {% endif %}

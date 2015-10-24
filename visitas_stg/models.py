@@ -131,7 +131,7 @@ class PartidoGobernante(models.Model):
 
 class Visita(models.Model):
     identificador_unico = models.SlugField(unique=True, null=True, verbose_name='Identificador Único')
-    dependencia = models.ForeignKey(Dependencia, default=1, verbose_name='Dependencia')
+    dependencia = models.ForeignKey(Dependencia, verbose_name='Dependencia')
     fecha_visita = models.DateField(verbose_name='Fecha de Visita')
     region = models.ForeignKey(Region, verbose_name='Región')
     entidad = models.ForeignKey(Estado, verbose_name='Entidad')
@@ -241,7 +241,7 @@ class Actividad(models.Model):
 
 
 class ProblematicaSocial(models.Model):
-    problematica_social = models.CharField(max_length=200)
+    problematica_social = models.TextField(max_length=200)
     actividad = models.ForeignKey(Actividad)
 
     def __str__(self):
