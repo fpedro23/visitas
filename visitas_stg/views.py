@@ -108,6 +108,13 @@ def listar_visitas(request):
         sheet.write(0, 11, "Descripcion", bold)
         sheet.write(0, 12, "Cargo de Funcionario", bold)
 
+        sheet.write(0, 13, "Tipo de Medio", bold)
+        sheet.write(0, 14, "Nombre del Medio", bold)
+        sheet.write(0, 15, "Capitalizacion", bold)
+        sheet.write(0, 16, "Nombre de Participante Local", bold)
+        sheet.write(0, 17, "Cargo de Participante Local", bold)
+        sheet.write(0, 18, "Problematica Social", bold)
+
         i = 1
         for obra in json_ans['visitas']:
             sheet.write(i, 0, obra['identificador_unico'])
@@ -125,7 +132,28 @@ def listar_visitas(request):
                 sheet.write(i, 10, actividad['tipo_actividad']['nombre_actividad'])
                 sheet.write(i, 11, actividad['descripcion'])
                 sheet.write(i, 12, actividad['clasificacion']['nombre_clasificacion'])
-                i += 1
+
+                j=i
+                for capitalizacion in actividad['capitalizaciones']:
+                    sheet.write(j, 13, capitalizacion['medio']['nombre_medio'])
+                    sheet.write(j, 14, capitalizacion['nombre_medio'])
+                    sheet.write(j, 15, capitalizacion['tipo_capitalizacion']['nombre_tipo_capitalizacion'])
+                    j += 1
+                k=i
+                for participantes in actividad['participantes_locales']:
+                    sheet.write(k, 16, participantes['nombre'])
+                    sheet.write(k, 17, participantes['cargo'])
+                    k += 1
+                l=i
+                for problematica in actividad['problematicas_sociales']:
+                    sheet.write(l, 18, problematica['problematica_social'])
+                    l += 1
+                if j>=k and j>=l:
+                    i=j
+                if k>=j and k>=l:
+                    i=k
+                if l>=j and l>=k:
+                    i=l
 
         book.close()
     else:
@@ -228,6 +256,11 @@ def movimientos(request):
 def usuarios(request):
     return render_to_response('admin/visitas_stg/usuarios.html', locals(),
                                  context_instance=RequestContext(request))
+
+def consulta_predifinidos(request):
+    return render_to_response('admin/visitas_stg/consulta_predefinidos/consulta-predefinidos.html', locals(),
+                                 context_instance=RequestContext(request))
+
 
 def consulta_filtros(request):
 

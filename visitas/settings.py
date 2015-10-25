@@ -129,3 +129,8 @@ TEMPLATE_DIRS = (
 TEMPLATETAGS_DIRS = (
     os.path.join(BASE_DIR, 'visitas_stg/templatetags/'),
 )
+
+
+SESSION_COOKIE_AGE = 35900
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+LOGIN_URL = '/admin/login/'

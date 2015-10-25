@@ -440,7 +440,7 @@ function verDatos() {
     if(inversionInicial!=""){ajax_data.inversionMinima=inversionInicial;}
     if(inversionFinal!=""){ajax_data.inversionMaxima=inversionFinal;}
 
-    if(arrayPartidos.toString()!=""){ajax_data.partido=arrayDependencias.toString();}
+    if(arrayPartidos.toString()!=""){ajax_data.partido=arrayPartidos.toString();}
     if(descripcion!=""){ajax_data.descripcion=descripcion;}
     if(problematica!=""){ajax_data.problematica=problematica;}
     if(nombreMedio!=""){ajax_data.nombreMedio=nombreMedio;}
@@ -513,128 +513,6 @@ function ponerMapaObra(){
     google.maps.event.addDomListener(window, 'load', initialize);
 }
 
-$l(function(){
-    $l('#msDependencias').bind('change', function() {
-        cargaSubDependencias();
-    });
-});
-function cargaSubDependencias() {
-
-    var arrayDependencias = $l("#msDependencias").multiselect("getChecked").map(function(){return this.value;}).get();
-
-    var ajax_data = {
-      "access_token"  : newToken
-    };
-
-    if(arrayDependencias.toString()!=""){ajax_data.dependencia=arrayDependencias.toString();}
-
-    if(arrayDependencias.toString()!=""){
-        $j.ajax({
-            url: '/obras/api/subdependencias',
-            type: 'get',
-            data: ajax_data,
-            success: function(data) {
-                subDependenciasMS(data);
-
-            },
-            error: function(data) {
-                alert('error!!! ' + data.status);
-            }
-        });
-    }
-}
-
-function subDependenciasMS(datos){
-    var sHtml='<select id="msSubDependencias" multiple="multiple" style="width: 100%;height: auto;">';
-    for(var i= 0;i<datos.length;i++) {
-
-        sHtml= sHtml +'<option value='+ datos[i].id +'>' + datos[i].nombreDependencia +'</option>';
-    }
-    sHtml= sHtml +'</select>';
-
-    $j('#divSubDep').html(sHtml);
-
-    $l("#msSubDependencias").multiselect({
-        header: true,
-        checkAllText: 'Marcar todas', uncheckAllText: 'Desmarcar todas',
-        noneSelectedText: 'Sub Dependencias',
-        selectedText: '# Sub Depen...'
-    });
-
-    //$l('#msSubDependencias').append(sHtml);
-}
-
-$l(function(){
-    $l('#msEstados').bind('change', function() {
-        cargaMunicipios();
-    });
-});
-function cargaMunicipios() {
-
-    var arrayEstados = $l("#msEstados").multiselect("getChecked").map(function(){return this.value;}).get();
-
-    var ajax_data = {
-      "access_token"  : newToken
-    };
-
-    if(arrayEstados.toString()!=""){ajax_data.estados=arrayEstados.toString();}
-
-    if(arrayEstados.toString()!="") {
-        $j.ajax({
-            url: '/obras/api/municipios_por_estado',
-            type: 'get',
-            data: ajax_data,
-            success: function (data) {
-                municipiosMS(data);
-
-            },
-            error: function (data) {
-                alert('error!!! ' + data.status);
-            }
-        });
-    }
-}
-
-function subDependenciasMS(datos){
-    var sHtml='<select id="msSubDependencias" multiple="multiple" style="width: 100%;height: auto;">';
-    for(var i= 0;i<datos.length;i++) {
-
-        sHtml= sHtml +'<option value='+ datos[i].id +'>' + datos[i].nombreDependencia +'</option>';
-    }
-    sHtml= sHtml +'</select>';
-
-    $j('#divSubDep').html(sHtml);
-
-    $l("#msSubDependencias").multiselect({
-        header: true,
-        checkAllText: 'Marcar todas', uncheckAllText: 'Desmarcar todas',
-        noneSelectedText: 'Sub Dependencias',
-        selectedText: '# Sub Depen...'
-    });
-
-    //$l('#msSubDependencias').append(sHtml);
-}
-
-function municipiosMS(datos){
-    var sHtml='<select id="msMunicipios" multiple="multiple" style="width: 100%;height: auto;">';
-
-    for(var i= 0;i<datos.length;i++) {
-
-        sHtml= sHtml +'<option value='+ datos[i].id +'>' + datos[i].nombreMunicipio +'</option>';
-    }
-    sHtml= sHtml +'</select>';
-
-    $j('#divMunicipios').html(sHtml);
-
-    $l("#msMunicipios").multiselect({
-        header: true,
-        checkAllText: 'Marcar todos', uncheckAllText: 'Desmarcar todos',
-        noneSelectedText: 'Municipios',
-        selectedText: '# Municipios'
-    });
-
-    //$l('#msSubDependencias').append(sHtml);
-}
 
 function regresa(){
     $pp('#pagina').show();
