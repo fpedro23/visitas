@@ -117,6 +117,8 @@ class ReporteDependenciaEndpoint(ProtectedResourceView):
     def get(self, request):
         dependencia = Dependencia.objects.get(id=request.GET.get('dependencia_id'))
         visitas = Visita.objects.filter(dependencia_id=dependencia.id)
+        tipos_actividad = TipoActividad.objects.values('id', 'nombre_actividad')
+        medios = Medio.objects.all()
 
         map = {}
         map['dependencia'] = dependencia.to_serializable_dict()
@@ -144,21 +146,26 @@ class ReporteDependenciaEndpoint(ProtectedResourceView):
             estado_map['capitalizaciones'] = Capitalizacion.objects.filter(
                 Q(actividad__visita__dependencia_id=dependencia.id) & Q(actividad__visita__entidad_id=estado.id)).count()
             map['estados'].append(estado_map)
+        map['estados'].sort(key=lambda e: e['capitalizaciones'])
 
-            map['medios'] = []
-            medios = Medio.objects.all()
-            for medio in medios:
-                medio_map = medio.to_serializable_dict()
+        map['medios'] = []
+        for medio in medios:
+            medio_map = medio.to_serializable_dict()
 
-                medio_map['tipos_capitalizacion'] = []
-                tipos_capitalizacion = TipoCapitalizacion.objects.all()
-                for tipo_capitalizacion in tipos_capitalizacion:
-                    tipo_map = tipo_capitalizacion.to_serializable_dict()
-                    tipo_map['numero'] = Capitalizacion.objects.filter(
-                        Q(tipo_capitalizacion_id=tipo_capitalizacion.id) & Q(medio_id=medio.id) & Q(
-                            actividad__visita__entidad_id=estado.id)).count()
-                    medio_map['tipos_capitalizacion'].append(tipo_map)
-                map['medios'].append(medio_map)
+            medio_map['tipos_capitalizacion'] = []
+            tipos_capitalizacion = TipoCapitalizacion.objects.all()
+            for tipo_capitalizacion in tipos_capitalizacion:
+                tipo_map = tipo_capitalizacion.to_serializable_dict()
+                tipo_map['numero'] = Capitalizacion.objects.filter(
+                    Q(tipo_capitalizacion_id=tipo_capitalizacion.id) & Q(medio_id=medio.id) & Q(dependencia_id=dependencia.id)).count()
+                medio_map['tipos_capitalizacion'].append(tipo_map)
+            map['medios'].append(medio_map)
+
+        map['tipos_actividad'] = []
+        for tipo in tipos_actividad:
+            tipo_map = tipo
+            tipo_map['numero'] = Actividad.objects.filter(Q(visita__dependencia_id=dependencia.id) & Q(tipo_actividad_id=tipo['id']))
+            map['tipos_actividad'].append(tipo_map)
 
         return HttpResponse(json.dumps(map), 'application/json')
 
@@ -168,6 +175,7 @@ class ReporteEstadoEndpoint(ProtectedResourceView):
         estado = Estado.objects.get(id=request.GET.get('estado_id'))
         medios = Medio.objects.values('id', 'nombre_medio')
         dependencias = Dependencia.objects.all()
+        tipos_actividad = TipoActividad.objects.values('id', 'nombre_actividad')
 
         map = {}
         map['estado'] = estado.to_serialzable_dict()
@@ -190,6 +198,7 @@ class ReporteEstadoEndpoint(ProtectedResourceView):
                 Q(actividad__visita__entidad_id=estado.id) & Q(
                     actividad__visita__dependencia_id=dependencia.id)).count()
             map['dependencias'].append(dependencia_map)
+        map['dependencias'].sort(key=lambda x: x['capitalizaciones'])
 
         map['medios'] = []
         for medio in medios:
@@ -204,6 +213,12 @@ class ReporteEstadoEndpoint(ProtectedResourceView):
                         actividad__visita__entidad_id=estado.id)).count()
                 medio_map['tipos_capitalizacion'].append(tipo_map)
             map['medios'].append(medio_map)
+
+        map['tipos_actividad'] = []
+        for tipo in tipos_actividad:
+            tipo_map = tipo
+            tipo_map['numero'] = Actividad.objects.filter(Q(visita__dependencia_id=dependencia.id) & Q(tipo_actividad_id=tipo['id']))
+            map['tipos_actividad'].append(tipo_map)
 
         return HttpResponse(json.dumps(map), 'application/json')
 
