@@ -14,6 +14,8 @@ from pptx.util import Inches
 from pptx.util import Pt
 from pptx.dml.color import RGBColor
 
+from django.db.models import Sum, IntegerField, Q, Count
+
 try:
     import cStringIO as StringIO
 except ImportError:
@@ -304,6 +306,106 @@ def fichaTecnica(request):
         prs.save('visitas_stg/static/ppt/ppt-generados/FichaTecnicaObras_' + str(usuario.user.id) + '.pptx')
 
         the_file = 'visitas_stg/static/ppt/ppt-generados/FichaTecnicaObras_' + str(usuario.user.id) + '.pptx'
+
+        filename = os.path.basename(the_file)
+        chunk_size = 8192
+        response = StreamingHttpResponse(FileWrapper(open(the_file,"rb"), chunk_size),
+                               content_type=mimetypes.guess_type(the_file)[0])
+        response['Content-Length'] = os.path.getsize(the_file)
+        response['Content-Disposition'] = "attachment; filename=%s" % filename
+        return response
+
+
+def Predefinido_Estado(request):
+        #prs = Presentation('/home/obrasapf/djangoObras/obras/static/ppt/FichaTecnicaObras.pptx')
+        prs = Presentation('visitas_stg/static/ppt/Reporte_Estado_sisef.pptx')
+        usuario = request.user.userprofile
+
+        ans = []
+
+        estados = Estado.objects.values('id', 'nombreEstado')
+        medios = Medio.objects.values('id', 'nombre_medio')
+        dependencias = Dependencia.objects.values('id', 'nombreDependencia')
+
+        for estado in estados:
+            map = {}
+            map['estado'] = estado
+            map['estado']['distritos_electorales'] = DistritoElectoral.objects.filter(estado_id=estado['id']).count()
+            map['estado']['municipios'] = Municipio.objects.filter(estado_id=estado['id']).count()
+
+            map['dependencias'] = []
+
+            visitas = Visita.objects.filter(entidad_id=estado['id'])
+
+            for dependencia in dependencias:
+                dependencia_map = dependencia
+                dependencia_map['funcionarios_federales'] = Cargo.objects.filter(dependencia_id=dependencia['id']).count()
+                dependencia_map['visitas'] = visitas.filter(dependencia_id=dependencia['id']).count()
+                dependencia_map['actividades'] = Actividad.objects.filter(
+                    Q(visita__dependencia_id=dependencia['id']) & Q(visita__entidad_id=dependencia['id'])).count()
+                dependencia_map['participantes_locales'] = ParticipanteLocal.objects.filter(
+                    Q(actividad__visita__dependencia_id=dependencia['id']) & Q(
+                        actividad__visita__entidad_id=estado['id'])).count()
+                dependencia_map['capitalizaciones'] = Capitalizacion.objects.filter(
+                    Q(actividad__visita__entidad_id=estado['id']) & Q(
+                        actividad__visita__dependencia_id=dependencia['id'])).count()
+                map['dependencias'].append(dependencia_map)
+
+            map['medios'] = []
+            for medio in medios:
+                medio_map = medio
+
+                medio_map['tipos_capitalizacion'] = []
+                tipos_capitalizacion = TipoCapitalizacion.objects.values('id', 'nombre_tipo_capitalizacion')
+                for tipo_capitalizacion in tipos_capitalizacion:
+                    tipo_map = tipo_capitalizacion
+                    tipo_map['numero'] = Capitalizacion.objects.filter(
+                        Q(tipo_capitalizacion_id=tipo_capitalizacion['id']) & Q(medio_id=medio['id']) & Q(
+                            actividad__visita__entidad_id=estado['id'])).count()
+                    medio_map['tipos_capitalizacion'].append(tipo_map)
+                map['medios'].append(medio_map)
+
+            ans.append(map)
+
+
+
+        table = prs.slides[0].shapes[0].table
+        # write body cellstable.cell(1, 0)
+        i=1
+        for dato in ans[0]['dependencias']:
+            table.cell(1, i).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(2, i).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(3, i).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(4, i).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(5, i).text_frame.paragraphs[0].font.size = Pt(8)
+
+            table.cell(1, i).text = str(dato['funcionarios_federales'])
+            table.cell(2, i).text = str(dato['visitas'])
+            table.cell(3, i).text = str(dato['actividades'])
+            table.cell(4, i).text = str(dato['capitalizaciones'])
+            table.cell(5, i).text = str(dato['participantes_locales'])
+            i=i+1
+
+        table = prs.slides[0].shapes[1].table
+        i=1
+        for dato in ans[0]['medios']:
+            table.cell(i,1).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i,2).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i,3).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i,4).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i,5).text_frame.paragraphs[0].font.size = Pt(8)
+
+            table.cell(i,1).text = str(dato['tipos_capitalizacion'][0]['numero'])
+            table.cell(i,2).text = str(dato['tipos_capitalizacion'][1]['numero'])
+            table.cell(i,3).text = str(dato['tipos_capitalizacion'][2]['numero'])
+            table.cell(i,4).text = str(dato['tipos_capitalizacion'][3]['numero'])
+            table.cell(i,5).text = str(dato['tipos_capitalizacion'][4]['numero'])
+            i=i+1
+
+
+        prs.save('visitas_stg/static/ppt/ppt-generados/Reporte_Estado_sisef_' + str(usuario.user.id) + '.pptx')
+
+        the_file = 'visitas_stg/static/ppt/ppt-generados/Reporte_Estado_sisef_' + str(usuario.user.id) + '.pptx'
 
         filename = os.path.basename(the_file)
         chunk_size = 8192

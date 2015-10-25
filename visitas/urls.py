@@ -26,6 +26,8 @@ urlpatterns = patterns('',
     url(r'^visitas/listar-visitas', views.listar_visitas, name='listar_visitas'),
     url(r'^visitas/usuarios$', 'visitas_stg.views.usuarios', name='usuarios'),
     url('^visitas/ficha', views.fichaTecnica),
+    url('^visitas/Predefinido_Estado', views.Predefinido_Estado),
+
 
 
 
