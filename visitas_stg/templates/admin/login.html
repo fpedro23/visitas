@@ -98,6 +98,7 @@
                         <div id="entrar" onclick="document.getElementById('login-form').submit();">
                          </div>
              </form>
+
                 {% url 'admin_password_reset' as password_reset_url %}
                 <div id="olvido" onclick="location.href='{{ password_reset_url }}'">
                 </div>
