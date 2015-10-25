@@ -7,7 +7,7 @@ import json
 from oauth2_provider.models import AccessToken
 from views import get_array_or_none
 from oauth2_provider.models import AccessToken
-from django.db.models import Sum, IntegerField, Q
+from django.db.models import Sum, IntegerField, Q, Count
 from django.db.models import F
 
 from pptx import Presentation
@@ -113,6 +113,102 @@ class ReporteEstadosEndpoint(ProtectedResourceView):
         return HttpResponse(json.dumps(ans), 'application/json')
 
 
+class ReporteDependenciaEndpoint(ProtectedResourceView):
+    def get(self, request):
+        dependencia = Dependencia.objects.get(id=request.GET.get('dependencia_id'))
+        visitas = Visita.objects.filter(dependencia_id=dependencia.id)
+
+        map = {}
+        map['dependencia'] = dependencia.to_serializable_dict()
+        map['dependencia']['estados_visitados'] = visitas.values('entidad_id').distinct().count()
+        map['dependencia']['municipios_visitados'] = visitas.values('entidad_id').distinct().count()
+        map['dependencia']['distritos_electorales_visitados'] = visitas.values(
+            'distrito_electoral_id').distinct().count()
+
+        map['estados'] = []
+        estados = Estado.objects.all()
+        for estado in estados:
+            estado_map = estado.to_serialzable_dict()
+            estado_map['total_visitas_funcionarios_federales'] = Visita.objects.filter(
+                Q(cargo__dependencia_id=dependencia.id) & Q(entidad_id=estado.id)).count()
+            estado_map['total_visitas'] = Visita.objects.filter(
+                Q(dependencia_id=dependencia.id) & Q(entidad_id=estado.id)).count()
+            estado_map['total_actividades'] = Actividad.objects.filter(
+                Q(visita__entidad_id=estado.id) & Q(visita__dependencia_id=dependencia.id)).count()
+            estado_map['municipios'] = Visita.objects.filter(
+                Q(dependencia_id=dependencia.id) & Q(entidad_id=dependencia.id)).values(
+                'municipio_id').distinct().count()
+            estado_map['participantes_locales'] = ParticipanteLocal.objects.filter(
+                Q(actividad__visita__dependencia_id=dependencia.id) & Q(
+                    actividad__visita__entidad_id=estado.id)).count()
+            estado_map['capitalizaciones'] = Capitalizacion.objects.filter(
+                Q(actividad__visita__dependencia_id=dependencia.id) & Q(actividad__visita__entidad_id=estado.id)).count()
+            map['estados'].append(estado_map)
+
+            map['medios'] = []
+            medios = Medio.objects.all()
+            for medio in medios:
+                medio_map = medio.to_serializable_dict()
+
+                medio_map['tipos_capitalizacion'] = []
+                tipos_capitalizacion = TipoCapitalizacion.objects.all()
+                for tipo_capitalizacion in tipos_capitalizacion:
+                    tipo_map = tipo_capitalizacion.to_serializable_dict()
+                    tipo_map['numero'] = Capitalizacion.objects.filter(
+                        Q(tipo_capitalizacion_id=tipo_capitalizacion.id) & Q(medio_id=medio.id) & Q(
+                            actividad__visita__entidad_id=estado.id)).count()
+                    medio_map['tipos_capitalizacion'].append(tipo_map)
+                map['medios'].append(medio_map)
+
+        return HttpResponse(json.dumps(map), 'application/json')
+
+
+class ReporteEstadoEndpoint(ProtectedResourceView):
+    def get(self, request):
+        estado = Estado.objects.get(id=request.GET.get('estado_id'))
+        medios = Medio.objects.values('id', 'nombre_medio')
+        dependencias = Dependencia.objects.all()
+
+        map = {}
+        map['estado'] = estado.to_serialzable_dict()
+        map['estado']['distritos_electorales'] = DistritoElectoral.objects.filter(estado_id=estado.id).count()
+        map['estado']['municipios'] = Municipio.objects.filter(estado_id=estado.id).count()
+
+        map['dependencias'] = []
+
+        for dependencia in dependencias:
+            dependencia_map = dependencia.to_serializable_dict()
+            dependencia_map['funcionarios_federales'] = Cargo.objects.filter(dependencia_id=dependencia.id).count()
+            dependencia_map['visitas'] = Visita.objects.filter(
+                Q(dependencia_id=dependencia.id) & Q(entidad_id=estado.id)).count()
+            dependencia_map['actividades'] = Actividad.objects.filter(
+                Q(visita__dependencia_id=dependencia.id) & Q(visita__entidad_id=dependencia.id)).count()
+            dependencia_map['participantes_locales'] = ParticipanteLocal.objects.filter(
+                Q(actividad__visita__dependencia_id=dependencia.id) & Q(
+                    actividad__visita__entidad_id=estado.id)).count()
+            dependencia_map['capitalizaciones'] = Capitalizacion.objects.filter(
+                Q(actividad__visita__entidad_id=estado.id) & Q(
+                    actividad__visita__dependencia_id=dependencia.id)).count()
+            map['dependencias'].append(dependencia_map)
+
+        map['medios'] = []
+        for medio in medios:
+            medio_map = medio.to_serializable_dict()
+
+            medio_map['tipos_capitalizacion'] = []
+            tipos_capitalizacion = TipoCapitalizacion.objects.all()
+            for tipo_capitalizacion in tipos_capitalizacion:
+                tipo_map = tipo_capitalizacion.to_serializable_dict()
+                tipo_map['numero'] = Capitalizacion.objects.filter(
+                    Q(tipo_capitalizacion_id=tipo_capitalizacion.id) & Q(medio_id=medio.id) & Q(
+                        actividad__visita__entidad_id=estado.id)).count()
+                medio_map['tipos_capitalizacion'].append(tipo_map)
+            map['medios'].append(medio_map)
+
+        return HttpResponse(json.dumps(map), 'application/json')
+
+
+
 class ReporteDependenciasEndpoint(ProtectedResourceView):
     def get(self, request):
         ans = {}
@@ -216,10 +312,10 @@ class EstadosForRegionesEndpoint(ProtectedResourceView):
 class MunicipiosForEstadosEndpoint(ProtectedResourceView):
     def get(self, request):
         estado_ids = get_array_or_none(request.GET.get('estados'))
-        if estado_ids is not None:
-            municipios = Municipio.objects.filter(estado_id__in=estado_ids)
-        else:
+        if estado_ids is None or 33 in estado_ids or 34 in estado_ids:
             municipios = Municipio.objects.all()
+        else:
+            municipios = Municipio.objects.filter(estado_id__in=estado_ids)
         municipios.order_by('nombreMunicipio')
 
         the_list = []
