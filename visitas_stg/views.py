@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response, redirect
 from visitas_stg.models import *
 from visitas_stg.tools import *
 from oauth2_provider.views import ProtectedResourceView
-
+from django.contrib.auth.decorators import login_required, user_passes_test
 import os, sys
 from pptx import Presentation
 from django.core.servers.basehttp import FileWrapper
@@ -414,3 +414,7 @@ def Predefinido_Estado(request):
         response['Content-Length'] = os.path.getsize(the_file)
         response['Content-Disposition'] = "attachment; filename=%s" % filename
         return response
+
+
+def redirect_admin(request):
+    return redirect('admin/')

@@ -1,15 +1,16 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from visitas_stg import views, endpoints
-
+from django.contrib.auth import views as auth_views
+from django.http import HttpResponseRedirect
 
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'visitas.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
+    url(r'^$', 'visitas_stg.views.redirect_admin', name='redirect_admin'),
     url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
-
     url(r'^admin/', include(admin.site.urls)),
     url(r'^admin_tools/', include('admin_tools.urls')),
     url(r'^busqueda-filtros/', views.buscar_visitas_web, name='consulta_filtros'),
@@ -28,7 +29,10 @@ urlpatterns = patterns('',
     url('^visitas/ficha', views.fichaTecnica),
     url('^visitas/Predefinido_Estado', views.Predefinido_Estado),
 
-
+    url(r'^admin/password_reset/$', auth_views.password_reset, name='admin_password_reset'),
+    url(r'^admin/password_reset/done/$', auth_views.password_reset_done, name='password_reset_done'),
+    url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$', auth_views.password_reset_confirm, name='password_reset_confirm'),
+    url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
 
 
 
