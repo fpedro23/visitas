@@ -221,7 +221,7 @@ class ReporteEstadoEndpoint(ProtectedResourceView):
         for clasificacion in clasificaciones:
             tipo_map = clasificacion
             tipo_map['numero'] = Actividad.objects.filter(
-                Q(visita__dependencia_id=dependencia.id) & Q(clasificacion_id=clasificacion['id'])).count()
+                Q(visita__estado_id=estado.id) & Q(clasificacion_id=clasificacion['id'])).count()
             map['clasificaciones'].append(tipo_map)
 
         # return HttpResponse(json.dumps(map), 'application/json')
