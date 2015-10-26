@@ -1,18 +1,23 @@
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.shortcuts import render_to_response, redirect
+from pptx.chart.data import ChartData
 from visitas_stg.models import *
 from visitas_stg.tools import *
+from datetime import *
 from oauth2_provider.views import ProtectedResourceView
 from django.contrib.auth.decorators import login_required, user_passes_test
 import os, sys
 from pptx import Presentation
+from pptx.enum.chart import XL_CHART_TYPE, XL_LEGEND_POSITION, XL_LABEL_POSITION
 from django.core.servers.basehttp import FileWrapper
 import mimetypes
 from django.http import StreamingHttpResponse
 from pptx.util import Inches
 from pptx.util import Pt
 from pptx.dml.color import RGBColor
+from pptx.enum.dml import MSO_COLOR_TYPE, MSO_THEME_COLOR
+
 
 from django.db.models import Sum, IntegerField, Q, Count
 
@@ -257,9 +262,24 @@ def usuarios(request):
     return render_to_response('admin/visitas_stg/usuarios.html', locals(),
                                  context_instance=RequestContext(request))
 
+
 def consulta_predifinidos(request):
-    return render_to_response('admin/visitas_stg/consulta_predefinidos/consulta-predefinidos.html', locals(),
-                                 context_instance=RequestContext(request))
+
+    template = loader.get_template('admin/visitas_stg/consulta_predefinidos/consulta-predefinidos.html')
+    context = RequestContext(request, {
+        'Regiones': Region.objects.all(),
+        'Estados': Estado.objects.all(),
+        'Distritos': DistritoElectoral.objects.all(),
+        'Municipios': Municipio.objects.all(),
+        'Funcionarios': Cargo.objects.all(),
+        'Dependencias': Dependencia.objects.all(),
+        'TipoActividad': TipoActividad.objects.all(),
+        'TipoCapitalizacion': TipoCapitalizacion.objects.all(),
+        'Medios': Medio.objects.all(),
+        'Clasificaciones': Clasificacion.objects.all(),
+        'Partidos': PartidoGobernante.objects.all(),
+    })
+    return HttpResponse(template.render(context))
 
 
 def consulta_filtros(request):
@@ -279,8 +299,7 @@ def consulta_filtros(request):
         'Partidos': PartidoGobernante.objects.all(),
     })
     return HttpResponse(template.render(context))
-    return render_to_response('admin/visitas_stg/consulta_filtros/consulta-filtros.html', locals(),
-                              context_instance=RequestContext(request))
+
 
 def fichaTecnica(request):
         #prs = Presentation('/home/obrasapf/djangoObras/obras/static/ppt/FichaTecnicaObras.pptx')
@@ -356,50 +375,86 @@ def Predefinido_Estado(request):
 
         ans = []
 
-        estados = Estado.objects.values('id', 'nombreEstado')
+        estado = Estado.objects.get(id=request.GET.get('estado_id'))
         medios = Medio.objects.values('id', 'nombre_medio')
-        dependencias = Dependencia.objects.values('id', 'nombreDependencia')
+        dependencias = Dependencia.objects.all()
+        clasificaciones = Clasificacion.objects.values('id', 'nombre_clasificacion')
 
-        for estado in estados:
-            map = {}
-            map['estado'] = estado
-            map['estado']['distritos_electorales'] = DistritoElectoral.objects.filter(estado_id=estado['id']).count()
-            map['estado']['municipios'] = Municipio.objects.filter(estado_id=estado['id']).count()
 
-            map['dependencias'] = []
+        date = datetime.now()
+        json_fecha={}
+        if date.day >= 10:
+            json_fecha['dia'] = str(date.day)
+        else:
+            json_fecha['dia'] = "0" + str(date.day)
+        if date.month >= 10:
+            json_fecha['mes'] = str(date.month)
+        else:
+            json_fecha['mes'] = "0" + str(date.month)
+        json_fecha['ano'] = str(date.year)
 
-            visitas = Visita.objects.filter(entidad_id=estado['id'])
+        map = {}
+        map['estado'] = estado.to_serialzable_dict()
+        map['estado']['distritos_electorales'] = DistritoElectoral.objects.filter(estado_id=estado.id).count()
+        map['estado']['municipios'] = Municipio.objects.filter(estado_id=estado.id).count()
 
-            for dependencia in dependencias:
-                dependencia_map = dependencia
-                dependencia_map['funcionarios_federales'] = Cargo.objects.filter(dependencia_id=dependencia['id']).count()
-                dependencia_map['visitas'] = visitas.filter(dependencia_id=dependencia['id']).count()
-                dependencia_map['actividades'] = Actividad.objects.filter(
-                    Q(visita__dependencia_id=dependencia['id']) & Q(visita__entidad_id=dependencia['id'])).count()
-                dependencia_map['participantes_locales'] = ParticipanteLocal.objects.filter(
-                    Q(actividad__visita__dependencia_id=dependencia['id']) & Q(
-                        actividad__visita__entidad_id=estado['id'])).count()
-                dependencia_map['capitalizaciones'] = Capitalizacion.objects.filter(
-                    Q(actividad__visita__entidad_id=estado['id']) & Q(
-                        actividad__visita__dependencia_id=dependencia['id'])).count()
-                map['dependencias'].append(dependencia_map)
+        map['dependencias'] = []
 
-            map['medios'] = []
-            for medio in medios:
-                medio_map = medio
+        for dependencia in dependencias:
+            dependencia_map = dependencia.to_serializable_dict()
+            dependencia_map['funcionarios_federales'] = Cargo.objects.filter(dependencia_id=dependencia.id).count()
+            dependencia_map['visitas'] = Visita.objects.filter(
+                Q(dependencia_id=dependencia.id) & Q(entidad_id=estado.id)).count()
+            dependencia_map['municipios'] = Visita.objects.filter(
+                Q(dependencia_id=dependencia.id) & Q(entidad_id=estado.id)).distinct().count()
+            dependencia_map['actividades'] = Actividad.objects.filter(
+                Q(visita__dependencia_id=dependencia.id) & Q(visita__entidad_id=dependencia.id)).count()
+            dependencia_map['participantes_locales'] = ParticipanteLocal.objects.filter(
+                Q(actividad__visita__dependencia_id=dependencia.id) & Q(
+                    actividad__visita__entidad_id=estado.id)).count()
+            dependencia_map['capitalizaciones'] = Capitalizacion.objects.filter(
+                Q(actividad__visita__entidad_id=estado.id) & Q(
+                    actividad__visita__dependencia_id=dependencia.id)).aggregate(Sum('cantidad'))
+            map['dependencias'].append(dependencia_map)
 
-                medio_map['tipos_capitalizacion'] = []
-                tipos_capitalizacion = TipoCapitalizacion.objects.values('id', 'nombre_tipo_capitalizacion')
-                for tipo_capitalizacion in tipos_capitalizacion:
-                    tipo_map = tipo_capitalizacion
-                    tipo_map['numero'] = Capitalizacion.objects.filter(
-                        Q(tipo_capitalizacion_id=tipo_capitalizacion['id']) & Q(medio_id=medio['id']) & Q(
-                            actividad__visita__entidad_id=estado['id'])).count()
-                    medio_map['tipos_capitalizacion'].append(tipo_map)
-                map['medios'].append(medio_map)
 
-            ans.append(map)
 
+        map['medios'] = []
+        for medio in medios:
+            medio_map = medio
+
+            medio_map['tipos_capitalizacion'] = []
+            tipos_capitalizacion = TipoCapitalizacion.objects.all()
+            for tipo_capitalizacion in tipos_capitalizacion:
+                tipo_map = tipo_capitalizacion.to_serializable_dict()
+                tipo_map['numero'] = Capitalizacion.objects.filter(
+                    Q(tipo_capitalizacion_id=tipo_capitalizacion.id) & Q(medio_id=medio['id']) & Q(
+                        actividad__visita__entidad_id=estado.id)).count()
+                medio_map['tipos_capitalizacion'].append(tipo_map)
+            map['medios'].append(medio_map)
+
+        map['clasificaciones'] = []
+        for clasificacion in clasificaciones:
+            tipo_map = clasificacion
+            tipo_map['numero'] = Actividad.objects.filter(
+                Q(visita__entidad_id=estado.id) & Q(clasificacion_id=clasificacion['id'])).count()
+            map['clasificaciones'].append(tipo_map)
+
+        ans.append(map)
+
+        prs.slides[0].shapes[4].text_frame.paragraphs[0].font.size = Pt(9)
+        prs.slides[0].shapes[5].text_frame.paragraphs[0].font.size = Pt(9)
+        prs.slides[0].shapes[6].text_frame.paragraphs[0].font.size = Pt(9)
+        prs.slides[0].shapes[7].text_frame.paragraphs[0].font.size = Pt(9)
+        prs.slides[0].shapes[8].text_frame.paragraphs[0].font.size = Pt(9)
+
+
+        prs.slides[0].shapes[4].text= json_fecha['dia'] + "/" + json_fecha['mes'] + "/" + json_fecha['ano']
+        prs.slides[0].shapes[5].text= '{0:,}'.format(ans[0]['estado']['distritos_electorales'])
+        prs.slides[0].shapes[6].text= ans[0]['estado']['nombreEstado']
+        #prs.slides[0].shapes[7].text= '{0:,}'.format(ans[0]['estado']['distritos_electorales'])
+        prs.slides[0].shapes[7].text= '{0:,}'.format(ans[0]['estado']['municipios'])
+        prs.slides[0].shapes[8].text= ans[0]['estado']['region']['numeroRegion']
 
 
         table = prs.slides[0].shapes[0].table
@@ -411,11 +466,18 @@ def Predefinido_Estado(request):
             table.cell(3, i).text_frame.paragraphs[0].font.size = Pt(8)
             table.cell(4, i).text_frame.paragraphs[0].font.size = Pt(8)
             table.cell(5, i).text_frame.paragraphs[0].font.size = Pt(8)
+            #fill=table.cell(1, i).fill
+            #fill.solid()
+            #fill.fore_color.rgb = RGBColor(255,0,0)
+            #fill.fore_color.theme_color = MSO_THEME_COLOR.ACCENT_1
+            #fill.fore_color.brightness = 0.25
+            #fill.transparency = 0.25
+            #fill.background()
 
             table.cell(1, i).text = str(dato['funcionarios_federales'])
             table.cell(2, i).text = str(dato['visitas'])
             table.cell(3, i).text = str(dato['actividades'])
-            table.cell(4, i).text = str(dato['capitalizaciones'])
+            table.cell(4, i).text = str(dato['municipios'])
             table.cell(5, i).text = str(dato['participantes_locales'])
             i=i+1
 
@@ -435,6 +497,64 @@ def Predefinido_Estado(request):
             table.cell(i,5).text = str(dato['tipos_capitalizacion'][4]['numero'])
             i=i+1
 
+
+        mayor = map['dependencias']
+        mayor.sort(key=lambda x: x['capitalizaciones']['cantidad__sum'], reverse=True)
+
+        table = prs.slides[0].shapes[2].table
+        i=1
+        for dato in mayor:
+            table.cell(i,0).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i,1).text_frame.paragraphs[0].font.size = Pt(8)
+
+            table.cell(i,0).text = str(dato['nombreDependencia'])
+            table.cell(i,1).text = str(0)
+            if str(dato['capitalizaciones']['cantidad__sum'])!='None':
+                table.cell(i,1).text = str(dato['capitalizaciones']['cantidad__sum'])
+
+            if i==3: break
+            i=i+1
+
+        menor = map['dependencias']
+        menor.sort(key=lambda x: x['capitalizaciones']['cantidad__sum'])
+
+        table = prs.slides[0].shapes[3].table
+        i=1
+        for dato in menor:
+            table.cell(i,0).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i,1).text_frame.paragraphs[0].font.size = Pt(8)
+
+            table.cell(i,0).text = str(dato['nombreDependencia'])
+            table.cell(i,1).text = str(0)
+            if str(dato['capitalizaciones']['cantidad__sum'])!='None':
+                table.cell(i,1).text = str(dato['capitalizaciones']['cantidad__sum'])
+
+            if i==3: break
+            i=i+1
+
+        total_clasificaciones=0
+        for cantidad in ans[0]['clasificaciones']:
+            total_clasificaciones = total_clasificaciones + cantidad['numero']
+
+        #grafica pie
+        chart_data = ChartData()
+        chart_data.categories = [ans[0]['clasificaciones'][0]['nombre_clasificacion'], ans[0]['clasificaciones'][1]['nombre_clasificacion'], ans[0]['clasificaciones'][2]['nombre_clasificacion']]
+        chart_data.add_series('Series 1', (float(ans[0]['clasificaciones'][0]['numero'])/float(total_clasificaciones), float(ans[0]['clasificaciones'][1]['numero'])/float(total_clasificaciones), float(ans[0]['clasificaciones'][2]['numero'])/float(total_clasificaciones)))
+
+        x, y, cx, cy = Inches(6.69), Inches(4.7), Inches(3), Inches(2.5)
+
+        chart = prs.slides[0].shapes.add_chart(
+            XL_CHART_TYPE.PIE, x, y, cx, cy, chart_data
+        ).chart
+
+        chart.has_legend = True
+        chart.legend.position = XL_LEGEND_POSITION.BOTTOM
+        chart.legend.include_in_layout = False
+
+        chart.plots[0].has_data_labels = True
+        data_labels = chart.plots[0].data_labels
+        data_labels.number_format = '0%'
+        data_labels.position = XL_LABEL_POSITION.OUTSIDE_END
 
         prs.save('visitas_stg/static/ppt/ppt-generados/Reporte_Estado_sisef_' + str(usuario.user.id) + '.pptx')
 

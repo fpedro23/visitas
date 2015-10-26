@@ -2,7 +2,7 @@
 {% load i18n admin_static %}
 {% block extrastyle %}{{ block.super }}
 
-    <link href="{% static "css/menu.css" %}" rel="stylesheet">  <!--AQUI VAN TODOS LOS ARCHIVOS DE ESTILO EXTRA QUE SE REQUIEREN PARA LA PAGINA O JS-->
+    <link href="{% static "assets/css/menu.css" %}" rel="stylesheet">  <!--AQUI VAN TODOS LOS ARCHIVOS DE ESTILO EXTRA QUE SE REQUIEREN PARA LA PAGINA O JS-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="{% static "assets/bootstrap/css/bootstrap.css"%}" />
@@ -21,8 +21,8 @@
      </script>
 
 
-	<script src="{% static "js/presentaciones.js" %} "></script>
-    <link href="{% static "css/styles.css"%}" rel="stylesheet">
+	<script src="{% static "assets/js/presentaciones.js" %} "></script>
+    <link href="{% static "assets/css/styles.css"%}" rel="stylesheet">
     <script>
       $(function(){
     $(".dropdown").hover(
@@ -189,7 +189,7 @@ et$(function() {
 
 
 </script>
-    <link href="{% static "css/styles.css"%}" rel="stylesheet">
+    <link href="{% static "assets/css/styles.css"%}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static "assets/css/menu-predefinidos.css"%}" />
     <script type="text/javascript" src="{% static "assets/js/menu-predefinidos.js"%}"></script>
 
@@ -254,9 +254,8 @@ et$(function() {
                                     <h6 class="panel-title">Predefinidos</h6>
                                 </div>
                                     <ul class="nav nav-pills nav-stacked">
-                                    <li style="height: 25px"><a href="/visitas/Predefinido_Estado" >Reporte por Estado</a></li>
-                                    <li style="height: 35px"><a href="/visitas/Predefinido_Estado" >Reporte por Dependencia</a></li>
-
+                                    <li style="height: 25px"><a href="#" id="verEstado">Reporte por Estado</a></li>
+                                    <li style="height: 35px"><a href="#" id="verDependencia">Reporte por Dependencia</a></li>
 
                                 </ul>
                             </div>
@@ -267,7 +266,68 @@ et$(function() {
 
        <div class="col-md-9-box" style="height: 433px">
             </br>
-            <div class="col-md-12 titulo" id="titulo"></div>
+            <div class="col-md-6 titulo" id="titulo"></div>
+
+            <div id="Estados" >
+                <div class="row" >
+                    <div class="col-md-12" style="padding-right: 4px; padding-left: 15px; padding-bottom: 1px; padding-top: 1px ">
+                        Seleccione el Estado para generar el reporte
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-5" style=";padding-right: 4px;  padding-bottom: 2px; padding-top: 0px ">
+                        <select id="msEstados"  style="width: 100%;height: auto;">
+                            {% for obj in Estados %}
+                               <option value={{obj.id}}>{{obj.nombreEstado}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="col-md-2" style="float: right;padding-right: 4px; padding-left: 15px; padding-bottom: 0px; padding-top: 0px " >
+                            <article id="consultarEstados">
+                                {% csrf_token %}
+                                <div class="consultarBTN" id="listaEstados" style="height: 23px"></div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="Dependencias" class="mfp-hide">
+                <div class="row" >
+                    <div class="col-md-12" style="padding-right: 4px; padding-left: 15px; padding-bottom: 1px; padding-top: 1px ">
+                        Seleccione la Dependencia para generar el reporte
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-5" style=";padding-right: 4px;  padding-bottom: 2px; padding-top: 0px ">
+                        <select id="msDependencias"  style="width: 100%;height: auto;">
+                            {% for obj in Dependencias %}
+                               <option value={{obj.id}}>{{obj.nombreDependencia}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="col-md-2" style="float: right;padding-right: 4px; padding-left: 15px; padding-bottom: 0px; padding-top: 0px " >
+                            <article id="consultarDependencias">
+                                {% csrf_token %}
+                                <div class="consultarBTN" id="listaDependencias" style="height: 23px"></div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
             <div class="col-md-12 mfp-hide" id="tabla">
 

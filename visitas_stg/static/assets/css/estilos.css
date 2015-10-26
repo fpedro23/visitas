@@ -1970,3 +1970,6 @@ input[type=file] {
     font-size: 12px;
 
 }
+
+.div-hide {
+  display: none !important; }
