@@ -169,7 +169,7 @@ class ReporteDependenciaEndpoint(ProtectedResourceView):
             tipo_map = clasificacion
             tipo_map['numero'] = Actividad.objects.filter(
                 Q(visita__dependencia_id=dependencia.id) & Q(clasificacion_id=clasificacion['id'])).count()
-            map['tipos_actividad'].append(tipo_map)
+            map['clasificaciones'].append(tipo_map)
 
         return HttpResponse(json.dumps(map), 'application/json')
 
@@ -222,7 +222,7 @@ class ReporteEstadoEndpoint(ProtectedResourceView):
             tipo_map = clasificacion
             tipo_map['numero'] = Actividad.objects.filter(
                 Q(visita__dependencia_id=dependencia.id) & Q(clasificacion_id=clasificacion['id'])).count()
-            map['tipos_actividad'].append(tipo_map)
+            map['clasificaciones'].append(tipo_map)
 
         # return HttpResponse(json.dumps(map), 'application/json')
         return HttpResponse(map.__str__(), 'application/json')
