@@ -3,10 +3,10 @@
 
 {% block extrastyle %}{{ block.super }}
      <!-- bxSlider Javascript file -->
-    <script src="{% static "galeria/jquery.bxslider.min.js" %}"></script>
+    <script src="{% static "assets/galeria/jquery.bxslider.min.js" %}"></script>
     <!-- bxSlider CSS file -->
-    <link href="{% static "galeria/jquery.bxslider.css" %}" rel="stylesheet" />
-    <link href="{% static "galeria/scripts.js" %}" rel="stylesheet" />
+    <link href="{% static "assets/galeria/jquery.bxslider.css" %}" rel="stylesheet" />
+    <link href="{% static "assets/galeria/scripts.js" %}" rel="stylesheet" />
 
 {% endblock %}
 
@@ -28,12 +28,12 @@
 </script>
 
 
-    <div id="galeria" hidden="true">
+    <div class="galeria" id="galeria" hidden="true">
           <ul class="bxslider" style=" -webkit-padding-start:0px" hidden="true">
-              <li><img src="{% static "img/FotoGalereria/002_gal.jpg" %}" /></li>
-              <li><img src="{% static "img/FotoGalereria/001_gal.jpg" %}" /></li>
-              <li><img src="{% static "img/FotoGalereria/003_gal.jpg" %}" /></li>
-              <li><img src="{% static "img/FotoGalereria/004_gal.jpg" %}" /></li>
+              <li><img src="{% static "assets/imagenes/gal_001.jpg" %}" /></li>
+              <li><img src="{% static "assets/imagenes/gal_002.jpg" %}" /></li>
+              <li><img src="{% static "assets/imagenes/gal_003.jpg" %}" /></li>
+              <li><img src="{% static "assets/imagenes/gal_004.jpg" %}" /></li>
           </ul>
     </div>
 
@@ -104,7 +104,7 @@
                 </div>
 		</div>
 
-                <script src="{% static "galeria/jquery.bxslider.min.js" %}"></script>
+                <script src="{% static "assets/galeria/jquery.bxslider.min.js" %}"></script>
                 <script type="text/javascript">
                     document.getElementById('id_username').focus()
                     var $j = jQuery.noConflict()

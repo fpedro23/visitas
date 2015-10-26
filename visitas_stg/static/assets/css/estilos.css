@@ -248,13 +248,24 @@
 
 
 /*ELEMENTOS CORRESPONDIENTES AL BODY DE LOG IN*/
-#galeria{
-	position: absolute;
-	width: 624px;
-	height: 580px;
-
-	background-color:#309;
+ .galeria{
+	 position:relative;
+	 width:540px;
+	 height:360px;
+	 border: 1px solid black;
+	 margin-top:55px;
+	 margin-left:50px;
 }
+
+.botGAL{
+	width:55px;
+	height:10px;
+	position:absolute;
+	top: 365px;
+	left: 295px;
+	border: 1px solid black;
+}
+
 
 #log{
 	position: absolute;
@@ -1636,7 +1647,7 @@ select, textarea, input[type=text], input{
 }
 
 .salirVBTN:hover{
-	background-position: -403px -280px;
+	background-position: -403px -284px;
 }
 
 .guardarVBTN{
@@ -1650,7 +1661,7 @@ select, textarea, input[type=text], input{
 }
 
 .guardarVBTN:hover{
-	background-position: -479px -280px;
+	background-position: -479px -284px;
 }
 
 .add-row {

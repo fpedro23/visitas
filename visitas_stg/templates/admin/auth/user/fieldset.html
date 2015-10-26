@@ -1,7 +1,7 @@
 {% load app_filters admin_static%}
 
 {% if fieldset.name == "Personal info" %}
-<fieldset class="module aligned {{ fieldset.classes }}" style="border: 0px;">
+<fieldset class="module {{ fieldset.classes }}" style="border: 0px;">
      <div class="datosGENERALES_AU">
      <div id="tituloCUADROS" style="height: 39px;">
     	DATOS GENERALES
@@ -68,7 +68,7 @@
 {% endif %}
 
  {% if fieldset.name == "AuthInfo" %}
-<fieldset class="module aligned {{ fieldset.classes }}" style="border: 0px;">
+<fieldset class="module {{ fieldset.classes }}" style="border: 0px;">
      <div class="datosINICIO_AU">
      <div id="tituloCUADROS" style="height: 39px;">DATOS DE ACCESO
       <br><br></div>
@@ -148,7 +148,7 @@
     <div id="tituloCUADROS" style="height: 39px;">DATOS DE PERFIL DE USUARIO</div>
     </div>
     <div class="campos04">
-<fieldset class="module aligned wide {{ fieldset.classes }}" style="border: 0px;">
+<fieldset class="module {{ fieldset.classes }}" style="border: 0px;">
 
          {% for line in fieldset %}
             {% for field in line %}
@@ -178,13 +178,13 @@
 
   <div class="campos03">
 
-    <fieldset class="module aligned  {{ fieldset.classes }}">
+    <fieldset class="module  {{ fieldset.classes }}">
 
          {% for line in fieldset %}
             {% for field in line %}
                {% if field.field.name == "rol" %}
                  <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-4" style="padding-right: 0px;">
                         <label class="required" for="id_rol"><span class="error__msg">*</span> Rol:</label>
                     </div>
                     <div class="col-md-8" >
@@ -202,8 +202,8 @@
 
                {% if field.field.name == "dependencia" %}
                   <div class="row field-dependencia" style="padding-top: 8px;">
-                    <div class="col-md-4">
-                        <label style="padding-right: 0px; font-style: normal; font-size: 12px; font-family: Verdana, Geneva, sans-serif;" for="id_usuario-0-dependencia"><span class="error__msg">*</span> Dependencia:</label>
+                    <div class="col-md-4" style="padding-right: 0px;">
+                        <label style="padding-right: 0px; font-style: normal; font-size: 12px; font-family: Verdana, Geneva, sans-serif; width:110px;" for="id_usuario-0-dependencia"><span class="error__msg">*</span> Dependencia:</label>
                     </div>
                     <div class="col-md-8" >
                         {{ field.field|add_attributes:"class:usudependencia" }}
