@@ -119,7 +119,7 @@ class ReporteDependenciaEndpoint(ProtectedResourceView):
     def get(self, request):
         dependencia = Dependencia.objects.get(id=request.GET.get('dependencia_id'))
         visitas = Visita.objects.filter(dependencia_id=dependencia.id)
-        tipos_actividad = TipoActividad.objects.values('id', 'nombre_actividad')
+        clasificaciones = Clasificacion.objects.values('id', 'nombre_clasificacion')
         medios = Medio.objects.all()
 
         map = {}
@@ -149,7 +149,6 @@ class ReporteDependenciaEndpoint(ProtectedResourceView):
                 Q(actividad__visita__dependencia_id=dependencia.id) & Q(
                     actividad__visita__entidad_id=estado.id)).count()
             map['estados'].append(estado_map)
-        map['estados'].sort(key=lambda e: e['capitalizaciones'])
 
         map['medios'] = []
         for medio in medios:
@@ -165,11 +164,11 @@ class ReporteDependenciaEndpoint(ProtectedResourceView):
                 medio_map['tipos_capitalizacion'].append(tipo_map)
             map['medios'].append(medio_map)
 
-        map['tipos_actividad'] = []
-        for tipo in tipos_actividad:
-            tipo_map = tipo
+        map['clasificaciones'] = []
+        for clasificacion in clasificaciones:
+            tipo_map = clasificacion
             tipo_map['numero'] = Actividad.objects.filter(
-                Q(visita__dependencia_id=dependencia.id) & Q(tipo_actividad_id=tipo['id'])).count()
+                Q(visita__dependencia_id=dependencia.id) & Q(clasificacion_id=clasificacion['id'])).count()
             map['tipos_actividad'].append(tipo_map)
 
         return HttpResponse(json.dumps(map), 'application/json')
@@ -180,7 +179,7 @@ class ReporteEstadoEndpoint(ProtectedResourceView):
         estado = Estado.objects.get(id=request.GET.get('estado_id'))
         medios = Medio.objects.values('id', 'nombre_medio')
         dependencias = Dependencia.objects.all()
-        tipos_actividad = TipoActividad.objects.values('id', 'nombre_actividad')
+        clasificaciones = Clasificacion.objects.values('id', 'nombre_clasificacion')
 
         map = {}
         map['estado'] = estado.to_serialzable_dict()
@@ -203,7 +202,6 @@ class ReporteEstadoEndpoint(ProtectedResourceView):
                 Q(actividad__visita__entidad_id=estado.id) & Q(
                     actividad__visita__dependencia_id=dependencia.id)).count()
             map['dependencias'].append(dependencia_map)
-        map['dependencias'].sort(key=lambda x: x['capitalizaciones'])
 
         map['medios'] = []
         for medio in medios:
@@ -219,11 +217,11 @@ class ReporteEstadoEndpoint(ProtectedResourceView):
                 medio_map['tipos_capitalizacion'].append(tipo_map)
             map['medios'].append(medio_map)
 
-        map['tipos_actividad'] = []
-        for tipo in tipos_actividad:
-            tipo_map = tipo
+        map['clasificaciones'] = []
+        for clasificacion in clasificaciones:
+            tipo_map = clasificacion
             tipo_map['numero'] = Actividad.objects.filter(
-                Q(visita__dependencia_id=dependencia.id) & Q(tipo_actividad_id=tipo['id'])).count()
+                Q(visita__dependencia_id=dependencia.id) & Q(clasificacion_id=clasificacion['id'])).count()
             map['tipos_actividad'].append(tipo_map)
 
         # return HttpResponse(json.dumps(map), 'application/json')
