@@ -192,7 +192,6 @@ class CustomUserAdmin(UserAdmin):
 
     def save_model(self, request, obj, form, change):
         obj.is_staff = True
-        print obj.userprofile
         usuario = obj
         usuario.save()
         super(CustomUserAdmin, self).save_model(request, obj, form, change)
