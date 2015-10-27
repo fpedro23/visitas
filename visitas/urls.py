@@ -29,6 +29,8 @@ urlpatterns = patterns('',
     url(r'^visitas/usuarios$', 'visitas_stg.views.usuarios', name='usuarios'),
     url('^visitas/ficha', views.fichaTecnica),
     url('^visitas/Predefinido_Estado', views.Predefinido_Estado),
+    url('^visitas/Predefinido_Dependencia', views.Predefinido_Dependencia),
+
 
     url(r'^admin/password_reset/$', auth_views.password_reset, name='admin_password_reset'),
     url(r'^admin/password_reset/done/$', auth_views.password_reset_done, name='password_reset_done'),

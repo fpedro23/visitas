@@ -50,6 +50,8 @@ function main_consulta() {
     $j('#verEstado').on('click', ver_estados);
     $j('#verDependencia').on('click', ver_dependencias);
     $j('#consultarEstados #listaEstados').on('click', reporte_estado);
+    $j('#consultarDependencias #listaDependencias').on('click', reporte_dependencia);
+
 
 }
 
@@ -77,3 +79,11 @@ function reporte_estado() {
 
 }
 
+function reporte_dependencia() {
+    var $E = jQuery.noConflict();
+    var dependencia_id = $E("#msDependencias").val();
+
+    var URL="/visitas/Predefinido_Dependencia?dependencia_id=" + dependencia_id;
+    location.href = URL;
+
+}
