@@ -44,6 +44,7 @@ function verDatos() {
 
                 graficas();
                 datosConcluidas();
+
                 // MAPA
                 var mapOptions = {
                 zoom: 4,
@@ -53,7 +54,7 @@ function verDatos() {
                 var map = new google.maps.Map(document.getElementById('mapaVISITAS'),
                                             mapOptions)
                 var lugares =  new Array();
-                lugares=puntosMapaTotales(data);
+                lugares=puntosMapaTotales(datosJson);
                 setMarkers(map,lugares);
                 google.maps.event.addDomListener(window, 'load', initialize);
                 // mapa
