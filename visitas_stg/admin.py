@@ -181,6 +181,14 @@ class CustomUserAdmin(UserAdmin):
 
     get_dependencia.short_description = 'Dependencia'
 
+    def save_model(self, request, obj, form, change):
+        obj.is_staff = True
+        print obj.userprofile
+        usuario = obj
+        usuario.save()
+        super(CustomUserAdmin, self).save_model(request, obj, form, change)
+
+
 
 admin.site.register(Visita, VisitaAdmin)
 admin.site.register(Region)
