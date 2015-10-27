@@ -145,12 +145,22 @@ class CustomUserAdmin(UserAdmin):
     inlines = (UserProfileInline, )
     list_display = ('username', 'first_name', 'last_name', 'email', 'get_dependencia', 'get_rol', )
 
+    fieldsets = (
+        (('AuthInfo'), {'fields': ('username', 'password')}),
+        (('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
+        (('Permissions'), {'fields': ('is_active',)}),
+        (('Important dates'), {'fields': ('last_login', 'date_joined')}),
+    )
+
+
     add_fieldsets = (
         (('AuthInfo'), {'fields': ('username', 'password1', 'password2')}),
         (('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
         (('Permissions'), {'fields': ('is_active',)}),
         (('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
+
+
 
     def f(self, x):
         return {
@@ -168,7 +178,6 @@ class CustomUserAdmin(UserAdmin):
             return nombre
 
     get_rol.short_description = 'Rol de usuario'
-
 
     def get_dependencia(self, obj):
         try:
