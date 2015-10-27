@@ -1,6 +1,7 @@
 # coding=utf-8
 from django.contrib.auth.models import User
 from django.db import models
+from smart_selects.db_fields import ChainedForeignKey
 
 # Create your models here.
 from django.forms import model_to_dict
@@ -139,10 +140,22 @@ class Visita(models.Model):
     identificador_unico = models.SlugField(unique=True, null=True, verbose_name='Identificador Único')
     dependencia = models.ForeignKey(Dependencia, verbose_name='Dependencia', db_index=True)
     fecha_visita = models.DateField(verbose_name='Fecha de Visita')
+
     region = models.ForeignKey(Region, verbose_name='Región')
-    entidad = models.ForeignKey(Estado, verbose_name='Entidad', db_index=True)
-    municipio = models.ForeignKey(Municipio, verbose_name='Municipio')
-    cargo = models.ForeignKey(Cargo, verbose_name='Cargo que ejecuta', db_index=True)
+    entidad = ChainedForeignKey(Estado,
+                                chained_field='region',
+                                chained_model_field='region',
+                                verbose_name='Entidad', db_index=True)
+    municipio = ChainedForeignKey(Municipio,
+                                  chained_field='entidad',
+                                  chained_model_field='estado',
+                                  verbose_name='Municipio')
+
+    cargo = ChainedForeignKey(Cargo,
+                              chained_field='dependencia',
+                              chained_model_field='dependencia',
+                              verbose_name='Cargo que ejecuta', db_index=True)
+
     distrito_electoral = models.ForeignKey(DistritoElectoral, verbose_name='Distrito electoral')
     partido_gobernante = models.ForeignKey(PartidoGobernante, null=True, blank=True, verbose_name='Partido Gobernante')
 

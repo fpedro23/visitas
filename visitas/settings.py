@@ -62,6 +62,7 @@ INSTALLED_APPS = (
     'oauth2_provider',
     'visitas_stg',
     'nested_inline',
+    'smart_selects',
 
 )
 
@@ -97,6 +98,14 @@ DATABASES = {
         'PORT': '',
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'db.sqlite3',
+#     }
+# }
 
 AUTHENTICATION_BACKENDS = (
     'oauth2_provider.backends.OAuth2Backend',

@@ -35,7 +35,7 @@ urlpatterns = patterns('',
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$', auth_views.password_reset_confirm, name='password_reset_confirm'),
     url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
 
-
+    url(r'^chaining/', include('smart_selects.urls')),
 
     url(r'^api/ReportePP', endpoints.PptxReporteEndpoint.as_view()),
     url(r'^api/PptxVista', endpoints.PptxEndpoint.as_view()),

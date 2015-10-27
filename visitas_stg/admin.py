@@ -179,7 +179,7 @@ class CustomUserAdmin(UserAdmin):
 
 admin.site.register(Visita, VisitaAdmin)
 admin.site.register(Region)
-# admin.site.register(Estado)
+admin.site.register(Estado)
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Municipio)
