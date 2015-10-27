@@ -460,6 +460,7 @@ def Predefinido_Estado(request):
         table = prs.slides[0].shapes[0].table
         # write body cellstable.cell(1, 0)
         i=1
+        total1=total2=total3=total4=total5=0
         for dato in ans[0]['dependencias']:
             table.cell(1, i).text_frame.paragraphs[0].font.size = Pt(8)
             table.cell(2, i).text_frame.paragraphs[0].font.size = Pt(8)
@@ -479,10 +480,27 @@ def Predefinido_Estado(request):
             table.cell(3, i).text = str(dato['actividades'])
             table.cell(4, i).text = str(dato['municipios'])
             table.cell(5, i).text = str(dato['participantes_locales'])
+            total1=total1 + dato['funcionarios_federales']
+            total2=total2 + dato['visitas']
+            total3=total3 + dato['actividades']
+            total4=total4 + dato['municipios']
+            total5=total5 + dato['participantes_locales']
             i=i+1
+
+        table.cell(1, 16).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(2, 16).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(3, 16).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(4, 16).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(5, 16).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(1, 16).text = str(total1)
+        table.cell(2, 16).text = str(total2)
+        table.cell(3, 16).text = str(total3)
+        table.cell(4, 16).text = str(total4)
+        table.cell(5, 16).text = str(total5)
 
         table = prs.slides[0].shapes[1].table
         i=1
+        total1=total2=total3=total4=total5=0
         for dato in ans[0]['medios']:
             table.cell(i,1).text_frame.paragraphs[0].font.size = Pt(8)
             table.cell(i,2).text_frame.paragraphs[0].font.size = Pt(8)
@@ -495,8 +513,24 @@ def Predefinido_Estado(request):
             table.cell(i,3).text = str(dato['tipos_capitalizacion'][2]['numero'])
             table.cell(i,4).text = str(dato['tipos_capitalizacion'][3]['numero'])
             table.cell(i,5).text = str(dato['tipos_capitalizacion'][4]['numero'])
+
+            total1=total1 + dato['tipos_capitalizacion'][0]['numero']
+            total2=total2 + dato['tipos_capitalizacion'][1]['numero']
+            total3=total3 + dato['tipos_capitalizacion'][2]['numero']
+            total4=total4 + dato['tipos_capitalizacion'][3]['numero']
+            total5=total5 + dato['tipos_capitalizacion'][4]['numero']
             i=i+1
 
+        table.cell(1, 6).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(2, 6).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(3, 6).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(4, 6).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(5, 6).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(1, 6).text = str(total1)
+        table.cell(2, 6).text = str(total2)
+        table.cell(3, 6).text = str(total3)
+        table.cell(4, 6).text = str(total4)
+        table.cell(5, 6).text = str(total5)
 
         mayor = map['dependencias']
         mayor.sort(key=lambda x: x['capitalizaciones']['cantidad__sum'], reverse=True)
