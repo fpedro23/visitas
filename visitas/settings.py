@@ -140,6 +140,10 @@ TEMPLATETAGS_DIRS = (
     os.path.join(BASE_DIR, 'visitas_stg/templatetags/'),
 )
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+    '/home/sisefenlin/visitas/static/',
+)
 
 SESSION_COOKIE_AGE = 35900
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
