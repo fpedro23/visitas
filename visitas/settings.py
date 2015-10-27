@@ -130,6 +130,7 @@ SITE_ID = 1
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/home/sisefenlin/visitas/static/'
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR,  'visitas_stg/templates/'),
@@ -139,10 +140,12 @@ TEMPLATETAGS_DIRS = (
     os.path.join(BASE_DIR, 'visitas_stg/templatetags/'),
 )
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "visitas/static/"),
+)
+
 
 SESSION_COOKIE_AGE = 35900
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 LOGIN_URL = '/admin/login/'
 
-STATIC_URL = '/static/'
-STATIC_ROOT = '/home/sisefenlin/visitas/static/'
