@@ -1,7 +1,7 @@
 {% extends "admin/base_site.html" %}
 {% load i18n admin_static %}
 {% block extrastyle %}{{ block.super }}
-   <link href="{% static "assets/css/menu.css" %}" rel="stylesheet">
+
     <script type="text/javascript" src="{% static "assets/tablesorter/jquery-latest.min.js"%}"></script>
 
 
@@ -149,13 +149,7 @@
             selectedText: '# Distritos Electorales'
         });
         // off
-        $l("#msInstanciaEjecutora").multiselect({
-            header: true,
-            checkAllText: 'Marcar todos',
-            uncheckAllText: 'Desmarcar todos',
-            noneSelectedText: 'Instancia Ejecutora',
-            selectedText: '# Instancias'
-        });
+
     });
     </script>
 
@@ -775,7 +769,7 @@ et$(function() {
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                        <div class="row">
                                         <div class="col-md-10 " style="padding-right: 4px; padding-left: 15px; padding-bottom: 2px; padding-top: 0px ">
                                             <select id="msRegiones" multiple="multiple"  style="width: 100%;height: auto;">
                                                 {% for obj in Regiones %}

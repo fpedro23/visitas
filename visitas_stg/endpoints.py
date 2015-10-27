@@ -150,6 +150,7 @@ class ReporteDependenciaEndpoint(ProtectedResourceView):
                 Q(actividad__visita__dependencia_id=dependencia.id) & Q(
                     actividad__visita__entidad_id=estado.id)).count()
             map['estados'].append(estado_map)
+        map['estados'].sort(key=lambda e: e['capitalizaciones'])
 
         map['medios'] = []
         for medio in medios:
