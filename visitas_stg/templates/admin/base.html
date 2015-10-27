@@ -67,6 +67,7 @@
 <!-- HEADER-->
 <div id="header">
 
+        <div id="homeBOT" onclick="location.href='/admin/'"></div>
 
     <div class="titleHEADER01">
     Sistema de Seguimiento a Entidades Federativas{% if user.is_active %}  {% else %}<br><br>{% endif %}
@@ -104,32 +105,31 @@
     <div id="menu">
          {% if user.is_active and user.is_staff %}
 
-            {%  if user.usuario.rol != 'FU' %}
-              <div class="MOVIMIENTOS" onclick="location.href='/visitas_stg/movimientos'"></div>
-              <li class="dropdown right-text" style="list-style-type: none;">
-                    <div class="pto001">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="pto01" aria-hidden="true"></span></a>
-                                    <ul class="dropdown-menu" style="left:-155px; top:29px;">
-                                      <li><a href="/admin/visitas_stg/visita/add/">Alta de Visita</a></li>
-                                      <li><a href="/admin/visitas_stg/visita/add/?m=1">Modificar Visita</a></li>
-                                    </ul>
-                    </div>
-              </li>
-            {% endif %}
 
-
-                <div class="CONSULTAS" onclick="location.href='/visitas/consultas'"></div>
-                    <li class="dropdown right-text" style="list-style-type: none;">
-                        <div class="pto002">
-                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="pto02"></span></a>
-                                     <ul class="dropdown-menu" style="left:-170px; top:29px;">
-                                        <li><a href="/visitas/consulta_filtros">Consultar por Filtro</a></li>
-                                        <li><a href="/visitas/consulta_predefinidos">Consultar Predefinida</a></li>
-                                         <li><a href="/admin/visitas_stg/visita/">Lista de Visitas</a></li>
-                                    </ul>
+                  <div class="MOVIMIENTOS" onclick="location.href='/visitas_stg/movimientos'"></div>
+                  <li class="dropdown right-text" style="list-style-type: none;">
+                        <div class="pto001">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="pto01" aria-hidden="true"></span></a>
+                                        <ul class="dropdown-menu" style="left:-155px; top:29px;">
+                                          <li><a href="/admin/visitas_stg/visita/add/">Alta de Visita</a></li>
+                                          <li><a href="/admin/visitas_stg/visita/add/?m=1">Modificar Visita</a></li>
+                                        </ul>
                         </div>
-                    </li>
+                  </li>
 
+                    <div class="CONSULTAS" onclick="location.href='/visitas/consultas'"></div>
+                        <li class="dropdown right-text" style="list-style-type: none;">
+                            <div class="pto002">
+                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="pto02"></span></a>
+                                         <ul class="dropdown-menu" style="left:-170px; top:29px;">
+                                            <li><a href="/visitas/consulta_filtros">Consultar por Filtro</a></li>
+                                            <li><a href="/visitas/consulta_predefinidos">Consultar Predefinida</a></li>
+                                             <li><a href="/admin/visitas_stg/visita/">Lista de Visitas</a></li>
+                                        </ul>
+                            </div>
+                        </li>
+
+            {%  if user.userprofile.rol == 'AD' %}
                 <div class="CATALOGOS" onclick="location.href='/visitas/catalogos'"></div>
                         <div class="pto003">
                             <a href="/catalogo" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="pto03"></span></a>
@@ -187,11 +187,11 @@
                           <li><a href="/admin/auth/user/add">Crear Nuevo</a></li>
                           <li><a href="/admin/auth/user/">Buscar Existente</a></li>
                           <li><a href="/admin/auth/user/?e=2">Modificar Existente</a></li>
-                          <li><a href="/admin/auth/user/?e=1">Eliminar Usuario</a></li>
+                          <li><a href="/admin/auth/user/?e=1">Eliminar Existente</a></li>
                         </ul>
                     </div>
                   </li>
-
+            {% endif %}
 
          {% endif %}
     </div>

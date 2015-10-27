@@ -42,7 +42,7 @@
             {% endif %}
         {% else %}
 
-           {% blocktrans with escaped_object=object %}  ¿Esta seguro de eliminar el medio?: {% endblocktrans %}
+           {% blocktrans with escaped_object=object %}  ¿Esta seguro de eliminar el medio? {% endblocktrans %}
 
            </div>
             <div class="campos01">
@@ -56,7 +56,7 @@
                 <input type="hidden" name="post" value="yes" />
                 <input type="submit" class="eliminarBTN" value="" /> &nbsp;&nbsp;&nbsp;
 
-                <div class="salirBTN" onclick="location.href='/obras/c_clasificacion'" style="left: 630px;"></div>
+                <div class="salirBTN" onclick="location.href='/visitas/catalogo-medios'" style="left: 630px;"></div>
                 </form>
 
         {% endif %}

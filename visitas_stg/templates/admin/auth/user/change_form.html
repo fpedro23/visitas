@@ -25,20 +25,12 @@
         var $l = jQuery.noConflict();
     $l(function(){
         // off
-        $l("#id_usuario-0-dependencia").multiselect({
+        $l("#id_userprofile-0-dependencia").multiselect({
             header: true,
             checkAllText: 'Marcar todos',
             uncheckAllText: 'Desmarcar todos',
             noneSelectedText: '',
             selectedText: '# Dependencias'
-        });
-        // off
-        $l("#id_usuario-0-subdependencia").multiselect({
-            header: true,
-            checkAllText: 'Marcar todas',
-            uncheckAllText: 'Desmarcar todas',
-            noneSelectedText: '',
-            selectedText: '# SubDependencias'
         });
 
         $l('#imgerr1').tooltip({html:true});
@@ -55,17 +47,21 @@
     });
 
     $l(document).ready(function() {
-        $l('select#id_usuario-0-rol').on('change',function () {
+
+        var srol = $l('select#id_userprofile-0-rol').val();
+        if (srol == "AD"){$l("#id_userprofile-0-dependencia").multiselect('disable');}
+
+        $l('select#id_userprofile-0-rol').on('change',function () {
             var selrol = $l(this).val();
 
-            if (selrol == "SA") {
+            if (selrol == "AD") {
 
-               $l("#id_usuario-0-dependencia").multiselect('disable');
+               $l("#id_userprofile-0-dependencia").multiselect('disable');
             }
             else
             {
 
-                $l("#id_usuario-0-dependencia").multiselect('enable');
+                $l("#id_userprofile-0-dependencia").multiselect('enable');
 
             }
 

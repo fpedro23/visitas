@@ -36,6 +36,19 @@
 	left: 681px;
 }
 
+#homeBOT{
+   width: 26px;
+   height: 26px;
+   position: absolute;
+   top: 14px;
+   left: 18px;
+   background-image: url(../imagenes/home_N.fw.png);
+}
+
+#homeBOT:hover{
+   background-image:url(../imagenes/home_O.fw.png);
+}
+
 #nombreUSER{
 	width: 250px;
 	height: 22px;
@@ -248,19 +261,31 @@
 
 
 /*ELEMENTOS CORRESPONDIENTES AL BODY DE LOG IN*/
-#galeria{
-	position: absolute;
-	width: 624px;
-	height: 580px;
-
-	background-color:#309;
+ .galeria{
+	 position:relative;
+	 width:540px;
+	 height:360px;
+	 border: 1px solid black;
+	 margin-top:55px;
+	 margin-left:50px;
 }
+
+.botGAL{
+	width:55px;
+	height:10px;
+	position:absolute;
+	top: 365px;
+	left: 295px;
+	border: 1px solid black;
+}
+
 
 #log{
 	position: absolute;
 	width: 400px;
 	height: 580px;
 	left: 624px;
+    top:-80px;
 }
 
 .titulo{
@@ -847,7 +872,7 @@
 	background-image: url(../imagenes/bigBACK.png);
 	background-position: -404px -256px;
 	position: absolute;
-	top: 419px;
+	top: 508px;
 	left: 847px;
 }
 
@@ -1240,7 +1265,8 @@
 	background-position: -312px -256px;
 	position: absolute;
 	top: 508px;
-	left: 500px;
+	left: 534px;
+    border:0px;
 }
 
 .eliminarBTN:hover{
@@ -1255,6 +1281,7 @@
 	position: absolute;
 	top: 508px;
 	left: 624px;
+    border: 0px;
 }
 
 .guardarotroBTN:hover{
@@ -1586,7 +1613,7 @@ ul li {
 }
 
 #id_cargo {
-    width: 95%;
+    width: 90%;
 }
 #id_partido_gobernante {
     width: 95%;
@@ -1637,7 +1664,7 @@ select, textarea, input[type=text], input{
 }
 
 .salirVBTN:hover{
-	background-position: -403px -280px;
+	background-position: -403px -284px;
 }
 
 .guardarVBTN{
@@ -1651,7 +1678,7 @@ select, textarea, input[type=text], input{
 }
 
 .guardarVBTN:hover{
-	background-position: -479px -280px;
+	background-position: -479px -284px;
 }
 
 .add-row {

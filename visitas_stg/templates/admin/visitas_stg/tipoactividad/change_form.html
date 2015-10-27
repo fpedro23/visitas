@@ -5,11 +5,6 @@
     <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
      <link href="{% static "assets/css/formas.css" %}" rel="stylesheet">
     {{ media }}
-     <script type="text/javascript"> $(document).ready(function($) {
-                                $("input[type=text]").keyup(function () {
-                                      $(this).val($(this).val().toUpperCase());
-
-                                }); });</script>
 {% endblock %}
 
 {% block extrastyle %}{{ block.super }}
