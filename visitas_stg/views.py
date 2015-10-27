@@ -302,8 +302,8 @@ def consulta_filtros(request):
 
 
 def fichaTecnica(request):
-        #prs = Presentation('/home/obrasapf/djangoObras/obras/static/ppt/FichaTecnicaObras.pptx')
-        prs = Presentation('visitas_stg/static/ppt/fichaTecnica_sisef.pptx')
+        #prs = Presentation('visitas_stg/static/ppt/fichaTecnica_sisef.pptx')
+        prs = Presentation('/home/sisefenlin/visitas/static/ppt/fichaTecnica_sisef.pptx')
         usuario = request.user.userprofile
         buscador = BuscaVisita(
             identificador_unico=request.GET.get('identificador_unico', None)
@@ -355,9 +355,9 @@ def fichaTecnica(request):
 
 
 
-        prs.save('visitas_stg/static/ppt/ppt-generados/FichaTecnicaObras_' + str(usuario.user.id) + '.pptx')
+        prs.save('/home/sisefenlin/visitas/static/ppt/ppt-generados/FichaTecnicaObras_' + str(usuario.user.id) + '.pptx')
 
-        the_file = 'visitas_stg/static/ppt/ppt-generados/FichaTecnicaObras_' + str(usuario.user.id) + '.pptx'
+        the_file = '/home/sisefenlin/visitas/static/ppt/ppt-generados/FichaTecnicaObras_' + str(usuario.user.id) + '.pptx'
 
         filename = os.path.basename(the_file)
         chunk_size = 8192
@@ -369,8 +369,9 @@ def fichaTecnica(request):
 
 
 def Predefinido_Estado(request):
-        #prs = Presentation('/home/obrasapf/djangoObras/obras/static/ppt/FichaTecnicaObras.pptx')
-        prs = Presentation('visitas_stg/static/ppt/Reporte_Estado_sisef.pptx')
+
+        #prs = Presentation('visitas_stg/static/ppt/Reporte_Estado_sisef.pptx')
+        prs = Presentation('/home/sisefenlin/visitas/static/ppt/Reporte_Estado_sisef.pptx')
         usuario = request.user.userprofile
 
         ans = []
@@ -590,9 +591,9 @@ def Predefinido_Estado(request):
         data_labels.number_format = '0%'
         data_labels.position = XL_LABEL_POSITION.OUTSIDE_END
 
-        prs.save('visitas_stg/static/ppt/ppt-generados/Reporte_Estado_sisef_' + str(usuario.user.id) + '.pptx')
+        prs.save('/home/sisefenlin/visitas/static/ppt/ppt-generados/Reporte_Estado_sisef_' + str(usuario.user.id) + '.pptx')
 
-        the_file = 'visitas_stg/static/ppt/ppt-generados/Reporte_Estado_sisef_' + str(usuario.user.id) + '.pptx'
+        the_file = '/home/sisefenlin/visitas/static/ppt/ppt-generados/Reporte_Estado_sisef_' + str(usuario.user.id) + '.pptx'
 
         filename = os.path.basename(the_file)
         chunk_size = 8192
@@ -604,8 +605,9 @@ def Predefinido_Estado(request):
 
 
 def Predefinido_Dependencia(request):
-        #prs = Presentation('/home/obrasapf/djangoObras/obras/static/ppt/FichaTecnicaObras.pptx')
-        prs = Presentation('visitas_stg/static/ppt/Reporte_Dependencia_sisef.pptx')
+
+        #prs = Presentation('visitas_stg/static/ppt/Reporte_Dependencia_sisef.pptx')
+        prs = Presentation('/home/sisefenlin/visitas/static/ppt/Reporte_Dependencia_sisef.pptx')
         usuario = request.user.userprofile
 
         ans = []
@@ -860,9 +862,9 @@ def Predefinido_Dependencia(request):
         data_labels.number_format = '0%'
         data_labels.position = XL_LABEL_POSITION.OUTSIDE_END
 
-        prs.save('visitas_stg/static/ppt/ppt-generados/Reporte_Dependencia_sisef_' + str(usuario.user.id) + '.pptx')
+        prs.save('/home/sisefenlin/visitas/static/ppt/ppt-generados/Reporte_Dependencia_sisef_' + str(usuario.user.id) + '.pptx')
 
-        the_file = 'visitas_stg/static/ppt/ppt-generados/Reporte_Dependencia_sisef_' + str(usuario.user.id) + '.pptx'
+        the_file = '/home/sisefenlin/visitas/static/ppt/ppt-generados/Reporte_Dependencia_sisef_' + str(usuario.user.id) + '.pptx'
 
         filename = os.path.basename(the_file)
         chunk_size = 8192
