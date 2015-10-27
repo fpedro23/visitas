@@ -25,6 +25,8 @@ activate_env = os.path.expanduser("/home/sisefenlin/visitas/ve/bin/activate_this
 execfile(activate_env, dict(__file__=activate_env))
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "visitas.settings")
+#os.environ["DJANGO_SETTINGS_MODULE"] = "visitas.settings"
+#os.environ["DJANGO_SETTINGS_MODULE"] = "{{ project_name }}.settings"
 
 from django.core.wsgi import get_wsgi_application
 
