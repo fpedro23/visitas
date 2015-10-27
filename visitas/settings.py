@@ -143,3 +143,6 @@ TEMPLATETAGS_DIRS = (
 SESSION_COOKIE_AGE = 35900
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 LOGIN_URL = '/admin/login/'
+
+STATIC_URL = '/static/'
+STATIC_ROOT = '/home/sisefenlin/visitas'
