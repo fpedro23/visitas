@@ -137,13 +137,13 @@ class PartidoGobernante(models.Model):
 
 class Visita(models.Model):
     identificador_unico = models.SlugField(unique=True, null=True, verbose_name='Identificador Único')
-    dependencia = models.ForeignKey(Dependencia, default=1, verbose_name='Dependencia', db_index=True)
+    dependencia = models.ForeignKey(Dependencia, verbose_name='Dependencia', db_index=True)
     fecha_visita = models.DateField(verbose_name='Fecha de Visita')
     region = models.ForeignKey(Region, verbose_name='Región')
     entidad = models.ForeignKey(Estado, verbose_name='Entidad', db_index=True)
     municipio = models.ForeignKey(Municipio, verbose_name='Municipio')
     cargo = models.ForeignKey(Cargo, verbose_name='Cargo que ejecuta', db_index=True)
-    distrito_electoral = models.ForeignKey(DistritoElectoral, default=0, verbose_name='Distrito electoral')
+    distrito_electoral = models.ForeignKey(DistritoElectoral, verbose_name='Distrito electoral')
     partido_gobernante = models.ForeignKey(PartidoGobernante, null=True, blank=True, verbose_name='Partido Gobernante')
 
     def __str__(self):
