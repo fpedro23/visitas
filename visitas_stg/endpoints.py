@@ -46,9 +46,11 @@ class ReporteInicioEndpoint(ProtectedResourceView):
         reporte['estados'] = []
         estados = Estado.objects.filter(~Q(id=33) & ~Q(id=34))
         for estado in estados:
-            reporte_estado = {'estado': estado.to_serialzable_dict(),
-                              'total_visitas': visitas.filter(entidad=estado).count()}
-            reporte['estados'].append(reporte_estado)
+            total_visitas = visitas.filter(entidad=estado).count()
+            if total_visitas > 0:
+                reporte_estado = {'estado': estado.to_serialzable_dict(),
+                              'total_visitas': total_visitas }
+                reporte['estados'].append(reporte_estado)
 
         reporte['medios'] = []
         for tipo_medio in Medio.objects.all():
