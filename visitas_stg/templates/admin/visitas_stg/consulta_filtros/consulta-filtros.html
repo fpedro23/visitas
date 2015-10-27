@@ -614,9 +614,9 @@ et$(function() {
                                             <div class="col-xs-5">
                                                <article id="ver_grafica_datos">
                                                     {% csrf_token %}
-                                                    <select id="datosGrafica">
-                                                        <option value="Numero">N&uacute;mero de visitas</option>
-                                                        <option value="Monto">N&uacute;mero de apariciones</option>
+                                                    <select class="selectpicker" data-size="5" id="datosGrafica">
+                                                        <option value="Numero">No. de visitas</option>
+                                                        <option value="Monto">No. de apariciones</option>
                                                     </select>
                                                </article>
                                             </div>
