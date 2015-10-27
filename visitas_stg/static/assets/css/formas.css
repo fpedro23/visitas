@@ -133,7 +133,7 @@ input[type=text], input[type=number] {
     font-family: Verdana, Geneva, sans-serif;
     font-size: 11px;
     line-height: initial;
-    height: 17px;
+    height: 20px;
     width: 90%;
 
 }
@@ -142,7 +142,7 @@ input[type=email], input[type=password] {
     font-family: Verdana, Geneva, sans-serif;
     font-size: 11px;
     line-height: initial;
-    height: 17px;
+    height: 20px;
     width: 90%;
 }
 
@@ -161,20 +161,9 @@ input[type=file] {
      height: 16px;
     padding: 0px 0px;
 }
-select{
-    font-family: Verdana, Geneva, sans-serif;
-    font-size: 11px;
-    line-height: initial;
-    height: 17px;
-    width: 90%;
-     background: #fff url("arrowdown.gif") no-repeat 90% center;
-}
 
-textarea{
-    line-height: initial;
-    width: 94%;
-    height: 40px;
-}
+
+
 
 td, th {
     font-size: 10px;
@@ -221,10 +210,27 @@ label {
     width: 90%;
 }
 
+
 .usurol{
     font-family: Verdana, Geneva, sans-serif;
     font-size: 11px;
+    width: 100%;
+}
+
+select{
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 11px;
+    line-height: initial;
+    height: 17px;
     width: 90%;
+     background: #fff url("arrowdown.gif") no-repeat 90% center;
+}
+
+
+textarea{
+    line-height: initial;
+    width: 94%;
+    height: 40px;
 }
 
 .tooltip{
@@ -236,3 +242,4 @@ label {
 .depwid{
     width: 90%;
 }
+

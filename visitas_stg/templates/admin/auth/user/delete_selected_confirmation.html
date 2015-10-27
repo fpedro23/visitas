@@ -2,7 +2,7 @@
 {% load i18n l10n admin_urls admin_static %}
 {% block extrahead %}{{ block.super }}
     <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
-     <link href="{% static "css/formas.css" %}" rel="stylesheet">
+     <link href="{% static "assets/css/formas.css" %}" rel="stylesheet">
 
 {% endblock %}
 
@@ -58,7 +58,7 @@
     <input type="hidden" name="action" value="delete_selected" />
     <input type="hidden" name="post" value="yes" />
     <input type="submit" class="eliminarBTN" value="" />
-     <div class="salirBTN" onclick="location.href='/obras/usuarios'" style="left: 630px;"></div>
+     <div class="salirBTN" onclick="location.href='/visitas/usuarios'" style="left: 630px;"></div>
 
     </form>
 {% endif %}

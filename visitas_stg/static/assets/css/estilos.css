@@ -36,6 +36,19 @@
 	left: 681px;
 }
 
+#homeBOT{
+   width: 26px;
+   height: 26px;
+   position: absolute;
+   top: 14px;
+   left: 18px;
+   background-image: url(../imagenes/home_N.fw.png);
+}
+
+#homeBOT:hover{
+   background-image:url(../imagenes/home_O.fw.png);
+}
+
 #nombreUSER{
 	width: 250px;
 	height: 22px;
@@ -272,6 +285,7 @@
 	width: 400px;
 	height: 580px;
 	left: 624px;
+    top:-80px;
 }
 
 .titulo{
@@ -838,7 +852,7 @@
 	background-position:-1512px -264px;
 }
 
-.eliminarBTN{
+.eliminarOBTN{
 	width: 85px;
 	height: 21px;
 	background-image: url(../imagenes/bigBACK.png);
@@ -848,7 +862,7 @@
 	left: 756px;
 }
 
-.eliminarBTN:hover{
+.eliminarOBTN:hover{
 	background-position: -312px -283px;
 }
 
@@ -858,7 +872,7 @@
 	background-image: url(../imagenes/bigBACK.png);
 	background-position: -404px -256px;
 	position: absolute;
-	top: 419px;
+	top: 508px;
 	left: 847px;
 }
 
@@ -1251,7 +1265,8 @@
 	background-position: -312px -256px;
 	position: absolute;
 	top: 508px;
-	left: 500px;
+	left: 534px;
+    border:0px;
 }
 
 .eliminarBTN:hover{
@@ -1266,6 +1281,7 @@
 	position: absolute;
 	top: 508px;
 	left: 624px;
+    border: 0px;
 }
 
 .guardarotroBTN:hover{
@@ -1597,7 +1613,7 @@ ul li {
 }
 
 #id_cargo {
-    width: 95%;
+    width: 90%;
 }
 #id_partido_gobernante {
     width: 95%;
@@ -1612,10 +1628,6 @@ ul li {
     display:none;
 }
 
-select, textarea, input[type=text], input{
-    width:95%;
-    height: 20px;
-}
 
 #alta03{
 	border: 2px solid #626262;
@@ -1895,14 +1907,6 @@ label {
     padding: 0px 0px;
 }
 
-input[type=file] {
-    font-family: "soberana_sanslight";
-     font-size: 11px;
-     width: 90%;
-     height: 100%;
-
-}
-
 .errornote {
         font-family: Verdana, Geneva, sans-serif;
         font-size: 10px !important;
@@ -1981,3 +1985,4 @@ input[type=file] {
     font-size: 12px;
 
 }
+
