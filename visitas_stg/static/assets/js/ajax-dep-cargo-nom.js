@@ -8,7 +8,7 @@ $j(document).on('ready', function() {
 
     var dependenciaId = $('#id_dependencia').find('option:selected').val();
     var cargoId = $('#id_cargo').find('option:selected').val();
-    var nombreId = $('#id_nombre_funcionario').find('option:selected').val();
+    var nombreId = $('#id_nombre_funcionario').val();
 
     if ( dependenciaId == "") {
         clearCargo();
@@ -23,7 +23,7 @@ $j(document).on('ready', function() {
             if (cargoId != "") {
                 getNombresForCargo(parseInt(cargoId), function (ans) {
                         populateNombreSelect(ans);
-                    $('#id_nombre_funcionario').val(nombreId);
+                    //$('#id_nombre_funcionario').val(nombreId);
                 });
             }
         }
@@ -38,7 +38,7 @@ $j(document).on('ready', function() {
              if (cargoId != "") {
                  getNombresForCargo(parseInt(cargoId), function (ans) {
                      populateNombreSelect(ans);
-                     $('#id_nombre_funcionario').val(nombreId);
+                     //$('#id_nombre_funcionario').val(nombreId);
                  });
              }
      }
@@ -155,19 +155,12 @@ function populateCargosSelect(cargos) {
 
 function populateNombreSelect(cargos) {
     // Clean the field
-    var selopt="";
     clearNombre();
 
     for (var i = 0; i < cargos.length; i++) {
-        if (i==0) selopt=cargos[i].id;
-        $j('#id_nombre_funcionario').append(
-            '<option value="'+cargos[i].id+'">' +
-            cargos[i].nombre_funcionario +
-            '</option>'
-        );
+        $j('#id_nombre_funcionario').val(cargos[i].nombre_funcionario);
     }
 
-    $("#id_nombre_funcionario").val(selopt).selected;
 
 }
 
@@ -182,7 +175,6 @@ function clearCargo() {
 }
 
 function clearNombre() {
-    $j('#id_nombre_funcionario')
-        .empty()
-        .append('<option value>---------</option>');
+    $j('#id_nombre_funcionario').val("");
+
 }
