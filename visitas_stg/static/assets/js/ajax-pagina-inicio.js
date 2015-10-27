@@ -134,13 +134,13 @@ function pieGrafica(datas,titulo,dona,nombreData) {
             panKey: 'shift',
             options3d: {
                 enabled: true,
-                alpha: 45,
+                alpha: 35,
                 beta: 0
             },
             style: {
                  color: '#FFFFFF',
                  fontFamily: 'Verdana, Geneva, sans-serif',
-                 fontSize: '15px'
+                 fontSize: '8px'
             }
         },
         title: {
@@ -163,14 +163,14 @@ function pieGrafica(datas,titulo,dona,nombreData) {
         },
         plotOptions: {
             pie: {
-                style: { fontFamily: 'Verdana, Geneva, sans-serif',color: '#FFFFFF' ,fontSize: '12px' },
+                style: { fontFamily: 'Verdana, Geneva, sans-serif',color: '#FFFFFF' ,fontSize: '8px' },
                 innerSize: dona,
                 allowPointSelect: true,
                 cursor: 'pointer',
                 depth: 35,
                 dataLabels: {
                     enabled: true,
-                    style: { fontFamily: 'Verdana, Geneva, sans-serif',color: '#FFFFFF' ,fontSize: '12px' },
+                    style: { fontFamily: 'Verdana, Geneva, sans-serif',color: '#FFFFFF' ,fontSize: '8px' },
                     format: '{point.name}'
                 }
             }

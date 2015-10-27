@@ -1,7 +1,7 @@
 {% extends "admin/base_site.html" %}
 {% load i18n admin_static %}
 {% block extrastyle %}{{ block.super }}
-   <link href="{% static "assets/css/menu.css" %}" rel="stylesheet">
+
     <script type="text/javascript" src="{% static "assets/tablesorter/jquery-latest.min.js"%}"></script>
 
 
@@ -149,13 +149,7 @@
             selectedText: '# Distritos Electorales'
         });
         // off
-        $l("#msInstanciaEjecutora").multiselect({
-            header: true,
-            checkAllText: 'Marcar todos',
-            uncheckAllText: 'Desmarcar todos',
-            noneSelectedText: 'Instancia Ejecutora',
-            selectedText: '# Instancias'
-        });
+
     });
     </script>
 
