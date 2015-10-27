@@ -79,6 +79,11 @@ class ActividadInLine(NestedStackedInline):
 
 
 class FuncionarioAdmin(admin.ModelAdmin):
+
+    list_display = (
+        '__str__', 'nombre_funcionario', 'dependencia',
+    )
+
     def get_queryset(self, request):
         """Limit Pages to those that belong to the request's user."""
         qs = super(FuncionarioAdmin, self).queryset(request)
