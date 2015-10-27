@@ -107,12 +107,12 @@ class VisitaAdmin(NestedModelAdmin):
         ('Información básica de la visita', {'fields': ['identificador_unico', 'dependencia', 'fecha_visita', ]}),
         ('Localización', {'fields': ['region', 'entidad', 'municipio', ]}),
         ('Datos electorales', {'fields': ['distrito_electoral', 'partido_gobernante', ]}),
-        ('Funcionarios', {'fields': ['cargo', ]}),
+        ('Funcionarios', {'fields': ['cargo', 'nombre_funcionario' ]}),
 
     ]
 
     def get_readonly_fields(self, request, obj=None):
-        readonly_fields = ('identificador_unico',)
+        readonly_fields = ('identificador_unico', 'nombre_funcionario')
         return readonly_fields
 
     def get_queryset(self, request):

@@ -165,6 +165,9 @@ class Visita(models.Model):
     def __unicode__(self):
         return self.cargo.nombre_funcionario + " - " + self.actividad_set.first().descripcion
 
+    def nombre_funcionario(self):
+        return self.cargo.nombre_funcionario
+
     class Meta:
         verbose_name = 'Visita'
         verbose_name_plural = 'Visitas'
