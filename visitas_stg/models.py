@@ -176,13 +176,34 @@ class Visita(models.Model):
         ans = {}
         ans['id'] = self.id
         ans['identificador_unico'] = self.identificador_unico
-        ans['dependencia'] = self.dependencia.to_serializable_dict()
-        ans['region'] = self.region.to_serializable_dict()
-        ans['entidad'] = self.entidad.to_serialzable_dict()
-        ans['municipio'] = self.municipio.to_serializable_dict()
-        ans['cargo'] = self.cargo.to_serializable_dict()
-        ans['distrito_electoral'] = self.distrito_electoral.to_serializable_dict()
-        ans['partido_gobernante'] = self.partido_gobernante.to_serializable_dict()
+        if self.dependencia:
+            ans['dependencia'] = self.dependencia.to_serializable_dict()
+        else:
+            ans['dependencia'] = None
+        if self.region:
+            ans['region'] = self.region.to_serializable_dict()
+        else:
+            ans['region'] = None
+        if self.entidad:
+            ans['entidad'] = self.entidad.to_serialzable_dict()
+        else:
+            ans['entidad'] = None
+        if self.municipio:
+            ans['municipio'] = self.municipio.to_serializable_dict()
+        else:
+            ans['municipio'] = None
+        if self.cargo:
+            ans['cargo'] = self.cargo.to_serializable_dict()
+        else:
+            ans['cargo'] = None
+        if self.distrito_electoral:
+            ans['distrito_electoral'] = self.distrito_electoral.to_serializable_dict()
+        else:
+            ans['distrito_electoral'] = None
+        if self.partido_gobernante:
+            ans['partido_gobernante'] = self.partido_gobernante.to_serializable_dict()
+        else:
+            ans['partido_gobernante'] = None
         ans['fecha_visita'] = self.fecha_visita.__str__()
 
         ans['actividades'] = []
