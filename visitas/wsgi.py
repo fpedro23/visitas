@@ -21,8 +21,8 @@ sys.path.append('/home/sisefenlin/visitas')
 sys.path.append('/home/sisefenlin/visitas/visitas_stg')
 
 # Activate your virtual env
-#activate_env = os.path.expanduser("/home/sisefenlin/visitas/ve/bin/activate_this.py")
-#execfile(activate_env, dict(__file__=activate_env))
+activate_env = os.path.expanduser("/home/sisefenlin/visitas/ve/bin/activate_this.py")
+execfile(activate_env, dict(__file__=activate_env))
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "visitas.settings")
 #os.environ["DJANGO_SETTINGS_MODULE"] = "visitas.settings"
