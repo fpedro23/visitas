@@ -1637,7 +1637,7 @@ function tablaD(Datos){
                         +'<tr>'
                             +'<th>TOTALES</th>'
                             +'<th align="right">'+ formato_numero(Datos.reporte_general.visitas_totales, 0, '.', ',') +'</th>'
-                            +'<th align="right">'+ formato_numero(Datos.reporte_general.numero_apariciones, 2, '.', ',') +'</th>'
+                            +'<th align="right">'+ formato_numero(Datos.reporte_general.numero_apariciones, 0, '.', ',') +'</th>'
                         +'</tr>'
 
                         +'<tr><td class="pager" id="pagerD" colspan="3">'
@@ -1663,7 +1663,7 @@ function tablaD(Datos){
             sHtml += '<tr>'
             + '<td width= "60%">' + Datos.reporte_dependencia[i].dependencia + '</td>'
             + '<td width= "20%" align="right">' + formato_numero(Datos.reporte_dependencia[i].numero_visitas, 0, '.', ',') + '</td>'
-            + '<td width= "20%" align="right">' + formato_numero(Datos.reporte_dependencia[i].numero_apariciones, 2, '.', ',') + '</td>'
+            + '<td width= "20%" align="right">' + formato_numero(Datos.reporte_dependencia[i].numero_apariciones, 0, '.', ',') + '</td>'
             + '</tr>'
 
             sHtmlExporta += '<tr>'
@@ -1682,13 +1682,13 @@ function tablaD(Datos){
             sHtml += '<tr>'
             + '<td>' + Datos.reporte_estado[i].estado + '</td>'
             + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_visitas, 0, '.', ',') + '</td>'
-            + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_apariciones, 2, '.', ',') + '</td>'
+            + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_apariciones, 0, '.', ',') + '</td>'
             + '</tr>'
 
             sHtmlExporta += '<tr>'
             + '<td>' + Datos.reporte_estado[i].estado + '</td>'
             + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_visitas, 0, '.', ',') + '</td>'
-            + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_apariciones, 2, '.', ',') + '</td>'
+            + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_apariciones, 0, '.', ',') + '</td>'
             + '</tr>'
         }
     }
@@ -1799,7 +1799,7 @@ $j.tablaGrafica = function(Datos){
                         +'<tr>'
                             +'<th>TOTALES</th>'
                             +'<th align="right">'+ formato_numero(Datos.reporte_general.visitas_totales, 0, '.', ',') +'</th>'
-                            +'<th align="right">'+ formato_numero(0, 2, '.', ',') +'</th>'//numero_apariciones
+                            +'<th align="right">'+ formato_numero(0, 0, '.', ',') +'</th>'//numero_apariciones
                         +'</tr>'
 
                         +'<tr><td class="pager" id="pagerG" colspan="3">'
@@ -1828,7 +1828,7 @@ $j.tablaGrafica = function(Datos){
             sHtml += '<tr>'
             + '<td>' + Datos.reporte_dependencia[i].dependencia + '</td>'
             + '<td align="right">' + formato_numero(Datos.reporte_dependencia[i].numero_visitas, 0, '.', ',') + '</td>'
-            + '<td align="right">' + formato_numero(Datos.reporte_dependencia[i].numero_apariciones, 2, '.', ',') + '</td>'
+            + '<td align="right">' + formato_numero(Datos.reporte_dependencia[i].numero_apariciones, 0, '.', ',') + '</td>'
             + '</tr>'
         }
     }
@@ -1840,7 +1840,7 @@ $j.tablaGrafica = function(Datos){
             sHtml += '<tr>'
             + '<td>' + Datos.reporte_estado[i].estado + '</td>'
             + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_visitas, 0, '.', ',') + '</td>'
-            + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_apariciones, 2, '.', ',') + '</td>'
+            + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_apariciones, 0, '.', ',') + '</td>'
             + '</tr>'
         }
     }
