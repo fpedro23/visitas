@@ -31,6 +31,7 @@ class ProblematicaSocialInLine(NestedStackedInline):
 class ParticipanteLocalInline(NestedStackedInline):
     model = ParticipanteLocal
     can_delete = False
+
     def get_extra(self, request, obj=None, **kwargs):
         try:
             if obj.visita is not None:
@@ -62,11 +63,27 @@ class CapitalizacionInline(NestedStackedInline):
             kwargs['widget'] = NumberInput
         return super(CapitalizacionInline, self).formfield_for_dbfield(db_field, **kwargs)
 
+from django.forms.models import BaseInlineFormSet
+from django import forms
+
+
+class AtLeastOneRequiredInlineFormSet(BaseInlineFormSet):
+
+    def clean(self):
+        """Check that at least one service has been entered."""
+        super(AtLeastOneRequiredInlineFormSet, self).clean()
+        if any(self.errors):
+            return
+        if not any(cleaned_data and not cleaned_data.get('DELETE', False)
+            for cleaned_data in self.cleaned_data):
+            raise forms.ValidationError('Al menos una actividad es requerida para dar de alta una visita')
+
 
 class ActividadInLine(NestedStackedInline):
     model = Actividad
     inlines = [ParticipanteLocalInline, CapitalizacionInline, ProblematicaSocialInLine]
     can_delete = False
+    formset = AtLeastOneRequiredInlineFormSet
     fieldsets = [
         (None, {'fields': ['tipo_actividad', 'descripcion', 'clasificacion', ]}),
 

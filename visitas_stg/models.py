@@ -158,7 +158,7 @@ class Visita(models.Model):
                               verbose_name='Cargo que ejecuta', db_index=True)
 
     distrito_electoral = models.ForeignKey(DistritoElectoral, verbose_name='Distrito electoral')
-    partido_gobernante = models.ForeignKey(PartidoGobernante, null=True, blank=True, verbose_name='Partido Gobernante')
+    partido_gobernante = models.ForeignKey(PartidoGobernante, null=False, blank=False, verbose_name='Partido Gobernante')
 
     def __str__(self):
         return self.cargo.nombre_funcionario + " - " + self.actividad_set.first().descripcion
@@ -233,6 +233,13 @@ class Actividad(models.Model):
     descripcion = models.TextField(max_length=500, verbose_name='Descripción')
     clasificacion = models.ForeignKey(Clasificacion, verbose_name='Clasificación')
     visita = models.ForeignKey(Visita, default=1, db_index=True)
+
+    def __str__(self):
+        return self.descripcion
+
+    def __unicode__(self):
+        return self.descripcion
+
 
     def to_serializabe_dict(self):
         ans = {}
