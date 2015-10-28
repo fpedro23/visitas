@@ -5,6 +5,7 @@ from smart_selects.db_fields import ChainedForeignKey
 
 # Create your models here.
 from django.forms import model_to_dict
+from datetime import datetime
 
 
 class Region(models.Model):
@@ -139,7 +140,7 @@ class PartidoGobernante(models.Model):
 class Visita(models.Model):
     identificador_unico = models.SlugField(unique=True, null=True, verbose_name='Identificador Único')
     dependencia = models.ForeignKey(Dependencia, verbose_name='Dependencia', db_index=True)
-    fecha_visita = models.DateField(verbose_name='Fecha de Visita')
+    fecha_visita = models.DateField(verbose_name='Fecha de Visita',default=datetime.now())
 
     region = models.ForeignKey(Region, verbose_name='Región')
     entidad = ChainedForeignKey(Estado,
