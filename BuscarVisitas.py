@@ -108,7 +108,7 @@ class BuscarVisitas:
             query = query & Q(partido_gobernante_id__in=self.ids_partido)
 
         if query is not None:
-            visitas = Visita.objects.filter(query).distinct()
+            visitas = Visita.objects.filter(query).distinct().order_by('identificador_unico')
 
         # Reporte General
         visitas_totales = visitas.count()
