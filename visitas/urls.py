@@ -1,5 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from django.conf.urls.static import static
+from django.conf import settings
 from visitas_stg import views, endpoints
 from django.contrib.auth import views as auth_views
 from django.http import HttpResponseRedirect
@@ -37,6 +39,7 @@ urlpatterns = patterns('',
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$', auth_views.password_reset_confirm, name='password_reset_confirm'),
     url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
 
+
     url(r'^chaining/', include('smart_selects.urls')),
 
     url(r'^api/ReportePP', endpoints.PptxReporteEndpoint.as_view()),
@@ -60,4 +63,7 @@ urlpatterns = patterns('',
     url(r'^api/reporte_dependencia', endpoints.ReporteDependenciasEndpoint.as_view()),
     url(r'^api/id_unico', endpoints.IdUnicoEndpoint.as_view()),
     url(r'^api/reporte_inicio', endpoints.ReporteInicioEndpoint.as_view()),
+
+    url(r'^icono_OBRAS.ico/$', lambda x: HttpResponseRedirect(settings.STATIC_URL+'icono_OBRAS.ico'))
+
 )
