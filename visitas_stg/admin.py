@@ -1,5 +1,6 @@
 # coding=utf-8
 from django.contrib import admin
+from django.contrib.auth.models import Group
 from django.db.models import Q
 from nested_inline.admin import NestedStackedInline, NestedModelAdmin
 from django.contrib.auth.admin import UserAdmin
@@ -194,6 +195,15 @@ class CustomUserAdmin(UserAdmin):
         obj.is_staff = True
         usuario = obj
         usuario.save()
+        try:
+            if usuario.userprofile.rol == 'AD':
+                usuario.is_superuser = True
+            elif usuario.userprofile.rol == 'US':
+                g = Group.objects.get(name='usuario_dependencia')
+                g.user_set.add(usuario)
+        except Exception as e:
+            print e
+
         super(CustomUserAdmin, self).save_model(request, obj, form, change)
 
 
