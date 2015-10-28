@@ -107,6 +107,10 @@ DATABASES = {
 #     }
 # }
 
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'visitas/media')
+MEDIA_URL = '/media/'
+
 AUTHENTICATION_BACKENDS = (
     'oauth2_provider.backends.OAuth2Backend',
     # Uncomment following if you want to access the admin

@@ -356,12 +356,19 @@ class TipoCapitalizacion(models.Model):
         verbose_name_plural = 'Tipos de Capitalización'
 
 
+def content_file_capitalizacion(instance, filename):
+    # print instance.identificador_unico
+    # ext = filename.split('.')[-1]
+    # filename = instance.identificador_unico + '_ANTES.'+ext
+    return '/'.join(['evidenciaGrafica', instance.actividad.visita.identificador_unico, filename])
+
+
 class Capitalizacion(models.Model):
     medio = models.ForeignKey(Medio, verbose_name='Tipo de Medio')
     nombre_medio = models.CharField(max_length=200, null=True, blank=True, verbose_name='Nombre De Medio')
     tipo_capitalizacion = models.ForeignKey(TipoCapitalizacion)
     cantidad = models.PositiveIntegerField()
-    evidencia_grafica = models.FileField(null=True, blank=True)
+    evidencia_grafica = models.FileField(null=True, blank=True, upload_to=content_file_capitalizacion)
     actividad = models.ForeignKey(Actividad)
 
 
