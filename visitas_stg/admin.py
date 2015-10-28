@@ -195,7 +195,6 @@ class CustomUserAdmin(UserAdmin):
         obj.is_staff = True
         usuario = obj
         usuario.save()
-        print usuario.userprofile
         try:
             if usuario.userprofile.rol == 'AD':
                 usuario.is_superuser = True
