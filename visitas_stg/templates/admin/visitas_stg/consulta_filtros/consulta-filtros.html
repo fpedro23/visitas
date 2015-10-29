@@ -765,7 +765,7 @@ et$(function() {
                                         <div class="col-md-10" style="padding-right: 4px; padding-left: 15px; padding-bottom: 2px; padding-top: 0px ">
                                             <select id="msFuncionarios" multiple="multiple"  style="width: 100%;height: auto;">
                                                  {% for obj in Funcionarios %}
-                                                       <option value={{obj.id}}>{{obj.nombre_cargo}}</option>
+                                                       <option value={{obj.id}}>{{obj.dependencia.nombreDependencia}}-{{obj.nombre_cargo}}</option>
                                                  {% endfor %}
                                             </select>
                                         </div>
