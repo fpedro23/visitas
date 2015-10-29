@@ -325,8 +325,8 @@ def consulta_filtros(request):
 
 
 def fichaTecnica(request):
-        prs = Presentation('visitas_stg/static/ppt/fichaTecnica_sisef.pptx')
-        #prs = Presentation('/home/sisefenlin/visitas/static/ppt/fichaTecnica_sisef.pptx')
+        #prs = Presentation('visitas_stg/static/ppt/fichaTecnica_sisef.pptx')
+        prs = Presentation('/home/sisefenlin/visitas/static/ppt/fichaTecnica_sisef.pptx')
         usuario = request.user.userprofile
         buscador = BuscaVisita(
             identificador_unico=request.GET.get('identificador_unico', None)
@@ -360,6 +360,13 @@ def fichaTecnica(request):
         prs.slides[0].shapes[12].text_frame.paragraphs[0].font.size = Pt(8)
         prs.slides[0].shapes[12].text = json_map['visitas'][0]['cargo']['nombre_cargo']
 
+        prs.slides[0].shapes[22].text_frame.paragraphs[0].font.size = Pt(8)
+        prs.slides[0].shapes[23].text_frame.paragraphs[0].font.size = Pt(8)
+        prs.slides[0].shapes[24].text_frame.paragraphs[0].font.size = Pt(8)
+        prs.slides[0].shapes[22].text = json_map['visitas'][0]['actividades'][0]['tipo_actividad']['nombre_actividad']
+        prs.slides[0].shapes[23].text = json_map['visitas'][0]['actividades'][0]['descripcion']
+        prs.slides[0].shapes[24].text = json_map['visitas'][0]['actividades'][0]['clasificacion']['nombre_clasificacion']
+
         #detalles
         prs.slides[0].shapes[15].text_frame.paragraphs[0].font.size = Pt(8)
         prs.slides[0].shapes[15].text = ""
@@ -390,11 +397,11 @@ def fichaTecnica(request):
             prs.slides[0].shapes[21].text = str(json_map['visitas'][0]['actividades'][0]['capitalizaciones'][0]['cantidad'])
 
 
-        prs.save('visitas_stg/static/ppt/ppt-generados/FichaTecnicaVisitas_' + str(usuario.user.id) + '.pptx')
-        the_file = 'visitas_stg/static/ppt/ppt-generados/FichaTecnicaVisitas_' + str(usuario.user.id) + '.pptx'
+        #prs.save('visitas_stg/static/ppt/ppt-generados/FichaTecnicaVisitas_' + str(usuario.user.id) + '.pptx')
+        #the_file = 'visitas_stg/static/ppt/ppt-generados/FichaTecnicaVisitas_' + str(usuario.user.id) + '.pptx'
 
-        #prs.save('/home/sisefenlin/visitas/static/ppt/ppt-generados/FichaTecnicaVisitas_' + str(usuario.user.id) + '.pptx')
-        #the_file = '/home/sisefenlin/visitas/static/ppt/ppt-generados/FichaTecnicaVisitas_' + str(usuario.user.id) + '.pptx'
+        prs.save('/home/sisefenlin/visitas/static/ppt/ppt-generados/FichaTecnicaVisitas_' + str(usuario.user.id) + '.pptx')
+        the_file = '/home/sisefenlin/visitas/static/ppt/ppt-generados/FichaTecnicaVisitas_' + str(usuario.user.id) + '.pptx'
 
         filename = os.path.basename(the_file)
         chunk_size = 8192
