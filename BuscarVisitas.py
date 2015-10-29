@@ -121,7 +121,7 @@ class BuscarVisitas:
             numero_apariciones=Sum('actividad__capitalizacion__cantidad'))
 
         reporte_municipio = visitas.values('municipio_id', 'municipio__nombreMunicipio', 'municipio__latitud',
-                                           'municipio__longitud').distinct().annotate(
+                                           'municipio__longitud', 'entidad__nombreEstado').distinct().annotate(
             numero_visitas=Count('id', distinct=True),
             numero_apariciones=Sum('actividad__capitalizacion__cantidad'))
         for municipio in reporte_municipio:
