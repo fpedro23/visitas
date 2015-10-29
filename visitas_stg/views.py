@@ -272,6 +272,13 @@ def usuarios(request):
 
 def consulta_predifinidos(request):
 
+    if request.user.userprofile.rol == 'AD':
+        dependencias = Dependencia.objects.all()
+    else:
+        dependencias = Dependencia.objects.filter(
+            Q(id=request.user.userprofile.dependencia_id)
+        )
+
     template = loader.get_template('admin/visitas_stg/consulta_predefinidos/consulta-predefinidos.html')
     context = RequestContext(request, {
         'Regiones': Region.objects.all(),
@@ -279,7 +286,7 @@ def consulta_predifinidos(request):
         'Distritos': DistritoElectoral.objects.all(),
         'Municipios': Municipio.objects.all(),
         'Funcionarios': Cargo.objects.all(),
-        'Dependencias': Dependencia.objects.all(),
+        'Dependencias': dependencias,
         'TipoActividad': TipoActividad.objects.all(),
         'TipoCapitalizacion': TipoCapitalizacion.objects.all(),
         'Medios': Medio.objects.all(),
@@ -291,6 +298,15 @@ def consulta_predifinidos(request):
 
 def consulta_filtros(request):
 
+    print request.user.userprofile.rol
+
+    if request.user.userprofile.rol == 'AD':
+        dependencias = Dependencia.objects.all()
+    else:
+        dependencias = Dependencia.objects.filter(
+            Q(id=request.user.userprofile.dependencia_id)
+        )
+
     template = loader.get_template('admin/visitas_stg/consulta_filtros/consulta-filtros.html')
     context = RequestContext(request, {
         'Regiones': Region.objects.all(),
@@ -298,7 +314,7 @@ def consulta_filtros(request):
         'Distritos': DistritoElectoral.objects.all(),
         'Municipios': Municipio.objects.all(),
         'Funcionarios': Cargo.objects.all(),
-        'Dependencias': Dependencia.objects.all(),
+        'Dependencias': dependencias,
         'TipoActividad': TipoActividad.objects.all(),
         'TipoCapitalizacion': TipoCapitalizacion.objects.all(),
         'Medios': Medio.objects.all(),
@@ -377,15 +393,23 @@ def fichaTecnica(request):
 
 def Predefinido_Estado(request):
 
-        #prs = Presentation('visitas_stg/static/ppt/Reporte_Estado_sisef.pptx')
-        prs = Presentation('/home/sisefenlin/visitas/static/ppt/Reporte_Estado_sisef.pptx')
+        prs = Presentation('visitas_stg/static/ppt/Reporte_Estado_sisef.pptx')
+        #prs = Presentation('/home/sisefenlin/visitas/static/ppt/Reporte_Estado_sisef.pptx')
         usuario = request.user.userprofile
+
+        print request.user.userprofile.rol
+
+        if request.user.userprofile.rol == 'AD':
+            dependencias = Dependencia.objects.all()
+        else:
+            dependencias = Dependencia.objects.filter(
+                Q(id=request.user.userprofile.dependencia_id))
 
         ans = []
 
         estado = Estado.objects.get(id=request.GET.get('estado_id'))
         medios = Medio.objects.values('id', 'nombre_medio')
-        dependencias = Dependencia.objects.all()
+        #dependencias = Dependencia.objects.all()
         clasificaciones = Clasificacion.objects.values('id', 'nombre_clasificacion')
 
 
@@ -598,9 +622,11 @@ def Predefinido_Estado(request):
         data_labels.number_format = '0%'
         data_labels.position = XL_LABEL_POSITION.OUTSIDE_END
 
-        prs.save('/home/sisefenlin/visitas/static/ppt/ppt-generados/Reporte_Estado_sisef_' + str(usuario.user.id) + '.pptx')
+        prs.save('visitas_stg/static/ppt/ppt-generados/Reporte_Estado_sisef_' + str(usuario.user.id) + '.pptx')
+        the_file = 'visitas_stg/static/ppt/ppt-generados/Reporte_Estado_sisef_' + str(usuario.user.id) + '.pptx'
 
-        the_file = '/home/sisefenlin/visitas/static/ppt/ppt-generados/Reporte_Estado_sisef_' + str(usuario.user.id) + '.pptx'
+        #prs.save('/home/sisefenlin/visitas/static/ppt/ppt-generados/Reporte_Estado_sisef_' + str(usuario.user.id) + '.pptx')
+        #the_file = '/home/sisefenlin/visitas/static/ppt/ppt-generados/Reporte_Estado_sisef_' + str(usuario.user.id) + '.pptx'
 
         filename = os.path.basename(the_file)
         chunk_size = 8192
@@ -613,9 +639,17 @@ def Predefinido_Estado(request):
 
 def Predefinido_Dependencia(request):
 
-        #prs = Presentation('visitas_stg/static/ppt/Reporte_Dependencia_sisef.pptx')
-        prs = Presentation('/home/sisefenlin/visitas/static/ppt/Reporte_Dependencia_sisef.pptx')
+        prs = Presentation('visitas_stg/static/ppt/Reporte_Dependencia_sisef.pptx')
+        #prs = Presentation('/home/sisefenlin/visitas/static/ppt/Reporte_Dependencia_sisef.pptx')
         usuario = request.user.userprofile
+
+        print request.user.userprofile.rol
+
+        if request.user.userprofile.rol == 'AD':
+            dependencias = Dependencia.objects.all()
+        else:
+            dependencias = Dependencia.objects.filter(
+                Q(id=request.user.userprofile.dependencia_id))
 
         ans = []
 
@@ -869,9 +903,11 @@ def Predefinido_Dependencia(request):
         data_labels.number_format = '0%'
         data_labels.position = XL_LABEL_POSITION.OUTSIDE_END
 
-        prs.save('/home/sisefenlin/visitas/static/ppt/ppt-generados/Reporte_Dependencia_sisef_' + str(usuario.user.id) + '.pptx')
+        prs.save('visitas_stg/static/ppt/ppt-generados/Reporte_Dependencia_sisef_' + str(usuario.user.id) + '.pptx')
+        the_file = 'visitas_stg/static/ppt/ppt-generados/Reporte_Dependencia_sisef_' + str(usuario.user.id) + '.pptx'
 
-        the_file = '/home/sisefenlin/visitas/static/ppt/ppt-generados/Reporte_Dependencia_sisef_' + str(usuario.user.id) + '.pptx'
+        #prs.save('/home/sisefenlin/visitas/static/ppt/ppt-generados/Reporte_Dependencia_sisef_' + str(usuario.user.id) + '.pptx')
+        #the_file = '/home/sisefenlin/visitas/static/ppt/ppt-generados/Reporte_Dependencia_sisef_' + str(usuario.user.id) + '.pptx'
 
         filename = os.path.basename(the_file)
         chunk_size = 8192
