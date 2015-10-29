@@ -70,7 +70,15 @@ def get_array_or_vacio(the_string):
 
 
 def listar_visitas(request):
-    buscador = BuscarVisitas(ids_dependencia=get_array_or_none(request.GET.get('dependencia')),
+    usuario = request.user.userprofile
+    dependencias = get_array_or_none(request.GET.get('dependencia'))
+    if dependencias is None or len(dependencias) == 0:
+        if usuario.rol == 'AD':
+            dependencias = None
+        else:
+            dependencias = [usuario.dependencia.id]
+
+    buscador = BuscarVisitas(ids_dependencia=dependencias,
                              rango_fecha_inicio=request.GET.get('fechaInicio', None),
                              rango_fecha_fin=request.GET.get('fechaFin', None),
                              descripcion=request.GET.get('descripcion', None),
@@ -160,12 +168,18 @@ def listar_visitas(request):
                 for problematica in actividad['problematicas_sociales']:
                     sheet.write(l, 18, problematica['problematica_social'])
                     l += 1
-                if j>=k and j>=l:
+                if j>k and j>l:
                     i=j
-                if k>=j and k>=l:
+                if k>j and k>l:
                     i=k
-                if l>=j and l>=k:
+                if l>j and l>k:
                     i=l
+                if j==k and j==l and j==i:
+                    i +=1
+                else:
+                    i=j
+
+
 
         book.close()
     else:
@@ -175,7 +189,7 @@ def listar_visitas(request):
 
     response = StreamingHttpResponse(FileWrapper(output),
                                     content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    response['Content-Disposition'] = 'attachment; filename="listado_obras.xlsx"'
+    response['Content-Disposition'] = 'attachment; filename="listado_visitas.xlsx"'
     response['Content-Length'] = output.tell()
 
     output.seek(0)
@@ -184,6 +198,8 @@ def listar_visitas(request):
 
 
 def listar_obras(request):
+
+
     buscador = BuscarVisitas(ids_dependencia=get_array_or_none(request.GET.get('dependencia')),
                              rango_fecha_inicio=request.GET.get('fechaInicio', None),
                              rango_fecha_fin=request.GET.get('fechaFin', None),
