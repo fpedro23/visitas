@@ -424,7 +424,14 @@ class IdUnicoEndpoint(ProtectedResourceView):
 
 class BuscarVisitasEndpoint(ProtectedResourceView):
     def get(self, request):
-        buscador = BuscarVisitas(ids_dependencia=get_array_or_none(request.GET.get('dependencia')),
+        usuario = get_usuario_for_token(request.GET.get('access_token'))
+        dependencias = get_array_or_none(request.GET.get('dependencia'))
+        if dependencias is None or len(dependencias) == 0:
+            if usuario.rol == 'AD':
+                dependencias = None
+            else:
+                dependencias = [usuario.dependencia.id]
+        buscador = BuscarVisitas(ids_dependencia=dependencias,
                                  rango_fecha_inicio=request.GET.get('fechaInicio', None),
                                  rango_fecha_fin=request.GET.get('fechaFin', None),
                                  descripcion=request.GET.get('descripcion', None),
@@ -470,8 +477,12 @@ class BuscarVisitasEndpoint(ProtectedResourceView):
         json_ans['reporte_municipio'] = []
         for municipio in ans['reporte_municipio']:
             json_map = {'municipio': municipio['municipio__nombreMunicipio'],
-                        'numero_visitas': dependencia['numero_visitas'],
-                        'numero_apariciones': int(dependencia['numero_apariciones'])}
+                        'estado': municipio['entidad__nombreEstado'],
+                        'numero_visitas': municipio['numero_visitas'],
+                        'numero_apariciones': int(municipio['numero_apariciones']),
+                        'visitas': []}
+            for visita in municipio['visitas']:
+                json_map['visitas'].append({'identificador_unico': visita['identificador_unico']})
             json_ans['reporte_municipio'].append(json_map)
 
         return HttpResponse(json.dumps(json_ans), 'application/json')
@@ -479,9 +490,13 @@ class BuscarVisitasEndpoint(ProtectedResourceView):
 
 class DependenciasEndpoint(ProtectedResourceView):
     def get(self, request):
-        return HttpResponse(
-            json.dumps(map(lambda dependencia: dependencia.to_serializable_dict(), Dependencia.objects.all())),
-            'application/json')
+        user = get_usuario_for_token(request.GET.get('access_token'))
+        if user.rol == 'AD':
+            return HttpResponse(
+                json.dumps(map(lambda dependencia: dependencia.to_serializable_dict(), Dependencia.objects.all())),
+                'application/json')
+        else:
+            return HttpResponse(json.dumps(user.dependencia.to_serializable_dict()), 'application/json')
 
 
 class TipoActividadEndpoint(ProtectedResourceView):
