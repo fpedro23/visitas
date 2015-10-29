@@ -1411,11 +1411,15 @@ function puntosMapa(Datos) {
   var arregloSimple=new Array();
   var arregloDoble=new Array();
     var arregloObjeto = new Object();
-    for(var i= 0;i<Datos.reporte_estado.length;i++){
+    for(var i= 0;i<Datos.reporte_municipio.length;i++){
         var arregloSimple=new Array();
-        arregloSimple.push(Datos.visitas[i].municipio.nombreMunicipio + ", " + Datos.visitas[i].entidad.nombreEstado + ", id. de visita : " + Datos.visitas[i].identificador_unico);
-        arregloSimple.push(Datos.visitas[i].municipio.latitud);
-        arregloSimple.push(Datos.visitas[i].municipio.longitud);
+        if (Datos.reporte_municipio[i].numero_visitas == 1){
+            arregloSimple.push(Datos.reporte_municipio[i].municipio + ", " + Datos.reporte_municipio[i].estado + ", id. de visita : " + Datos.reporte_municipio[i].visitas[0].identificador_unico);
+        }else{
+            arregloSimple.push(Datos.reporte_municipio[i].municipio + ", " + Datos.reporte_municipio[i].estado + ", Total de Visitas : " + Datos.reporte_municipio[i].numero_visitas);
+        }
+        arregloSimple.push(Datos.reporte_municipio[i].latitud);
+        arregloSimple.push(Datos.reporte_municipio[i].longitud);
         arregloSimple.push(i);
         arregloDoble.push(arregloSimple);
     }

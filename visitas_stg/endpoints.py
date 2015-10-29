@@ -479,7 +479,9 @@ class BuscarVisitasEndpoint(ProtectedResourceView):
             json_map = {'municipio': municipio['municipio__nombreMunicipio'],
                         'estado': municipio['entidad__nombreEstado'],
                         'numero_visitas': municipio['numero_visitas'],
-                        'numero_apariciones': int(municipio['numero_apariciones']),
+                        'numero_apariciones': municipio['numero_apariciones'],
+                        'longitud': municipio['municipio__longitud'],
+                        'latitud': municipio['municipio__latitud'],
                         'visitas': []}
             for visita in municipio['visitas']:
                 json_map['visitas'].append({'identificador_unico': visita['identificador_unico']})
@@ -530,7 +532,15 @@ class PptxEndpoint(ProtectedResourceView):
 
         user = AccessToken.objects.get(token=request.GET.get('access_token')).user
 
-        buscador = BuscarVisitas(ids_dependencia=get_array_or_none(request.GET.get('dependencia')),
+        usuario = get_usuario_for_token(request.GET.get('access_token'))
+        dependencias = get_array_or_none(request.GET.get('dependencia'))
+        if dependencias is None or len(dependencias) == 0:
+            if usuario.rol == 'AD':
+                dependencias = None
+            else:
+                dependencias = [usuario.dependencia.id]
+
+        buscador = BuscarVisitas(ids_dependencia=dependencias,
                                  rango_fecha_inicio=request.GET.get('fechaInicio', None),
                                  rango_fecha_fin=request.GET.get('fechaFin', None),
                                  descripcion=request.GET.get('descripcion', None),
@@ -652,8 +662,17 @@ class PptxReporteEndpoint(ProtectedResourceView):
     def get(self, request):
 
         user = AccessToken.objects.get(token=request.GET.get('access_token')).user
+
+        usuario = get_usuario_for_token(request.GET.get('access_token'))
+        dependencias = get_array_or_none(request.GET.get('dependencia'))
+        if dependencias is None or len(dependencias) == 0:
+            if usuario.rol == 'AD':
+                dependencias = None
+            else:
+                dependencias = [usuario.dependencia.id]
+
         tipoReporte = request.GET.get("tipoReporte", None)
-        buscador = BuscarVisitas(ids_dependencia=get_array_or_none(request.GET.get('dependencia')),
+        buscador = BuscarVisitas(ids_dependencia=dependencias,
                                  rango_fecha_inicio=request.GET.get('fechaInicio', None),
                                  rango_fecha_fin=request.GET.get('fechaFin', None),
                                  descripcion=request.GET.get('descripcion', None),
