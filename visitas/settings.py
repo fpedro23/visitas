@@ -144,6 +144,13 @@ TEMPLATETAGS_DIRS = (
     os.path.join(BASE_DIR, 'visitas_stg/templatetags/'),
 )
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'edicomexsa@gmail.com'
+EMAIL_HOST_PASSWORD = 'Edicomex2015'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 
 SESSION_COOKIE_AGE = 35900
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
