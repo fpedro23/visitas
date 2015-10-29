@@ -5,7 +5,7 @@ from models import Estado, Municipio, TipoCapitalizacion, DistritoElectoral, Reg
     TipoActividad, Clasificacion, Medio, Visita, Capitalizacion, Actividad, ParticipanteLocal
 import json
 from oauth2_provider.models import AccessToken
-from views import get_array_or_none
+from views import get_array_or_none,get_array_or_vacio
 from oauth2_provider.models import AccessToken
 from django.db.models import Sum, IntegerField, Q, Count
 from django.db.models import F
@@ -323,7 +323,7 @@ class RegionesEndpoint(ProtectedResourceView):
 
 class EstadosForRegionesEndpoint(ProtectedResourceView):
     def get(self, request):
-        region_ids = get_array_or_none(request.GET.get('regiones'))
+        region_ids = get_array_or_vacio(request.GET.get('regiones'))
         if region_ids is not None:
             estados = Estado.objects.filter(region_id__in=region_ids)
         else:
@@ -334,7 +334,7 @@ class EstadosForRegionesEndpoint(ProtectedResourceView):
 
 class MunicipiosForEstadosEndpoint(ProtectedResourceView):
     def get(self, request):
-        estado_ids = get_array_or_none(request.GET.get('estados'))
+        estado_ids = get_array_or_vacio(request.GET.get('estados'))
         if estado_ids is None or 33 in estado_ids or 34 in estado_ids:
             municipios = Municipio.objects.all()
         else:
@@ -350,7 +350,7 @@ class MunicipiosForEstadosEndpoint(ProtectedResourceView):
 
 class DistritoElectoralForEstadosEndpoint(ProtectedResourceView):
     def get(self, request):
-        estado_ids = get_array_or_none(request.GET.get('estados'))
+        estado_ids = get_array_or_vacio(request.GET.get('estados'))
 
         if estado_ids is not None:
             distritos = DistritoElectoral.objects.filter(estado_id__in=estado_ids)
@@ -363,7 +363,7 @@ class DistritoElectoralForEstadosEndpoint(ProtectedResourceView):
 
 class CargosForDependenciasEndpoint(ProtectedResourceView):
     def get(self, request):
-        dependencia_ids = get_array_or_none(request.GET.get('dependencias'))
+        dependencia_ids = get_array_or_vacio(request.GET.get('dependencias',None))
 
         if dependencia_ids is not None and len(dependencia_ids) > 0:
             cargos = Cargo.objects.filter(dependencia_id__in=dependencia_ids)
@@ -375,7 +375,7 @@ class CargosForDependenciasEndpoint(ProtectedResourceView):
 
 class CargosForNombreEndpoint(ProtectedResourceView):
     def get(self, request):
-        cargo_ids = get_array_or_none(request.GET.get('id_cargo'))
+        cargo_ids = get_array_or_vacio(request.GET.get('id_cargo'))
 
         if cargo_ids is not None and len(cargo_ids) > 0:
             cargos = Cargo.objects.filter(id__in=cargo_ids)

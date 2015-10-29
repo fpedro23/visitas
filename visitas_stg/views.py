@@ -62,6 +62,13 @@ def get_array_or_none(the_string):
     else:
         return map(int, the_string.split(','))
 
+def get_array_or_vacio(the_string):
+    if the_string =='':
+        return None
+    else:
+        return map(int, the_string.split(','))
+
+
 def listar_visitas(request):
     buscador = BuscarVisitas(ids_dependencia=get_array_or_none(request.GET.get('dependencia')),
                              rango_fecha_inicio=request.GET.get('fechaInicio', None),

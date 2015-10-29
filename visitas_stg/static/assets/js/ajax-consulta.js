@@ -1928,6 +1928,7 @@ $l(function() {
             populateMunicpiosSelect(ans);
         });
         getDistritosForEstado(estadoId, function (ans) {
+
             populateDistritosSelect(ans);
 
         });
@@ -1939,7 +1940,7 @@ $l(function() {
         }).get();
 
         getCargosForDependencias(dependencias, function (ans) {
-            populateCargosSelect(ans);
+            populateCargosSelect(ans,dependencias);
         });
 
     });
@@ -2060,12 +2061,18 @@ function getDistritosForEstado(estadoId, onSuccess) {
 }
 
 // Once we're done filtering, we just put the results where they belong
-function populateCargosSelect(cargos) {
+function populateCargosSelect(cargos,dependencias) {
     // Clean the field
     clearCargos();
     var sHtml='<select id="msFuncionarios" multiple="multiple" style="width: 100%;height: auto;">';
-    for(var i= 0;i<cargos.length;i++) {
-       sHtml= sHtml +'<option value='+ cargos[i].id +'>' + cargos[i].nombre_cargo +'</option>';
+    if (dependencias ==''){
+        for(var i= 0;i<cargos.length;i++) {
+           sHtml= sHtml +'<option value='+ cargos[i].id +'>' + cargos[i].dependencia.nombreDependencia + '-' + cargos[i].nombre_cargo +'</option>';
+        }
+    }else{
+        for(var i= 0;i<cargos.length;i++) {
+           sHtml= sHtml +'<option value='+ cargos[i].id +'>' + cargos[i].nombre_cargo +'</option>';
+        }
     }
     sHtml= sHtml +'</select>';
 
