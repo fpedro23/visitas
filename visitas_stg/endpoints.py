@@ -550,9 +550,10 @@ class PptxEndpoint(ProtectedResourceView):
         shapes = slide.shapes
         shapes.title.text = 'Resultados'
 
-        renglones = resultados['reporte_general']['visitas_totales'] + 1
+        #renglones = resultados['reporte_general']['visitas_totales'] + 1
+        renglones = len(json_map['visitas'])
         if renglones < 22:
-            rows = renglones
+            rows = renglones+1
         else:
             rows = 22
         cols = 3
