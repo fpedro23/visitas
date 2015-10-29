@@ -424,7 +424,14 @@ class IdUnicoEndpoint(ProtectedResourceView):
 
 class BuscarVisitasEndpoint(ProtectedResourceView):
     def get(self, request):
-        buscador = BuscarVisitas(ids_dependencia=get_array_or_none(request.GET.get('dependencia')),
+        usuario = get_usuario_for_token(request.GET.get('access_token'))
+        dependencias = get_array_or_none(request.GET.get('dependencia'))
+        if dependencias is None or len(dependencias) == 0:
+            if usuario.rol == 'AD':
+                dependencias = None
+            else:
+                dependencias = [usuario.dependencia.id]
+        buscador = BuscarVisitas(ids_dependencia=dependencias,
                                  rango_fecha_inicio=request.GET.get('fechaInicio', None),
                                  rango_fecha_fin=request.GET.get('fechaFin', None),
                                  descripcion=request.GET.get('descripcion', None),
@@ -480,7 +487,7 @@ class BuscarVisitasEndpoint(ProtectedResourceView):
 class DependenciasEndpoint(ProtectedResourceView):
     def get(self, request):
         user = get_usuario_for_token(request.GET.get('access_token'))
-        if user.rol == 'SA':
+        if user.rol == 'AD':
             return HttpResponse(
                 json.dumps(map(lambda dependencia: dependencia.to_serializable_dict(), Dependencia.objects.all())),
                 'application/json')
