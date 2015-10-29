@@ -51,7 +51,7 @@
 	position: absolute;
 	left: 684px;
 	top: 284px;
-    padding-left: 4px;
+    padding-left: 8px;
     padding-right: 2px;
 }
 
@@ -207,14 +207,14 @@ label {
 .usudependencia{
     font-family: Verdana, Geneva, sans-serif;
     font-size: 9px;
-    width: 100%;
+    width: 90%;
 }
 
 
 .usurol{
     font-family: Verdana, Geneva, sans-serif;
     font-size: 11px;
-    width: 100%;
+    width: 90%;
 }
 
 select{
