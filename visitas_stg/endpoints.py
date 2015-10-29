@@ -479,9 +479,13 @@ class BuscarVisitasEndpoint(ProtectedResourceView):
 
 class DependenciasEndpoint(ProtectedResourceView):
     def get(self, request):
-        return HttpResponse(
-            json.dumps(map(lambda dependencia: dependencia.to_serializable_dict(), Dependencia.objects.all())),
-            'application/json')
+        user = get_usuario_for_token(request.GET.get('access_token'))
+        if user.rol == 'SA':
+            return HttpResponse(
+                json.dumps(map(lambda dependencia: dependencia.to_serializable_dict(), Dependencia.objects.all())),
+                'application/json')
+        else:
+            return HttpResponse(json.dumps(user.dependencia.to_serializable_dict()), 'application/json')
 
 
 class TipoActividadEndpoint(ProtectedResourceView):
