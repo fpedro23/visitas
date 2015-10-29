@@ -120,6 +120,11 @@ class BuscarVisitas:
         reporte_estado = visitas.values('entidad__nombreEstado').annotate(numero_visitas=Count('entidad')).annotate(
             numero_apariciones=Sum('actividad__capitalizacion__cantidad'))
 
+        reporte_municipio = visitas.values('municipio_id', 'municipio__nombreMunicipio', 'municipio__latitud',
+                                           'municipio__longitud').distinct().annotate(
+                                                numero_visitas=Count('id', distinct=True),
+                                                numero_apariciones=Sum('actividad__capitalizacion__cantidad'))
+
         reporte_general = {
             'visitas_totales': visitas_totales,
         }
@@ -129,6 +134,7 @@ class BuscarVisitas:
             'reporte_general': reporte_general,
             'reporte_dependencia': reporte_dependencia,
             'reporte_estado': reporte_estado,
+            'reporte_municipio': reporte_municipio
         }
 
         return reportes
@@ -147,11 +153,8 @@ class BuscaVisita:
         if self.identificador_unico is not None:
             query = query & Q(identificador_unico=self.identificador_unico)
 
-
         if query is not None:
             visitas = Visita.objects.filter(query).distinct()
-
-
 
         reportes = {
             'visitas': visitas,
