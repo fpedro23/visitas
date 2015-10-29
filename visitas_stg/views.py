@@ -393,8 +393,8 @@ def fichaTecnica(request):
 
 def Predefinido_Estado(request):
 
-        prs = Presentation('visitas_stg/static/ppt/Reporte_Estado_sisef.pptx')
-        #prs = Presentation('/home/sisefenlin/visitas/static/ppt/Reporte_Estado_sisef.pptx')
+        #prs = Presentation('visitas_stg/static/ppt/Reporte_Estado_sisef.pptx')
+        prs = Presentation('/home/sisefenlin/visitas/static/ppt/Reporte_Estado_sisef.pptx')
         usuario = request.user.userprofile
 
         print request.user.userprofile.rol
@@ -622,11 +622,11 @@ def Predefinido_Estado(request):
         data_labels.number_format = '0%'
         data_labels.position = XL_LABEL_POSITION.OUTSIDE_END
 
-        prs.save('visitas_stg/static/ppt/ppt-generados/Reporte_Estado_sisef_' + str(usuario.user.id) + '.pptx')
-        the_file = 'visitas_stg/static/ppt/ppt-generados/Reporte_Estado_sisef_' + str(usuario.user.id) + '.pptx'
+        #prs.save('visitas_stg/static/ppt/ppt-generados/Reporte_Estado_sisef_' + str(usuario.user.id) + '.pptx')
+        #the_file = 'visitas_stg/static/ppt/ppt-generados/Reporte_Estado_sisef_' + str(usuario.user.id) + '.pptx'
 
-        #prs.save('/home/sisefenlin/visitas/static/ppt/ppt-generados/Reporte_Estado_sisef_' + str(usuario.user.id) + '.pptx')
-        #the_file = '/home/sisefenlin/visitas/static/ppt/ppt-generados/Reporte_Estado_sisef_' + str(usuario.user.id) + '.pptx'
+        prs.save('/home/sisefenlin/visitas/static/ppt/ppt-generados/Reporte_Estado_sisef_' + str(usuario.user.id) + '.pptx')
+        the_file = '/home/sisefenlin/visitas/static/ppt/ppt-generados/Reporte_Estado_sisef_' + str(usuario.user.id) + '.pptx'
 
         filename = os.path.basename(the_file)
         chunk_size = 8192
@@ -639,8 +639,8 @@ def Predefinido_Estado(request):
 
 def Predefinido_Dependencia(request):
 
-        prs = Presentation('visitas_stg/static/ppt/Reporte_Dependencia_sisef.pptx')
-        #prs = Presentation('/home/sisefenlin/visitas/static/ppt/Reporte_Dependencia_sisef.pptx')
+        #prs = Presentation('visitas_stg/static/ppt/Reporte_Dependencia_sisef.pptx')
+        prs = Presentation('/home/sisefenlin/visitas/static/ppt/Reporte_Dependencia_sisef.pptx')
         usuario = request.user.userprofile
 
         print request.user.userprofile.rol
@@ -903,11 +903,11 @@ def Predefinido_Dependencia(request):
         data_labels.number_format = '0%'
         data_labels.position = XL_LABEL_POSITION.OUTSIDE_END
 
-        prs.save('visitas_stg/static/ppt/ppt-generados/Reporte_Dependencia_sisef_' + str(usuario.user.id) + '.pptx')
-        the_file = 'visitas_stg/static/ppt/ppt-generados/Reporte_Dependencia_sisef_' + str(usuario.user.id) + '.pptx'
+        #prs.save('visitas_stg/static/ppt/ppt-generados/Reporte_Dependencia_sisef_' + str(usuario.user.id) + '.pptx')
+        #the_file = 'visitas_stg/static/ppt/ppt-generados/Reporte_Dependencia_sisef_' + str(usuario.user.id) + '.pptx'
 
-        #prs.save('/home/sisefenlin/visitas/static/ppt/ppt-generados/Reporte_Dependencia_sisef_' + str(usuario.user.id) + '.pptx')
-        #the_file = '/home/sisefenlin/visitas/static/ppt/ppt-generados/Reporte_Dependencia_sisef_' + str(usuario.user.id) + '.pptx'
+        prs.save('/home/sisefenlin/visitas/static/ppt/ppt-generados/Reporte_Dependencia_sisef_' + str(usuario.user.id) + '.pptx')
+        the_file = '/home/sisefenlin/visitas/static/ppt/ppt-generados/Reporte_Dependencia_sisef_' + str(usuario.user.id) + '.pptx'
 
         filename = os.path.basename(the_file)
         chunk_size = 8192
