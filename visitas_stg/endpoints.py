@@ -477,8 +477,11 @@ class BuscarVisitasEndpoint(ProtectedResourceView):
         json_ans['reporte_municipio'] = []
         for municipio in ans['reporte_municipio']:
             json_map = {'municipio': municipio['municipio__nombreMunicipio'],
-                        'numero_visitas': dependencia['numero_visitas'],
-                        'numero_apariciones': int(dependencia['numero_apariciones'])}
+                        'numero_visitas': municipio['numero_visitas'],
+                        'numero_apariciones': int(municipio['numero_apariciones']),
+                        'visitas': []}
+            for visita in municipio['visitas']:
+                json_map['visitas'].append({'identificador_unico': visita['identificador_unico']})
             json_ans['reporte_municipio'].append(json_map)
 
         return HttpResponse(json.dumps(json_ans), 'application/json')
