@@ -20,6 +20,19 @@
   background-position: 0px 0px;
 }
 
+#homeBOT{
+	width: 25px;
+	height: 25px;
+	position: absolute;
+	top: 40px;
+	left: 47px;
+	background-image: url(../imagenes/home_N.fw.png);
+}
+
+#homeBOT:hover{
+	background-image:url(../imagenes/home_O.fw.png);
+}
+
 .titleHEADER01{
 	width: 320px;
 	height: 20px;
@@ -34,19 +47,6 @@
 	position: absolute;
 	top: 34px;
 	left: 681px;
-}
-
-#homeBOT{
-   width: 26px;
-   height: 26px;
-   position: absolute;
-   top: 14px;
-   left: 18px;
-   background-image: url(../imagenes/home_N.fw.png);
-}
-
-#homeBOT:hover{
-   background-image:url(../imagenes/home_O.fw.png);
 }
 
 #nombreUSER{
@@ -68,11 +68,11 @@
 	right: 23px;
 	top: 55px;
 	background-image:url(../imagenes/bigBACK.png);
-	background-position: -873px -199px;
+	background-position: -874px -199px;
 }
 
 #engrane:hover{
-	background-position: -873px -221px;
+	background-position: -874px -221px;
 }
 
 #menu{
@@ -208,17 +208,17 @@
 }
 
 #regresarBTN{
-	 width: 82px;
-	 height: 22px;
+	 width: 84px;
+	 height: 21px;
 	 background-image:url(../imagenes/bigBACK.png);
-	 background-position: -1558px -237px;
+	 background-position: -1560px -237px;
 }
 
 #regresarBTN:hover{
-	background-position: -1558px -264px;
+	background-position: -1560px -261px;
 }
 
-#welcome {
+#welcome{
 	width: 400px;
 	height: 22px;
 	text-align: center;
@@ -234,7 +234,7 @@
 	width: 290px;
 	height: 18px;
 	position: absolute;
-	left: 530px;
+	left: 370px;
 	top: 710px;
 	font-family: Verdana, Geneva, sans-serif;
 	font-size: 10px;
@@ -353,7 +353,7 @@
 
 
 #entrar:hover{
-	background-position:-312px -229px;
+	background-position:-312px -223px;
 }
 
 #olvido{
@@ -368,7 +368,7 @@
 }
 
 #olvido:hover{
-	background-position: -1659px -260px;
+	background-position: -1659px -255px;
 }
 /*ELEMENTOS CORRESPONDIENTES AL BODY DE LOG IN*/
 
@@ -421,7 +421,7 @@
 }
 
 .botENVIAR:hover{
-	background-position: -759px -230px;
+	background-position: -759px -227px;
 }
 
 #alertaMAIL{
@@ -483,7 +483,7 @@
 	top: 283px;
 	left: 356px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -759px -157px;
+	background-position: -759px -160px;
 }
 
 .botCAMBIAR:hover{
@@ -506,7 +506,7 @@
 	width: 180px;
 	height: 190px;
 	background-image:url(../imagenes/bigBACK.png);
-	background-position: -1439px -713px;
+	background-position: -1251px -1494px;
 
 	position: absolute;
 	top: 210px;
@@ -514,14 +514,14 @@
 }
 
 .ayudaTEXTO:hover{
-	background-position: -1439px -910px;
+	background-position: -1430px -1494px;
 }
 
 .ayudaVIDEO{
 	width: 180px;
 	height: 190px;
 	background-image:url(../imagenes/bigBACK.png);
-	background-position: -1625px -714px;
+	background-position: -1251px -1686px;
 
 	position: absolute;
 	top: 210px;
@@ -529,7 +529,7 @@
 }
 
 .ayudaVIDEO:hover{
-	background-position: -1625px -911px;
+	background-position: -1431px -1686px;
 	background-color:#F06;
 }
 /*ELEMENTOS CORRESPONDIENTEES AL BODY DE AYUDA*/
@@ -699,21 +699,21 @@
 }
 
 .altaVISITA:hover{
-	background-position: -1251px -508px;
+	background-position: -1251px -501px;
 }
 
 .modificarVISITA{
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -1252px -712px;
+	background-position: -1251px -691px;
 	position: absolute;
 	top: 80px;
 	left: 515px;
 }
 
 .modificarVISITA:hover{
-	background-position: -1252px -910px;
+	background-position: -1252px -881px;
 }
 /*ELEMENTOS CORRESPONDIENTEES AL BODY DE MOVIMIENTOS*/
 
@@ -726,11 +726,11 @@
 	left: 977px;
 	top: 1px;
 	background-image:url(../imagenes/bigBACK.png);
-	background-position: -1415px -233px;
+	background-position: -1409px -207px;
 }
 
 .imprimirBTN:hover{
-	background-position:-1415px -264px;
+	background-position:-1435px -207px;
 }
 
 #alta01{
@@ -863,7 +863,7 @@
 }
 
 .eliminarBTN:hover{
-	background-position: -312px -283px;
+	background-position: -312px -277px;
 }
 
 .salirBTN{
@@ -877,7 +877,7 @@
 }
 
 .salirBTN:hover{
-	background-position: -404px -283px;
+	background-position: -404px -277px;
 }
 
 .guardarBTN{
@@ -891,7 +891,7 @@
 }
 
 .guardarBTN:hover{
-	background-position: -480px -283px;
+	background-position: -480px -277px;
 }
 
 #autorizar{
@@ -934,11 +934,11 @@
 	left: 947px;
 	top: 1px;
 	background-image:url(../imagenes/bigBACK.png);
-	background-position: -1447px -233px;
+	background-position: -1410px -234px;
 }
 
 .historialBTN:hover{
-	background-position:-1447px -264px;
+	background-position:-1436px -234px;
 }
 /*ELEMENTOS CORRESPONDIENTES AL BODY DE MODIFICACIÓN DE VISITA*/
 
@@ -958,14 +958,14 @@
 	width: 85px;
 	height: 21px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -1085px -256px;
+	background-position: -1087px -256px;
 	position: relative;
 	display: inline-block;
 
 }
 
 .listarBTN:hover{
-	background-position: -1085px -283px;
+	background-position: -1087px -277px;
 	cursor: pointer;
 }
 
@@ -980,7 +980,7 @@
 }
 
 .limpiarBTN:hover{
-	background-position: -759px -283px;
+	background-position: -759px -277px;
 	cursor: pointer;
 }
 
@@ -988,14 +988,14 @@
 	width: 90px;
 	height: 21px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -851px -256px;
+	background-position: -856px -256px;
 	position: relative;
 	display: inline-block;
 
 }
 
 .consultarBTN:hover{
-	background-position: -851px -283px;
+	background-position: -856px -277px;
 	cursor: pointer;
 }
 
@@ -1045,33 +1045,33 @@
 }
 
 .exportarBTN{
-	width: 26px;
-	height: 30px;
+	width: 25px;
+	height: 25px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -1355px -233px;
+	background-position: -1353px -232px;
 	position: relative;
 	display: inline-block;
+	cursor:pointer;
 }
 
 .exportarBTN:hover{
-	background-position: -1357px -263px;
-    cursor: pointer;
+	background-position: -1353px -258px;
 }
 
 
 .graficoBTN{
-	width: 26px;
-	height: 26px;
+	width: 25px;
+	height: 25px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -1386px -235px;
+	background-position: -1383px -232px;
 	position: relative;
 	display: inline-block;
+    cursor: pointer;
 
 }
 
 .graficoBTN:hover{
-	background-position:-1386px -265px;
-	cursor: pointer;
+	background-position:-1383px -258px;
 }
 /*ELEMENTOS CORRESPONDIENTES AL BODY DE CONSULTA MEDIANTE FILTROS*/
 
@@ -1088,35 +1088,35 @@
 }
 
 .filtroCONSULTAS:hover{
-	background-position: -1252px -1307px;
+	background-position: -1432px -1110px;
 }
 
 .predefinidaCONSULTAS{
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -1254px -1505px;
+	background-position: -1252px -1301px;
 	position: absolute;
 	top: 80px;
 	left: 515px;
 }
 
 .predefinidaCONSULTAS:hover{
-	background-position:-1255px -1709px;
+	background-position:-1432px -1301px;
 }
 
 .listaCONSULTAS{
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -1062px -1910px;
+	background-position: -1062px -1831px;
 	position: absolute;
 	top: 280px;
 	left: 421px;
 }
 
 .listaCONSULTAS:hover{
-	background-position:-1062px -2109px;
+	background-position:-1062px -2021px;
 }
 /*ELEMENTOS CORRESPONDIENTES AL BODY DE CONSULTAS*/
 
@@ -1125,28 +1125,28 @@
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -879px -311px;
+	background-position: -875px -311px;
 	position: absolute;
 	top: 80px;
 	left: 325px;
 }
 
 .funcionarioCATALOGO:hover{
-	background-position: -879px -507px;
+	background-position: -875px -501px;
 }
 
 .mediosCATALOGO{
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -503px -311px;
+	background-position: -498px -312px;
 	position: absolute;
 	top: 80px;
 	left: 515px;
 }
 
 .mediosCATALOGO:hover{
-	background-position:-503px -507px;
+	background-position:-498px -502px;
 }
 
 .actividadCATALOGO{
@@ -1160,21 +1160,21 @@
 }
 
 .actividadCATALOGO:hover{
-	background-position:-311px -507px;
+	background-position:-312px -501px;
 }
 
 .capitalizacionCATALOGO{
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -689px -311px;
+	background-position: -685px -312px;
 	position: absolute;
 	top: 280px;
 	left: 515px;
 }
 
 .capitalizacionCATALOGO:hover{
-	background-position:-688px -507px;
+	background-position:-685px -502px;
 }
 /*ELEMENTOS CORRESPONDIENTES AL BODY DE CATALOGOS*/
 
@@ -1183,56 +1183,56 @@
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -876px -711px;
+	background-position: -875px -691px;
 	position: absolute;
 	top: 80px;
 	left: 325px;
 }
 
 .funcionariosAGREGAR:hover{
-	background-position: -876px -910px;
+	background-position: -875px -881px;
 }
 
 .funcionariosBUSCAR{
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -1064px -1108px;
+	background-position: -875px -1451px;
 	position: absolute;
 	top: 80px;
 	left: 515px;
 }
 
 .funcionariosBUSCAR:hover{
-	background-position:-1064px -1307px;
+	background-position:-875px -1641px;
 }
 
 .funcionariosEDITAR{
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -1062px -1505px;
+	background-position: -875px -1831px;
 	position: absolute;
 	top: 280px;
 	left: 325px;
 }
 
 .funcionariosEDITAR:hover{
-	background-position:-1062px -1709px;
+	background-position:-875px -2021px;
 }
 
 .funcionariosELIMINAR{
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -1065px -711px;
+	background-position: -875px -1071px;
 	position: absolute;
 	top: 280px;
 	left: 515px;
 }
 
 .funcionariosELIMINAR:hover{
-	background-position:-1065px -910px;
+	background-position:-875px -1261px;
 }
 /*ELEMENTOS CORRESPONDIENTES AL BODY DE FUNCIONARIOS*/
 
@@ -1270,7 +1270,7 @@
 }
 
 .eliminarBTN:hover{
-	background-position: -312px -283px;
+	background-position: -312px -277px;
 }
 
 .guardarotroBTN{
@@ -1285,21 +1285,21 @@
 }
 
 .guardarotroBTN:hover{
-	background-position: -1008px -227px;
+	background-position: -1008px -222px;
 }
 
 .guardarsalirBTN{
 	width: 137px;
 	height: 21px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -1249px -129px;
+	background-position: -1190px -130px;
 	position: absolute;
 	top: 508px;
 	left: 833px;
 }
 
 .guardarsalirBTN:hover{
-	background-position: -1249px -154px;
+	background-position: -1190px -151px;
 }
 /*ELEMENTOS CORRESPONDIENTES AL BODY DE AGREGAR A CATALOGO*/
 
@@ -1308,56 +1308,56 @@
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -500px -711px;
+	background-position: -498px -692px;
 	position: absolute;
 	top: 80px;
 	left: 325px;
 }
 
 .mediosAGREGAR:hover{
-	background-position: -500px -910px;
+	background-position: -498px -882px;
 }
 
 .mediosBUSCAR{
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -500px -1505px;
+	background-position: -498px -1452px;
 	position: absolute;
 	top: 80px;
 	left: 515px;
 }
 
 .mediosBUSCAR:hover{
-	background-position:-500px -1708px;
+	background-position:-498px -1642px;
 }
 
 .mediosEDITAR{
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -500px -1910px;
+	background-position: -498px -1832px;
 	position: absolute;
 	top: 280px;
 	left: 325px;
 }
 
 .mediosEDITAR:hover{
-	background-position:-500px -2108px;
+	background-position:-498px -2022px;
 }
 
 .mediosELIMINAR{
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -500px -1108px;
+	background-position: -498px -1072px;
 	position: absolute;
 	top: 280px;
 	left: 515px;
 }
 
 .mediosELIMINAR:hover{
-	background-position:-500px -1306px;
+	background-position:-498px -1262px;
 }
 /*ELEMENTOS CORRESPONDIENTES AL BODY DE MEDIOS*/
 
@@ -1366,56 +1366,56 @@
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -309px -711px;
+	background-position: -311px -690px;
 	position: absolute;
 	top: 80px;
 	left: 325px;
 }
 
 .actividadAGREGAR:hover{
-	background-position: -309px -910px;
+	background-position: -311px -880px;
 }
 
 .actividadBUSCAR{
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -309px -1505px;
+	background-position: -312px -1450px;
 	position: absolute;
 	top: 80px;
 	left: 515px;
 }
 
 .actividadBUSCAR:hover{
-	background-position:-309px -1708px;
+	background-position:-312px -1640px;
 }
 
 .actividadEDITAR{
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -309px -1910px;
+	background-position: -312px -1830px;
 	position: absolute;
 	top: 280px;
 	left: 325px;
 }
 
 .actividadEDITAR:hover{
-	background-position:-309px -2108px;
+	background-position:-312px -2020px;
 }
 
 .actividadELIMINAR{
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -309px -1108px;
+	background-position: -312px -1070px;
 	position: absolute;
 	top: 280px;
 	left: 515px;
 }
 
 .actividadELIMINAR:hover{
-	background-position:-309px -1306px;
+	background-position:-312px -1260px;
 }
 /*ELEMENTOS CORRESPONDIENTES AL BODY DE TIPO DE ACTIVIDAD*/
 
@@ -1424,56 +1424,56 @@
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -686px -711px;
+	background-position: -685px -692px;
 	position: absolute;
 	top: 80px;
 	left: 325px;
 }
 
 .capitalizacionAGREGAR:hover{
-	background-position: -686px -910px;
+	background-position: -685px -882px;
 }
 
 .capitalizacionBUSCAR{
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -686px -1505px;
+	background-position: -685px -1452px;
 	position: absolute;
 	top: 80px;
 	left:515px;
 }
 
 .capitalizacionBUSCAR:hover{
-	background-position:-686px -1708px;
+	background-position:-685px -1642px;
 }
 
 .capitalizacionEDITAR{
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -686px -1910px;
+	background-position: -685px -1832px;
 	position: absolute;
 	top: 280px;
 	left: 325px;
 }
 
 .capitalizacionEDITAR:hover{
-	background-position:-686px -2108px;
+	background-position:-685px -2022px;
 }
 
 .capitalizacionELIMINAR{
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -686px -1108px;
+	background-position: -685px -1072px;
 	position: absolute;
 	top: 280px;
 	left: 515px;
 }
 
 .capitalizacionELIMINAR:hover{
-	background-position:-686px -1306px;
+	background-position:-685px -1262px;
 }
 /*ELEMENTOS CORRESPONDIENTES AL BODY DE TIPO DE CAPITALIZACION*/
 
@@ -1482,58 +1482,59 @@
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -1064px -311px;
+	background-position: -1062px -311px;
 	position: absolute;
 	top:80px;
 	left: 325px;
 }
 
 .usuariosAGREGAR:hover{
-	background-position: -1063px -508px;
+	background-position: -1062px -501px;
 }
 
 .usuariosBUSCAR{
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -1064px -1108px;
+	background-position: -1062px -1071px;
 	position: absolute;
 	top: 80px;
 	left: 515px;
 }
 
 .usuariosBUSCAR:hover{
-	background-position:-1064px -1307px;
+	background-position:-1062px -1261px;
 }
 
 .usuariosEDITAR{
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -1062px -1505px;
+	background-position: -1062px -1451px;
 	position: absolute;
 	top: 280px;
 	left: 325px;
 }
 
 .usuariosEDITAR:hover{
-	background-position:-1062px -1709px;
+	background-position:-1062px -1641px;
 }
 
 .usuariosELIMINAR{
 	width: 180px;
 	height: 190px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -1065px -711px;
+	background-position: -1062px -691px;
 	position: absolute;
 	top: 280px;
 	left: 515px;
 }
 
 .usuariosELIMINAR:hover{
-	background-position:-1065px -910px;
+	background-position:-1062px -881px;
 }
 /*ELEMENTOS CORRESPONDIENTES AL BODY DE USUARIOS*/
+
 
 .datosCATALOGOS{
 	border: 2px solid rgba(55, 54, 48, 0.71);
@@ -1657,28 +1658,28 @@ select, textarea, input[type=text], input{
 	width: 68px;
 	height: 21px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -403px -256px;
+	background-position: -404px -256px;
 	position: absolute;
 	top: 559px;
 	left: 847px;
 }
 
 .salirVBTN:hover{
-	background-position: -403px -284px;
+	background-position: -404px -277px;
 }
 
 .guardarVBTN{
 	width: 85px;
 	height: 21px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -479px -256px;
+	background-position: -480px -256px;
 	position: absolute;
 	top: 559px;
 	left: 925px;
 }
 
 .guardarVBTN:hover{
-	background-position: -479px -284px;
+	background-position: -480px -277px;
 }
 
 .add-row {

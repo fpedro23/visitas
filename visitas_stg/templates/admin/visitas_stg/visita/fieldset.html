@@ -144,35 +144,6 @@
                                         {{ field.field }}
                                     </td>
                                 </tr>
-                            {% if not change %}
-                                <tr>
-                                    <td width="70px">
-                                         <label class="contenidoTABLA" for="id_nombre_funcionario" style="width: auto;">Nombre:</label>
-                                    </td>
-                                     <td width="182px">
-
-                                         <input type="text" id="id_nombre_funcionario" name="nombre_funcionario" disabled value="{{ field.field.value|default_if_none:"" }}">
-                                    </td>
-                                </tr>
-
-
-                                <tr>
-                                    <td  width="70px">
-                                       &nbsp;
-
-                                    </td>
-                                    <td  width="182px">
-                                       &nbsp;
-
-                                    </td>
-                                </tr>
-                            </table>
-
-                        </fieldset>
-                 </td>
-            </tr>
-         </table>
-                            {% endif %}
          {% endif %}
 
           {% if field.field.name == "nombre_funcionario" %}
@@ -181,11 +152,9 @@
                                          <label class="contenidoTABLA" for="id_nombre_funcionario" style="width: auto;">Nombre:</label>
                                     </td>
                                      <td width="182px">
-                                           {% if change %}
+
                                                  <input style="width:87%; "type="text" disabled id="id_nombre_funcionario" name="nombre_funcionario" value="{{ field.field.value|default_if_none:"" }}">
-                                            {% else %}
-                                                 &nbsp;
-                                             {% endif %}
+
                                     </td>
                                 </tr>
 
