@@ -325,8 +325,8 @@ def consulta_filtros(request):
 
 
 def fichaTecnica(request):
-        #prs = Presentation('visitas_stg/static/ppt/fichaTecnica_sisef.pptx')
-        prs = Presentation('/home/sisefenlin/visitas/static/ppt/fichaTecnica_sisef.pptx')
+        prs = Presentation('visitas_stg/static/ppt/fichaTecnica_sisef.pptx')
+        #prs = Presentation('/home/sisefenlin/visitas/static/ppt/fichaTecnica_sisef.pptx')
         usuario = request.user.userprofile
         buscador = BuscaVisita(
             identificador_unico=request.GET.get('identificador_unico', None)
@@ -362,25 +362,39 @@ def fichaTecnica(request):
 
         #detalles
         prs.slides[0].shapes[15].text_frame.paragraphs[0].font.size = Pt(8)
-        prs.slides[0].shapes[15].text = json_map['visitas'][0]['actividades'][0]['participantes_locales'][0]['nombre']
+        prs.slides[0].shapes[15].text = ""
         prs.slides[0].shapes[16].text_frame.paragraphs[0].font.size = Pt(8)
-        prs.slides[0].shapes[16].text = json_map['visitas'][0]['actividades'][0]['participantes_locales'][0]['cargo']
+        prs.slides[0].shapes[16].text = ""
+        if len(json_map['visitas'][0]['actividades'][0]['participantes_locales'])!=0:
+            prs.slides[0].shapes[15].text = json_map['visitas'][0]['actividades'][0]['participantes_locales'][0]['nombre']
+            prs.slides[0].shapes[16].text = json_map['visitas'][0]['actividades'][0]['participantes_locales'][0]['cargo']
+
         prs.slides[0].shapes[17].text_frame.paragraphs[0].font.size = Pt(8)
-        prs.slides[0].shapes[17].text = json_map['visitas'][0]['actividades'][0]['problematicas_sociales'][0]['problematica_social']
+        prs.slides[0].shapes[17].text = ""
+        if len(json_map['visitas'][0]['actividades'][0]['problematicas_sociales'])!=0:
+            prs.slides[0].shapes[17].text = json_map['visitas'][0]['actividades'][0]['problematicas_sociales'][0]['problematica_social']
+
         prs.slides[0].shapes[18].text_frame.paragraphs[0].font.size = Pt(8)
-        prs.slides[0].shapes[18].text = json_map['visitas'][0]['actividades'][0]['capitalizaciones'][0]['medio']['nombre_medio']
+        prs.slides[0].shapes[18].text = ""
         prs.slides[0].shapes[20].text_frame.paragraphs[0].font.size = Pt(8)
-        prs.slides[0].shapes[20].text = json_map['visitas'][0]['actividades'][0]['capitalizaciones'][0]['nombre_medio']
+        prs.slides[0].shapes[20].text = ""
         prs.slides[0].shapes[19].text_frame.paragraphs[0].font.size = Pt(8)
-        prs.slides[0].shapes[19].text = json_map['visitas'][0]['actividades'][0]['capitalizaciones'][0]['tipo_capitalizacion']['nombre_tipo_capitalizacion']
+        prs.slides[0].shapes[19].text = ""
         prs.slides[0].shapes[21].text_frame.paragraphs[0].font.size = Pt(8)
-        prs.slides[0].shapes[21].text = str(json_map['visitas'][0]['actividades'][0]['capitalizaciones'][0]['cantidad'])
+        prs.slides[0].shapes[21].text = ""
+
+        if len(json_map['visitas'][0]['actividades'][0]['capitalizaciones'])!=0:
+            prs.slides[0].shapes[18].text = json_map['visitas'][0]['actividades'][0]['capitalizaciones'][0]['medio']['nombre_medio']
+            prs.slides[0].shapes[20].text = json_map['visitas'][0]['actividades'][0]['capitalizaciones'][0]['nombre_medio']
+            prs.slides[0].shapes[19].text = json_map['visitas'][0]['actividades'][0]['capitalizaciones'][0]['tipo_capitalizacion']['nombre_tipo_capitalizacion']
+            prs.slides[0].shapes[21].text = str(json_map['visitas'][0]['actividades'][0]['capitalizaciones'][0]['cantidad'])
 
 
+        prs.save('visitas_stg/static/ppt/ppt-generados/FichaTecnicaVisitas_' + str(usuario.user.id) + '.pptx')
+        the_file = 'visitas_stg/static/ppt/ppt-generados/FichaTecnicaVisitas_' + str(usuario.user.id) + '.pptx'
 
-        prs.save('/home/sisefenlin/visitas/static/ppt/ppt-generados/FichaTecnicaVisitas_' + str(usuario.user.id) + '.pptx')
-
-        the_file = '/home/sisefenlin/visitas/static/ppt/ppt-generados/FichaTecnicaVisitas_' + str(usuario.user.id) + '.pptx'
+        #prs.save('/home/sisefenlin/visitas/static/ppt/ppt-generados/FichaTecnicaVisitas_' + str(usuario.user.id) + '.pptx')
+        #the_file = '/home/sisefenlin/visitas/static/ppt/ppt-generados/FichaTecnicaVisitas_' + str(usuario.user.id) + '.pptx'
 
         filename = os.path.basename(the_file)
         chunk_size = 8192
