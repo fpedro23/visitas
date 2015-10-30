@@ -107,7 +107,7 @@ class Dependencia(models.Model):
 class Cargo(models.Model):  # Cargo de la persona que hace la actividad
     nombre_cargo = models.CharField(max_length=200)
     nombre_funcionario = models.CharField(max_length=200)
-    dependencia = models.ForeignKey(Dependencia, default=1)
+    dependencia = models.ForeignKey(Dependencia)
 
     def __str__(self):
         return self.nombre_cargo
