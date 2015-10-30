@@ -1045,23 +1045,23 @@
 }
 
 .exportarBTN{
-	width: 25px;
-	height: 25px;
+	width: 26px;
+	height: 26px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -1353px -232px;
+	background-position: -1357px -232px;
 	position: relative;
 	display: inline-block;
 	cursor:pointer;
 }
 
 .exportarBTN:hover{
-	background-position: -1353px -258px;
+	background-position: -1357px -258px;
 }
 
 
 .graficoBTN{
-	width: 25px;
-	height: 25px;
+	width: 26px;
+	height: 26px;
 	background-image: url(../imagenes/bigBACK.png);
 	background-position: -1383px -232px;
 	position: relative;
@@ -1703,7 +1703,7 @@ select, textarea, input[type=text], input{
 .add{
     position: relative;
     width: 20px;
-    left: 984px;
+    left: 970px;
     background-color: transparent;
 }
 
