@@ -147,7 +147,7 @@
 {% block after_field_sets %}{% endblock %}
 
 {% block inline_field_sets %}
-    <div id="alta02" style="overflow: scroll;">
+    <div id="alta02" style="overflow: scroll; overflow-x: hidden;">
         <div class="tituloTABLA">Actividades</div>
   {% for inline_admin_formset in inline_admin_formsets %}
     {% include inline_admin_formset.opts.template %}

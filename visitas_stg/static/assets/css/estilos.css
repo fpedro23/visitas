@@ -1695,7 +1695,7 @@ select, textarea, input[type=text], input{
 
 .addcapitalizacion_set{
      position: absolute;
-    width: 495px;
+    width: 480px;
     left: 2px;
     background-position: right;
 }

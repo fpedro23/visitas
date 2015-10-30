@@ -1,7 +1,7 @@
 {% load i18n admin_static %}
 {{ inline_admin_formset.formset.prefix|slice:"15:16" }}
 {# inline_admin_formset.formset.prefix|slice:"16:46"  inline_admin_formset.formser.opts.name   loopCounter  #}
-<div class="inline-group{% if recursive_formset %} {{ recursive_formset.formset.prefix|default:"Root" }}-nested-inline {% if prev_prefix %} {{ prev_prefix }}-{{ loopCounter }}-nested-inline{% endif %} nested-inline{% endif %}" id="{{ inline_admin_formset.formset.prefix }}-group" {% if inline_admin_formset.formset.prefix|slice:"16:46" == "" %} style="height:180px;"{% endif %} {% if inline_admin_formset.formset.prefix|slice:"16:46" == "capitalizacion_set" %} style="width:502px; height:142px; left:502px; top:-5px; position:absolute;"{% endif %} {% if inline_admin_formset.formset.prefix|slice:"16:46" == "participantelocal_set" %} style="width: 252px; height: 70px; top:65px; left:-5px; position: absolute;" {% endif %} {% if inline_admin_formset.formset.prefix|slice:"16:46" == "problematicasocial_set" %} style="width: 252px; height:70px; left:254px; top:65px; position: absolute;"{% endif %}>
+<div class="inline-group{% if recursive_formset %} {{ recursive_formset.formset.prefix|default:"Root" }}-nested-inline {% if prev_prefix %} {{ prev_prefix }}-{{ loopCounter }}-nested-inline{% endif %} nested-inline{% endif %}" id="{{ inline_admin_formset.formset.prefix }}-group" {% if inline_admin_formset.formset.prefix|slice:"16:46" == "" %} style="height:180px; width: 1000px; padding-left: 5px;"{% endif %} {% if inline_admin_formset.formset.prefix|slice:"16:46" == "capitalizacion_set" %} style="width:480px; height:142px; left:502px; top:-5px; position:absolute;"{% endif %} {% if inline_admin_formset.formset.prefix|slice:"16:46" == "participantelocal_set" %} style="width: 252px; height: 70px; top:65px; left:-5px; position: absolute;" {% endif %} {% if inline_admin_formset.formset.prefix|slice:"16:46" == "problematicasocial_set" %} style="width: 252px; height:70px; left:254px; top:65px; position: absolute;"{% endif %}>
 {% with recursive_formset=inline_admin_formset stacked_template='admin/edit_inline/stacked-nested.html' tabular_template='admin/edit_inline/tabular-nested.html'%}
   {# recursive_formset.opts.verbose_name_plural|title #}
 {{ recursive_formset.formset.management_form }}
@@ -16,7 +16,7 @@
         <div class="subtituloTABLA" style="width: 505px; height: 22px; left: 2px; position: relative; background-color: #acadae">Actividad {{ inline_admin_formset.formset.prefix|slice:"15:16"}}</div>
     {% endif %}
      {% if recursive_formset.opts.verbose_name|title == "Capitalización" %}
-        <div class="subtituloTABLA" style="width: 495px; height: 22px; left:2px; background-color: #acadae; position: absolute;">Capitalización</div>
+        <div class="subtituloTABLA" style="width: 480px; height: 22px; left:2px; background-color: #acadae; position: absolute;">Capitalización</div>
     {% endif %}
     {% if recursive_formset.opts.verbose_name|title == "Participante Local" %}
         <div class="subtituloTABLA" style="width: 250px; height: 22px; top:2px; left: 2px; position: relative;">Participante Local Destacado</div>
