@@ -17,9 +17,10 @@ from visitas_stg.models import *
 class ProblematicaSocialInLine(NestedStackedInline):
     model = ProblematicaSocial
     can_delete = False
+
     def get_extra(self, request, obj=None, **kwargs):
         try:
-            if obj.visita is not None:
+            if obj.visita.actividad_set.first().problematicasocial_set.first() is not None:
                 return 0
             else:
                 return 1
@@ -34,7 +35,7 @@ class ParticipanteLocalInline(NestedStackedInline):
 
     def get_extra(self, request, obj=None, **kwargs):
         try:
-            if obj.visita is not None:
+            if obj.visita.actividad_set.first().participantelocal_set.first() is not None:
                 return 0
             else:
                 return 1
@@ -46,9 +47,10 @@ class ParticipanteLocalInline(NestedStackedInline):
 class CapitalizacionInline(NestedStackedInline):
     model = Capitalizacion
     can_delete = False
+
     def get_extra(self, request, obj=None, **kwargs):
         try:
-            if obj.visita is not None:
+            if obj.visita.actividad_set.first().capitalizacion_set.first() is not None:
                 return 0
             else:
                 return 1
