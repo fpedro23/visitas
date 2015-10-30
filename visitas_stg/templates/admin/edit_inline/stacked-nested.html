@@ -8,7 +8,7 @@
 {{ recursive_formset.formset.non_form_errors }}
 
 
-{% for inline_admin_form in recursive_formset %}<div class="inline-related{% if forloop.last %} empty-form last-related{% endif %}" id="{{ recursive_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}" {% if inline_admin_formset.formset.prefix|slice:"16:46" == "" %} style="height:180px; overflow:scroll; border-color: #838383"{% endif %} {% if inline_admin_formset.formset.prefix|slice:"16:46" == "capitalizacion_set" %} style="height:137px;" {% endif %} {% if inline_admin_formset.formset.prefix|slice:"16:46" == "participantelocal_set" %} style="height: 68px;" {% endif %} {% if inline_admin_formset.formset.prefix|slice:"16:46" == "problematicasocial_set" %} style="height: 67px;"{% endif %}>
+{% for inline_admin_form in recursive_formset %}<div class="inline-related{% if forloop.last %} empty-form last-related{% endif %}" id="{{ recursive_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}" {% if inline_admin_formset.formset.prefix|slice:"16:46" == "" %} style="width:999px; height:180px; overflow:scroll; border-color: #838383"{% endif %} {% if inline_admin_formset.formset.prefix|slice:"16:46" == "capitalizacion_set" %} style="height:137px;" {% endif %} {% if inline_admin_formset.formset.prefix|slice:"16:46" == "participantelocal_set" %} style="height: 68px;" {% endif %} {% if inline_admin_formset.formset.prefix|slice:"16:46" == "problematicasocial_set" %} style="height: 67px;"{% endif %}>
    <!-- <h3><b>{# recursive_formset.opts.verbose_name|title #}:</b>&nbsp;<span class="inline_label">{% if inline_admin_form.original %}{# inline_admin_form.original #}{% else %}#{# forloop.counter #}{% endif %}</span>
    </h3> Participante Local Problematica Social-->
 
@@ -100,7 +100,7 @@
         $(rows).formset({
             prefix: "{{ recursive_formset.formset.prefix }}",
             addText: "",
-            addCssClass:"add-row add{{inline_admin_formset.formset.prefix|slice:"16:46"}}",
+            addCssClass:"add-row add{{recursive_formset.formset.prefix|slice:"16:46"}}",
             formCssClass: "dynamic-{{ recursive_formset.formset.prefix }}",
             deleteCssClass: "inline-deletelink",
             deleteText: "{% trans "Remove" %}",
