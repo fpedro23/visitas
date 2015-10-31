@@ -1883,17 +1883,17 @@ label {
 }
 
 .aceptarBTN{
-	width:92px;
-	height:30px;
+	width:85px;
+	height:20px;
 	background-image:url(../imagenes/bigBACK.png);
-	background-position: -1175px -250px;
+	background-position: -1176px -256px;
 	position:absolute;
 	top:180px;
 	left:170px;
 }
 
 .aceptarBTN:hover{
-	background-position: -1175px -278px;
+	background-position: -1176px -277px;
 }
 
 
