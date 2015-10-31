@@ -7,52 +7,174 @@
     {% for line in fieldset %}
 
         <div class="form-row{% if line.fields|length_is:'1' and line.errors %} errors{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}" style="left: 0px;">
-            {% if line.fields|length_is:'1' %}{{ line.errors }}{% endif %}
+            {#  if line.fields|length_is:'1' %}{{ line.errors }}{% endif #}
             {% for field in line %}
                   {% if field.field.name == "tipo_actividad" %}
 
                               <div class="contenidoTABLA2" style="width: 99px; height: 25px; top:22px; position: absolute; padding-left: 2px;"><label class="contenidoTABLA" for="id_actividad_set-0-tipo_actividad">Tipo:</label></div>
-                              <div class="contenidoTABLA2" style="width: 152px; height: 25px; top:22px; left:101px; padding-top:2px;position: absolute;">{{ field.field }}</div>
+                              <div class="contenidoTABLA2" style="width: 152px; height: 25px; top:22px; left:101px; padding-top:2px;position: absolute;"
+                                       id="tr-{{ field.field.name}}" data-toggle="tooltip" data-placement="right"  title="{% for error in field.field.errors %}{{ error }}{% endfor %}">
+                                       {% if field.field.errors %}
+                                         {{ field.field|addcss:"border-error"}}
+                                       {% else %}
+                                         {{ field.field }}
+                                       {% endif %}
+                                        <script type="text/javascript" src="{% static 'assets/bootstrap/js/bootstrap.js' %}"></script>
+                                          <script> $(document).ready(function($) {
+                                             var $te = jQuery.noConflict();
+                                          $te('[data-toggle="tooltip"]').tooltip({html:true});});
+                                          </script>
+                              </div>
 
                   {% elif field.field.name == "descripcion" %}
 
                               <div class="contenidoTABLA2" style="width: 93px; height: 25px; left:252px; top:22px; position: absolute;"><label class="contenidoTABLA" for="id_actividad_set-0-descripcion">Descripción:</label></div>
-                              <div class="contenidoTABLA2" style="width: 173px; height: 45px; left:334px; top:22px; position: absolute; padding-top:2px;">{{ field.field|addcss:"txtdesc" }}</div>
+                              <div class="contenidoTABLA2" style="width: 173px; height: 45px; left:334px; top:22px; position: absolute; padding-top:2px;"
+                                       id="tr-{{ field.field.name}}" data-toggle="tooltip" data-placement="right"  title="{% for error in field.field.errors %}{{ error }}{% endfor %}">
+                                       {% if field.field.errors %}
+                                         {{ field.field|addcss:"txtdesc border-error"}}
+                                       {% else %}
+                                         {{ field.field|addcss:"txtdesc" }}
+                                       {% endif %}
+                                        <script type="text/javascript" src="{% static 'assets/bootstrap/js/bootstrap.js' %}"></script>
+                                          <script> $(document).ready(function($) {
+                                var $te = jQuery.noConflict();
+                                $te('#tr-{{ field.field.name}}').tooltip({html:true});});</script>
+                              </div>
 
                   {% elif  field.field.name == "clasificacion" %}
                               <div class="contenidoTABLA2" style="width: 100px; height: 22px; top: 45px; position: absolute; padding-left: 2px;"><label class="contenidoTABLA" for="id_actividad_set-0-clasificacion">Clasificación:</label></div>
-                              <div class="contenidoTABLA2" style="width: 152px; height: 22px; left:101px; top:45px; position: absolute;">{{ field.field }}</div>
+                              <div class="contenidoTABLA2" style="width: 152px; height: 22px; left:101px; top:45px; position: absolute;"
+                                   id="tr-{{ field.field.name}}" data-toggle="tooltip" data-placement="right"  title="{% for error in field.field.errors %}{{ error }}{% endfor %}">
+                                       {% if field.field.errors %}
+                                         {{ field.field|addcss:"border-error"}}
+                                       {% else %}
+                                         {{ field.field }}
+                                       {% endif %}
+                                        <script type="text/javascript" src="{% static 'assets/bootstrap/js/bootstrap.js' %}"></script>
+                                          <script> $(document).ready(function($) {
+                                var $te = jQuery.noConflict();
+                                $te('#tr-{{ field.field.name}}').tooltip({html:true});});</script>
+                              </div>
                               <div class="contenidoTABLA2" style="width: 81px; height: 22px; left:253px; top:45px; position: absolute;">&nbsp;</div>
 
 
                   {% elif field.field.name == "nombre" %}
 
                               <div class="contenidoTABLA2" style="width: 100px; height: 22px; position: absolute; padding-left: 2px;"><label class="contenidoTABLA" for="id_actividad_set-0-participantelocal_set-0-nombre">Nombre:</label></div>
-                              <div class="contenidoTABLA2" style="width: 152px; height: 22px; left:100px; position: absolute;">{{ field.field }}</div>
+                              <div class="contenidoTABLA2" style="width: 152px; height: 22px; left:100px; position: absolute;"
+                                      id="tr-{{ field.field.name}}" data-toggle="tooltip" data-placement="right" title="{% for error in field.field.errors %}{{ error }}{% endfor %}">
+                                       {% if field.field.errors %}
+                                         {{ field.field|addcss:"border-error"}}
+                                       {% else %}
+                                         {{ field.field }}
+                                       {% endif %}
+                                        <script type="text/javascript" src="{% static 'assets/bootstrap/js/bootstrap.js' %}"></script>
+                                          <script> $(document).ready(function($) {
+                                var $te = jQuery.noConflict();
+                                $te('#tr-{{ field.field.name}}').tooltip({html:true});});</script>
+                              </div>
                   {% elif field.field.name == "cargo" %}
                               <div class="contenidoTABLA2" style="width: 100px; height: 22px; top: 46px; position: absolute; padding-left: 2px;"><label class="contenidoTABLA" for="id_actividad_set-0-participantelocal_set-0-cargo">Cargo:</label></div>
-                              <div class="contenidoTABLA2" style="width: 152px; height: 22px; left:100px; top:46px; position: absolute;">{{ field.field }}</div>
+                              <div class="contenidoTABLA2" style="width: 152px; height: 22px; left:100px; top:46px; position: absolute;"
+                                      id="trc-{{ field.field.name}}" data-toggle="tooltip" data-placement="right"  title="{% for error in field.field.errors %}{{ error }}{% endfor %}">
+                                       {% if field.field.errors %}
+                                         {{ field.field|addcss:"border-error"}}
+                                       {% else %}
+                                         {{ field.field }}
+                                       {% endif %}
+                                        <script type="text/javascript" src="{% static 'assets/bootstrap/js/bootstrap.js' %}"></script>
+                                          <script> $(document).ready(function($) {
+                                var $te = jQuery.noConflict();
+                                $te('#trc-{{ field.field.name}}').tooltip({html:true});});</script>
+                              </div>
                   {% elif  field.field.name == "problematica_social" %}
 
-                              <div class="contenidoTABLA2" style="width: 252px; height: 44px; left:-4px; top:23px; position: absolute;">&nbsp;{{ field.field|addcss:"txtps" }}</div>
+                              <div class="contenidoTABLA2" style="width: 252px; height: 44px; left:-4px; top:23px; position: absolute;"
+                                      id="tr-{{ field.field.name}}" data-toggle="tooltip" data-placement="right"  title="{% for error in field.field.errors %}{{ error }}{% endfor %}">&nbsp;
+                                       {% if field.field.errors %}
+                                         {{ field.field|addcss:"txtps border-error"}}
+                                       {% else %}
+                                         {{ field.field|addcss:"txtps" }}
+                                       {% endif %}
+                                        <script type="text/javascript" src="{% static 'assets/bootstrap/js/bootstrap.js' %}"></script>
+                                          <script> $(document).ready(function($) {
+                                var $te = jQuery.noConflict();
+                                $te('#tr-{{ field.field.name}}').tooltip({html:true});});</script>
+                              </div>
 
                   {% elif field.field.name == "medio" %}
 
                               <div class="contenidoTABLA2" style="width: 118px; height: 42px; top:22px; position: absolute; padding-top: 12px;"><label class="contenidoTABLA" for="id_actividad_set-0-capitalizacion_set-0-medio">Medio:</label></div>
-                              <div class="contenidoTABLA2" style="width: 136px; height: 42px; top:22px; left:117px; position: absolute; padding-top: 12px;">{{ field.field }}</div>
+                              <div class="contenidoTABLA2" style="width: 136px; height: 42px; top:22px; left:117px; position: absolute; padding-top: 12px;"
+                                      id="tr-{{ field.field.name}}" data-toggle="tooltip" data-placement="right"  title="{% for error in field.field.errors %}{{ error }}{% endfor %}">
+                                       {% if field.field.errors %}
+                                         {{ field.field|addcss:"border-error"}}
+                                       {% else %}
+                                         {{ field.field }}
+                                       {% endif %}
+                                        <script type="text/javascript" src="{% static 'assets/bootstrap/js/bootstrap.js' %}"></script>
+                                          <script> $(document).ready(function($) {
+                                var $te = jQuery.noConflict();
+                                $te('#tr-{{ field.field.name}}').tooltip({html:true});});</script>
+                              </div>
                   {% elif field.field.name == "tipo_capitalizacion" %}
                               <div class="contenidoTABLA2" style="width: 127px; height: 42px; left:253px; top:22px; position: absolute; padding-top: 12px;"><label class="contenidoTABLA" for="id_actividad_set-0-capitalizacion_set-0-tipo_capitalizacion">Tipo:</label></div>
-                              <div class="contenidoTABLA2" style="width: 104px; height: 42px; left:378px; top:22px; position: absolute; padding-top: 12px;">{{ field.field }}</div>
+                              <div class="contenidoTABLA2" style="width: 104px; height: 42px; left:378px; top:22px; position: absolute; padding-top: 12px;"
+                                        id="tr-{{ field.field.name}}" data-toggle="tooltip" data-placement="left"  title="{% for error in field.field.errors %}{{ error }}{% endfor %}">
+                                       {% if field.field.errors %}
+                                         {{ field.field|addcss:"border-error"}}
+                                       {% else %}
+                                         {{ field.field }}
+                                       {% endif %}
+                                        <script type="text/javascript" src="{% static 'assets/bootstrap/js/bootstrap.js' %}"></script>
+                                          <script> $(document).ready(function($) {
+                                var $te = jQuery.noConflict();
+                                $te('#tr-{{ field.field.name}}').tooltip({html:true});});</script>
+                              </div>
 
                   {% elif  field.field.name == "nombre_medio" %}
                               <div class="contenidoTABLA2" style="width: 120px; height: 42px; top: 63px; position: absolute; padding-top: 12px;"><label class="contenidoTABLA" for="id_actividad_set-0-capitalizacion_set-0-nombre_medio" style="width:118px; padding-right: 0px;">Nombre del Medio:</label></div>
-                              <div class="contenidoTABLA2" style="width: 134px; height: 42px; left:119px; top:63px; position: absolute; padding-top: 12px;">{{ field.field }}</div>
+                              <div class="contenidoTABLA2" style="width: 134px; height: 42px; left:119px; top:63px; position: absolute; padding-top: 12px;"
+                                      id="tr-{{ field.field.name}}" data-toggle="tooltip" data-placement="right"  title="{% for error in field.field.errors %}{{ error }}{% endfor %}">
+                                       {% if field.field.errors %}
+                                         {{ field.field|addcss:"border-error"}}
+                                       {% else %}
+                                         {{ field.field }}
+                                       {% endif %}
+                                        <script type="text/javascript" src="{% static 'assets/bootstrap/js/bootstrap.js' %}"></script>
+                                          <script> $(document).ready(function($) {
+                                var $te = jQuery.noConflict();
+                                $te('#tr-{{ field.field.name}}').tooltip({html:true});});</script>
+                              </div>
                   {% elif  field.field.name == "cantidad" %}
                               <div class="contenidoTABLA2" style="width: 127px; height: 42px; left:253px; top:63px; position: absolute; padding-top: 12px;"><label class="contenidoTABLA" for="id_actividad_set-0-capitalizacion_set-0-cantidad" style="width:129px;padding-right: 0px;">No. de Apariciones:</label></div>
-                              <div class="contenidoTABLA2" style="width: 104px; height: 42px; left:378px; top:63px; position: absolute; padding-top: 12px;">{{ field.field }}</div>
+                              <div class="contenidoTABLA2" style="width: 104px; height: 42px; left:378px; top:63px; position: absolute; padding-top: 12px;"
+                                      id="tr-{{ field.field.name}}" data-toggle="tooltip" data-placement="left"  title="{% for error in field.field.errors %}{{ error }}{% endfor %}">
+                                       {% if field.field.errors %}
+                                         {{ field.field|addcss:"border-error"}}
+                                       {% else %}
+                                         {{ field.field }}
+                                       {% endif %}
+                                        <script type="text/javascript" src="{% static 'assets/bootstrap/js/bootstrap.js' %}"></script>
+                                          <script> $(document).ready(function($) {
+                                var $te = jQuery.noConflict();
+                                $te('#tr-{{ field.field.name}}').tooltip({html:true});});</script>
+                              </div>
                   {% elif  field.field.name == "evidencia_grafica" %}
                               <div class="contenidoTABLA2" style="width: 120px; height: 36px; top: 105px; position: absolute; padding-top: 12px;"><label class="contenidoTABLA" for="id_actividad_set-0-capitalizacion_set-0-evidencia_grafica" style="width:118px; padding-right: 0px;">Evidencia Gráfica:</label></div>
-                              <div class="contenidoTABLA2" style="width: 350px; height: 38px; left:119px; top:105px; position: absolute; padding-top: 12px; overflow-y: auto;">{{ field.field }}</div>
+                              <div class="contenidoTABLA2" style="width: 350px; height: 38px; left:119px; top:105px; position: absolute; padding-top: 12px; overflow-y: auto;"
+                                      id="tr-{{ field.field.name}}" data-toggle="tooltip" data-placement="right"  title="{% for error in field.field.errors %}{{ error }}{% endfor %}">
+                                       {% if field.field.errors %}
+                                         {{ field.field|addcss:"border-error"}}
+                                       {% else %}
+                                         {{ field.field }}
+                                       {% endif %}
+                                        <script type="text/javascript" src="{% static 'assets/bootstrap/js/bootstrap.js' %}"></script>
+                                          <script> $(document).ready(function($) {
+                                var $te = jQuery.noConflict();
+                                $te('#tr-{{ field.field.name}}').tooltip({html:true});});</script>
+                              </div>
                               <div class="contenidoTABLA2" style="width: 17px; height: 42px; left:465px; top:105px; position: absolute; padding-top: 12px;"></div>
 
 

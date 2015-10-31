@@ -1045,23 +1045,23 @@
 }
 
 .exportarBTN{
-	width: 25px;
-	height: 25px;
+	width: 26px;
+	height: 26px;
 	background-image: url(../imagenes/bigBACK.png);
-	background-position: -1353px -232px;
+	background-position: -1357px -232px;
 	position: relative;
 	display: inline-block;
 	cursor:pointer;
 }
 
 .exportarBTN:hover{
-	background-position: -1353px -258px;
+	background-position: -1357px -258px;
 }
 
 
 .graficoBTN{
-	width: 25px;
-	height: 25px;
+	width: 26px;
+	height: 26px;
 	background-image: url(../imagenes/bigBACK.png);
 	background-position: -1383px -232px;
 	position: relative;
@@ -1614,7 +1614,7 @@ ul li {
 }
 
 #id_cargo {
-    width: 87%;
+    width: 85%;
 }
 #id_partido_gobernante {
     width: 95%;
@@ -2031,4 +2031,31 @@ width:10px;
 background-image: -webkit-linear-gradient(top, rgba(55, 54, 48, 0.19) 10%, rgba(97, 96, 90, 0.65) 51%);
 }
 ::-webkit-scrollbar-track {
+}
+
+
+
+.error_brfield
+{
+ border:1px solid red;
+}
+
+.border-error {
+   outline: none;
+   border: 1px solid #b00b12;
+   box-shadow: 0 0 3px red;
+}
+
+.error_msgact{
+    left:50px;
+    top:5px;
+    width: 250px;
+    position: absolute;
+}
+
+.error_msgvis{
+    left:100px;
+    top:5px;
+    width: 250px;
+    position: absolute;
 }
