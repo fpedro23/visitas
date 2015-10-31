@@ -5,12 +5,12 @@
          {% if field.field.name == "identificador_unico" %}
              <div id="alta01">
                  <table width="1008px" border="0px">
-                    <tr valign="top">
+                    <tr valign="middle">
                         <td width="252px">
                             <fieldset class="module ">
                                 <table width="252px" border="0px" >
                                     <tr>
-                                        <td class="tituloTABLA" colspan="2">
+                                        <td class="tituloTABLA" colspan="2" style="padding-bottom: 10px;">
                                             Información General
                                         </td>
                                     </tr>
@@ -36,9 +36,17 @@
                                     <td width="147px">
                                          <label class="contenidoTABLA" for="id_dependencia">Dependencia:</label>
                                     </td>
-                                    <td width="105px">
+                                    <td width="105px" id="tr-{{ field.field.name}}" data-toggle="tooltip" data-placement="right"  title="{% for error in field.field.errors %}{{ error }}{% endfor %}">
+                                       {% if field.field.errors %}
+                                         {{ field.field|addcss:"border-error"}}
+                                       {% else %}
                                          {{ field.field }}
-                                       </td>
+                                       {% endif %}
+                                        <script type="text/javascript" src="{% static 'assets/bootstrap/js/bootstrap.js' %}"></script>
+                                          <script> $(document).ready(function($) {
+                                var $te = jQuery.noConflict();
+                                $te('#tr-{{ field.field.name}}').tooltip({html:true});});</script>
+                                    </td>
                                 </tr>
 
          {% endif %}
@@ -47,8 +55,16 @@
                                     <td width="147px">
                                         <label class="contenidoTABLA" for="id_fecha_visita">Fecha de Visita:</label>
                                     </td>
-                                    <td width="105px">
-                                         {{ field.field|addcss:"form-control2"}}
+                                    <td width="105px" id="tr-{{ field.field.name}}" data-toggle="tooltip" data-placement="right"  title="{% for error in field.field.errors %}{{ error }}{% endfor %}">
+                                       {% if field.field.errors %}
+                                         {{ field.field|addcss:"form-control2 border-error" }}
+                                       {% else %}
+                                          {{ field.field|addcss:"form-control2"}}
+                                       {% endif %}
+                                    <script type="text/javascript" src="{% static 'assets/bootstrap/js/bootstrap.js' %}"></script>
+                                          <script> $(document).ready(function($) {
+                                var $te = jQuery.noConflict();
+                                $te('#tr-{{ field.field.name}}').tooltip({html:true});});</script>
                                     </td>
                                 </tr>
                             </table>
@@ -60,14 +76,22 @@
                           <fieldset class="module">
                             <table width="252px" border="0px">
                                 <tr>
-                                    <td class="tituloTABLA" colspan="2">Ubicación</td>
+                                    <td class="tituloTABLA" colspan="2" style="padding-bottom: 10px;">Ubicación</td>
                                 </tr>
                                 <tr class="field-id_region">
                                     <td width="126px">
                                          <label class="contenidoTABLA" for="id_region">Región:</label>
                                     </td>
-                                    <td width="126px">
-                                         {{ field.field }}
+                                    <td width="126px" id="tr-{{ field.field.name}}" data-toggle="tooltip" data-placement="right"  title="{% for error in field.field.errors %}{{ error }}{% endfor %}">
+                                         {% if field.field.errors %}
+                                         {{ field.field|addcss:"border-error" }}
+                                       {% else %}
+                                          {{ field.field }}
+                                       {% endif %}
+                                    <script type="text/javascript" src="{% static 'assets/bootstrap/js/bootstrap.js' %}"></script>
+                                          <script> $(document).ready(function($) {
+                                var $te = jQuery.noConflict();
+                                $te('#tr-{{ field.field.name}}').tooltip({html:true});});</script>
                                     </td>
                                 </tr>
 
@@ -77,8 +101,16 @@
                                     <td width="126px">
                                         <label class="contenidoTABLA" for="id_entidad">	Entidad Federativa:</label>
                                     </td>
-                                    <td width="126px">
-                                         {{ field.field }}
+                                    <td width="126px" id="tr-{{ field.field.name}}" data-toggle="tooltip" data-placement="right"  title="{% for error in field.field.errors %}{{ error }}{% endfor %}">
+                                          {% if field.field.errors %}
+                                         {{ field.field|addcss:"border-error" }}
+                                       {% else %}
+                                          {{ field.field }}
+                                       {% endif %}
+                                    <script type="text/javascript" src="{% static 'assets/bootstrap/js/bootstrap.js' %}"></script>
+                                          <script> $(document).ready(function($) {
+                                var $te = jQuery.noConflict();
+                                $te('#tr-{{ field.field.name}}').tooltip({html:true});});</script>
                                     </td>
                                 </tr>
          {% endif %}
@@ -88,8 +120,16 @@
                                     <td width="126px">
                                         <label class="contenidoTABLA" for="id_municipio">Municipio:</label>
                                     </td>
-                                    <td width="126px">
-                                        {{ field.field }}
+                                    <td width="126px" id="tr-{{ field.field.name}}" data-toggle="tooltip" data-placement="right"  title="{% for error in field.field.errors %}{{ error }}{% endfor %}">
+                                         {% if field.field.errors %}
+                                         {{ field.field|addcss:"border-error" }}
+                                       {% else %}
+                                          {{ field.field }}
+                                       {% endif %}
+                                    <script type="text/javascript" src="{% static 'assets/bootstrap/js/bootstrap.js' %}"></script>
+                                          <script> $(document).ready(function($) {
+                                var $te = jQuery.noConflict();
+                                $te('#tr-{{ field.field.name}}').tooltip({html:true});});</script>
                                     </td>
                                 </tr>
                             </table>
@@ -101,14 +141,22 @@
                         <fieldset class="module">
                             <table width="252px" border="0px">
                                 <tr>
-                                    <td class="tituloTABLA" colspan="2">Información Adicional</td>
+                                    <td class="tituloTABLA" colspan="2" style="padding-bottom: 10px;">Información Adicional</td>
                                 </tr>
                                 <tr class="field-distrito_electoral">
                                     <td width="140px">
-                                        <label class="contenidoTABLA" for="id_distrito_electoral" style="width: auto;">	No. de dtro. electoral:<label>
+                                        <label class="contenidoTABLA" for="id_distrito_electoral" style="width: auto;">	No. de dtro. electoral:</label>
                                     </td>
-                                    <td width="112px">
-                                        {{ field.field }}
+                                    <td width="112px" id="tr-{{ field.field.name}}" data-toggle="tooltip" data-placement="right"  title="{% for error in field.field.errors %}{{ error }}{% endfor %}">
+                                         {% if field.field.errors %}
+                                         {{ field.field|addcss:"border-error" }}
+                                       {% else %}
+                                          {{ field.field }}
+                                       {% endif %}
+                                    <script type="text/javascript" src="{% static 'assets/bootstrap/js/bootstrap.js' %}"></script>
+                                          <script> $(document).ready(function($) {
+                                var $te = jQuery.noConflict();
+                                $te('#tr-{{ field.field.name}}').tooltip({html:true});});</script>
                                     </td>
                                 </tr>
          {% endif %}
@@ -117,8 +165,16 @@
                                     <td width="140px">
                                         <label class="contenidoTABLA" for="id_partido_gobernante">Partido Gobernante:</label>
                                     </td>
-                                    <td width="112px">
-                                        {{ field.field }}
+                                    <td width="112px" id="tr-{{ field.field.name}}" data-toggle="tooltip" data-placement="right"  title="{% for error in field.field.errors %}{{ error }}{% endfor %}">
+                                         {% if field.field.errors %}
+                                         {{ field.field|addcss:"border-error" }}
+                                       {% else %}
+                                          {{ field.field }}
+                                       {% endif %}
+                                    <script type="text/javascript" src="{% static 'assets/bootstrap/js/bootstrap.js' %}"></script>
+                                          <script> $(document).ready(function($) {
+                                var $te = jQuery.noConflict();
+                                $te('#tr-{{ field.field.name}}').tooltip({html:true});});</script>
                                     </td>
                                 </tr>
                                 <tr>
@@ -134,14 +190,22 @@
                         <fieldset class="module">
                             <table width="252px" border="0px">
                                 <tr>
-                                    <td colspan="2" class="tituloTABLA" colspan="2">Funcionario</td>
+                                    <td colspan="2" class="tituloTABLA" colspan="2" style="padding-bottom: 10px;">Funcionario</td>
                                 </tr>
                                 <tr class="field-cargo" align="center">
                                     <td width="70px" align="left">
                                         <label class="contenidoTABLA" for="id_cargo" style="width: auto;">Cargo:</label>
                                     </td>
-                                    <td width="182px" align="left">
-                                        {{ field.field }}
+                                    <td width="182px" align="left" id="tr-{{ field.field.name}}" data-toggle="tooltip" data-placement="left"  title="{% for error in field.field.errors %}{{ error }}{% endfor %}">
+                                         {% if field.field.errors %}
+                                         {{ field.field|addcss:"border-error" }}
+                                       {% else %}
+                                          {{ field.field }}
+                                       {% endif %}
+                                    <script type="text/javascript" src="{% static 'assets/bootstrap/js/bootstrap.js' %}"></script>
+                                          <script> $(document).ready(function($) {
+                                var $te = jQuery.noConflict();
+                                $te('#tr-{{ field.field.name}}').tooltip({html:true});});</script>
                                     </td>
                                 </tr>
          {% endif %}
@@ -153,7 +217,7 @@
                                     </td>
                                      <td width="182px">
 
-                                                 <input style="width:87%; "type="text" disabled id="id_nombre_funcionario" name="nombre_funcionario" value="{{ field.field.value|default_if_none:"" }}">
+                                                 <input style="width:85%; "type="text" disabled id="id_nombre_funcionario" name="nombre_funcionario" value="{{ field.field.value|default_if_none:"" }}">
 
                                     </td>
                                 </tr>
