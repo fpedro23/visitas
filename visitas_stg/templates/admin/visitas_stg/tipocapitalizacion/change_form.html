@@ -79,8 +79,7 @@
                     {% block after_related_objects %}{% endblock %}
                      {% if errors %}
                         <div class="set-errmsg">
-                        {% if adminform.form.non_field_errors|length == 1 %} * Favor de verificar los siguientes datos{% else %}
-                            * Favor de verificar los siguientes datos{% endif %}
+                        {% if adminform.form.non_field_errors|length == 1 %} {% endif %}
                         </div>
                         {{ adminform.form.non_field_errors }}
                     {% endif %}
