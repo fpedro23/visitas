@@ -1997,13 +1997,15 @@ input[type=file] {
 }
 
 .botCAMBIAR2{
-	width:90px;
-	height:26px;
+	width:86px;
+	height:22px;
 	position:absolute;
 	top: 300px;
 	left: 335px;
 	background-image:url(../imagenes/bigBACK.png);
-	background-position: -759px -157px;
+	background-position: -759px -160px;
+    border: 0px;
+    cursor: pointer;
 }
 
 .botCAMBIAR2:hover{
@@ -2012,7 +2014,7 @@ input[type=file] {
 
 
 .cambcc{
-    width: 60%;
+    width: 80%;
     font-family: Verdana, Geneva, sans-serif;
     font-size: 12px;
 
