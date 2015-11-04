@@ -37,7 +37,7 @@ class Estado(models.Model):
     def __unicode__(self):  # __unicode__ on Python 2
         return self.nombreEstado
 
-    def to_serialzable_dict(self):
+    def to_serializable_dict(self):
         return {'id': self.id, 'nombreEstado': self.nombreEstado, 'latitud': self.latitud, 'longitud': self.longitud,
                 'region': self.region.to_serializable_dict()}
 

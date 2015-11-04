@@ -61,6 +61,7 @@ urlpatterns = patterns('',
     url(r'^api/reporte_dependencia_id', endpoints.ReporteDependenciaEndpoint.as_view()),
     url(r'^api/reporte_estado', endpoints.ReporteEstadosEndpoint.as_view()),
     url(r'^api/reporte_dependencia', endpoints.ReporteDependenciasEndpoint.as_view()),
+    url(r'^api/reporte_region', endpoints.ReporteRegionEndpoint.as_view()),
     url(r'^api/id_unico', endpoints.IdUnicoEndpoint.as_view()),
     url(r'^api/reporte_inicio', endpoints.ReporteInicioEndpoint.as_view()),
 
