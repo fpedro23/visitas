@@ -115,7 +115,7 @@ class BuscarVisitas:
 
         # Reporte Dependencia
         reporte_dependencia = visitas.values('dependencia__nombreDependencia').annotate(
-            numero_visitas=Count('dependencia'), numero_apariciones=Sum('actividad__capitalizacion__cantidad'))
+            numero_visitas=Count('id', distinct=True), numero_apariciones=Sum('actividad__capitalizacion__cantidad'))
 
         reporte_estado = visitas.values('entidad__nombreEstado').annotate(numero_visitas=Count('entidad')).annotate(
             numero_apariciones=Sum('actividad__capitalizacion__cantidad'))

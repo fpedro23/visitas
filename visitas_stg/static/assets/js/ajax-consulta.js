@@ -1779,6 +1779,11 @@ $j.tablaGrafica = function(Datos){
     var dependenciasChecked="";
     var estadosChecked="";
 
+    var totalApariciones = 0
+    for (var i = 0; i < Datos.reporte_dependencia.length; i++) {
+
+            totalApariciones += Datos.reporte_dependencia[i].numero_apariciones
+        }
 
     //alert($j('input:radio[name=tipoReporte]:checked').val());
     var sHtml= '<div class="row tituloFiltros">'
@@ -1803,7 +1808,7 @@ $j.tablaGrafica = function(Datos){
                         +'<tr>'
                             +'<th>TOTALES</th>'
                             +'<th align="right">'+ formato_numero(Datos.reporte_general.visitas_totales, 0, '.', ',') +'</th>'
-                            +'<th align="right">'+ formato_numero(0, 0, '.', ',') +'</th>'//numero_apariciones
+                            +'<th align="right">'+ formato_numero(totalApariciones, 0, '.', ',') +'</th>'//numero_apariciones
                         +'</tr>'
 
                         +'<tr><td class="pager" id="pagerG" colspan="3">'
