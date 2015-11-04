@@ -531,6 +531,7 @@ def Predefinido_Estado(request):
         i=1
         total1=total2=total3=total4=total5=0
         for dato in ans[0]['dependencias']:
+            if i>=16: break
             table.cell(1, i).text_frame.paragraphs[0].font.size = Pt(8)
             table.cell(2, i).text_frame.paragraphs[0].font.size = Pt(8)
             table.cell(3, i).text_frame.paragraphs[0].font.size = Pt(8)
