@@ -1792,11 +1792,11 @@ $j.tablaGrafica = function(Datos){
                    + ' </div>'
                + '</div>'
                     +'<table cellspacing="1"   id="tablaGrafica">'
-                    +' <colgroup>'
+                    /*+' <colgroup>'
                     +' <col width="30%">'
                     +' <col width="40%">'
                     +' <col width="30%">'
-                    +' </colgroup> '
+                    +' </colgroup> '*/
                     +'<thead>'
                         +'<tr>'
                             +'<th>Origen</th>'
@@ -1807,8 +1807,8 @@ $j.tablaGrafica = function(Datos){
                     +'<tfoot>'
                         +'<tr>'
                             +'<th>TOTALES</th>'
-                            +'<th align="right">'+ formato_numero(Datos.reporte_general.visitas_totales, 0, '.', ',') +'</th>'
-                            +'<th align="right">'+ formato_numero(totalApariciones, 0, '.', ',') +'</th>'//numero_apariciones
+                            +'<th style="text-align:right;">'+ formato_numero(Datos.reporte_general.visitas_totales, 0, '.', ',') +'</th>'
+                            +'<th style="text-align:right; padding-right:10px;">'+ formato_numero(totalApariciones, 0, '.', ',') +'</th>'
                         +'</tr>'
 
                         +'<tr><td class="pager" id="pagerG" colspan="3">'
@@ -1825,12 +1825,8 @@ $j.tablaGrafica = function(Datos){
                         +'</select></td></tr>'
 
                     +'</tfoot>'
-                    +'<tbody>'
-                    +' <colgroup>'
-                    +' <col width="30%">'
-                    +' <col width="40%">'
-                    +' <col width="30%">'
-                    +' </colgroup> ';
+                    +'<tbody>';
+
     if (tipoReporte=="Dependencia") {
         dependenciasChecked="checked";
         for (var i = 0; i < Datos.reporte_dependencia.length; i++) {
