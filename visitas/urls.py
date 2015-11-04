@@ -64,6 +64,6 @@ urlpatterns = patterns('',
     url(r'^api/id_unico', endpoints.IdUnicoEndpoint.as_view()),
     url(r'^api/reporte_inicio', endpoints.ReporteInicioEndpoint.as_view()),
 
-    url(r'^icono_OBRAS.ico/$', lambda x: HttpResponseRedirect(settings.STATIC_URL+'icono_OBRAS.ico'))
+    url(r'^ico_SISEF.ico/$', lambda x: HttpResponseRedirect(settings.STATIC_URL+'ico_SISEF.ico'))
 
 )
