@@ -128,7 +128,7 @@ class ReporteDependenciaEndpoint(ProtectedResourceView):
         map = {}
         map['dependencia'] = dependencia.to_serializable_dict()
         map['dependencia']['estados_visitados'] = visitas.values('entidad_id').distinct().count()
-        map['dependencia']['municipios_visitados'] = visitas.values('entidad_id').distinct().count()
+        map['dependencia']['municipios_visitados'] = visitas.values('municipio_id').distinct().count()
         map['dependencia']['distritos_electorales_visitados'] = visitas.values(
             'distrito_electoral_id').distinct().count()
 
