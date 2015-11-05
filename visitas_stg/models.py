@@ -54,9 +54,9 @@ class DistritoElectoral(models.Model):
 
     def to_serializable_dict(self):
         ans = model_to_dict(self)
-        ans['estado'] = self.estado.to_serialzable_dict()
+        ans['estado'] = self.estado.to_serializable_dict()
         return {'id': self.id, 'nombre_distrito_electoral': self.nombre_distrito_electoral,
-                'estado': self.estado.to_serialzable_dict()}
+                'estado': self.estado.to_serializable_dict()}
 
 
 class Municipio(models.Model):
@@ -83,7 +83,7 @@ class Municipio(models.Model):
             ans['longitud'] = self.longitud
         else:
             ans['longitud'] = None
-        ans['estado'] = self.estado.to_serialzable_dict()
+        ans['estado'] = self.estado.to_serializable_dict()
         return ans
 
 
@@ -186,7 +186,7 @@ class Visita(models.Model):
         else:
             ans['region'] = None
         if self.entidad:
-            ans['entidad'] = self.entidad.to_serialzable_dict()
+            ans['entidad'] = self.entidad.to_serializable_dict()
         else:
             ans['entidad'] = None
         if self.municipio:
