@@ -5,7 +5,7 @@ from models import Estado, Municipio, TipoCapitalizacion, DistritoElectoral, Reg
     TipoActividad, Clasificacion, Medio, Visita, Capitalizacion, Actividad, ParticipanteLocal
 import json
 from oauth2_provider.models import AccessToken
-from views import get_array_or_none,get_array_or_vacio
+from views import get_array_or_none, get_array_or_vacio
 from oauth2_provider.models import AccessToken
 from django.db.models import Sum, IntegerField, Q, Count
 from django.db.models import F
@@ -128,7 +128,7 @@ class ReporteDependenciaEndpoint(ProtectedResourceView):
         map = {}
         map['dependencia'] = dependencia.to_serializable_dict()
         map['dependencia']['estados_visitados'] = visitas.values('entidad_id').distinct().count()
-        map['dependencia']['municipios_visitados'] = visitas.values('entidad_id').distinct().count()
+        map['dependencia']['municipios_visitados'] = visitas.values('municipio_id').distinct().count()
         map['dependencia']['distritos_electorales_visitados'] = visitas.values(
             'distrito_electoral_id').distinct().count()
 
@@ -244,6 +244,8 @@ class ReporteRegionEndpoint(ProtectedResourceView):
         map['region']['estados'] = Estado.objects.filter(region_id=region.id).count()
         map['region']['distritos_electorales'] = DistritoElectoral.objects.filter(estado__region_id=region.id).count()
         map['region']['municipios'] = Municipio.objects.filter(estado__region_id=region.id).count()
+        map['region']['municipios_visitados'] = Visita.objects.filter(entidad__region_id=region.id).values(
+            'municipio_id').distinct().count()
 
         map['dependencias'] = []
 
@@ -420,7 +422,7 @@ class DistritoElectoralForEstadosEndpoint(ProtectedResourceView):
 
 class CargosForDependenciasEndpoint(ProtectedResourceView):
     def get(self, request):
-        dependencia_ids = get_array_or_vacio(request.GET.get('dependencias',None))
+        dependencia_ids = get_array_or_vacio(request.GET.get('dependencias', None))
 
         if dependencia_ids is not None and len(dependencia_ids) > 0:
             cargos = Cargo.objects.filter(dependencia_id__in=dependencia_ids)
