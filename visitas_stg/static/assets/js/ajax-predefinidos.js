@@ -47,8 +47,10 @@ function main_consulta() {
 	});
 
     valida_token();
+    $j('#verRegion').on('click', ver_regiones);
     $j('#verEstado').on('click', ver_estados);
     $j('#verDependencia').on('click', ver_dependencias);
+    $j('#consultarRegiones #listaRegiones').on('click', reporte_region);
     $j('#consultarEstados #listaEstados').on('click', reporte_estado);
     $j('#consultarDependencias #listaDependencias').on('click', reporte_dependencia);
 
@@ -56,19 +58,35 @@ function main_consulta() {
 }
 
 
+function ver_regiones() {
+    $j('#Dependencias').addClass("mfp-hide");
+    $j('#Estados').addClass("mfp-hide");
+    $j('#Regiones').removeClass("mfp-hide");
+    $j('#Regiones').addClass("mfp-show");
+}
 
 function ver_estados() {
     $j('#Dependencias').addClass("mfp-hide");
+    $j('#Regiones').addClass("mfp-hide");
     $j('#Estados').removeClass("mfp-hide");
     $j('#Estados').addClass("mfp-show");
 }
 
 function ver_dependencias() {
     $j('#Estados').addClass("mfp-hide");
+    $j('#Regiones').addClass("mfp-hide");
     $j('#Dependencias').removeClass("mfp-hide");
     $j('#Dependencias').addClass("mfp-show");
 }
 
+function reporte_region() {
+    var $E = jQuery.noConflict();
+    var estado_id = $E("#msRegiones").val();
+
+    var URL="/visitas/Predefinido_Region?region_id=" + estado_id;
+    location.href = URL;
+
+}
 
 function reporte_estado() {
     var $E = jQuery.noConflict();

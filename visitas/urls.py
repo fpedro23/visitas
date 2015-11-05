@@ -32,6 +32,7 @@ urlpatterns = patterns('',
     url('^visitas/ficha', views.fichaTecnica),
     url('^visitas/Predefinido_Estado', views.Predefinido_Estado),
     url('^visitas/Predefinido_Dependencia', views.Predefinido_Dependencia),
+    url('^visitas/Predefinido_Region', views.Predefinido_Region),
 
 
     url(r'^admin/password_reset/$', auth_views.password_reset, name='admin_password_reset'),

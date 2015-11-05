@@ -463,7 +463,7 @@ def Predefinido_Estado(request):
         json_fecha['ano'] = str(date.year)
 
         map = {}
-        map['estado'] = estado.to_serialzable_dict()
+        map['estado'] = estado.to_serializable_dict()
         map['estado']['distritos_electorales'] = DistritoElectoral.objects.filter(estado_id=estado.id).count()
         map['estado']['municipios'] = Municipio.objects.filter(estado_id=estado.id).count()
 
@@ -719,7 +719,7 @@ def Predefinido_Dependencia(request):
         map['estados'] = []
         estados = Estado.objects.all()
         for estado in estados:
-            estado_map = estado.to_serialzable_dict()
+            estado_map = estado.to_serializable_dict()
             estado_map['total_visitas_funcionarios_federales'] = Visita.objects.filter(
                 Q(cargo__dependencia_id=dependencia.id) & Q(entidad_id=estado.id)).count()
             estado_map['total_visitas'] = Visita.objects.filter(
@@ -946,6 +946,287 @@ def Predefinido_Dependencia(request):
 
         prs.save('/home/sisefenlin/visitas/static/ppt/ppt-generados/Reporte_Dependencia_sisef_' + str(usuario.user.id) + '.pptx')
         the_file = '/home/sisefenlin/visitas/static/ppt/ppt-generados/Reporte_Dependencia_sisef_' + str(usuario.user.id) + '.pptx'
+
+        filename = os.path.basename(the_file)
+        chunk_size = 8192
+        response = StreamingHttpResponse(FileWrapper(open(the_file,"rb"), chunk_size),
+                               content_type=mimetypes.guess_type(the_file)[0])
+        response['Content-Length'] = os.path.getsize(the_file)
+        response['Content-Disposition'] = "attachment; filename=%s" % filename
+        return response
+
+
+def Predefinido_Region(request):
+
+        #prs = Presentation('visitas_stg/static/ppt/Reporte_Region_sisef.pptx')
+        prs = Presentation('/home/sisefenlin/visitas/static/ppt/Reporte_Region_sisef.pptx')
+        usuario = request.user.userprofile
+
+        print request.user.userprofile.rol
+
+        if request.user.userprofile.rol == 'AD':
+            dependencias = Dependencia.objects.all()
+        else:
+            dependencias = Dependencia.objects.filter(
+                Q(id=request.user.userprofile.dependencia_id))
+
+        ans = []
+
+        date = datetime.now()
+        json_fecha={}
+        if date.day >= 10:
+            json_fecha['dia'] = str(date.day)
+        else:
+            json_fecha['dia'] = "0" + str(date.day)
+        if date.month >= 10:
+            json_fecha['mes'] = str(date.month)
+        else:
+            json_fecha['mes'] = "0" + str(date.month)
+        json_fecha['ano'] = str(date.year)
+
+        region = Region.objects.get(id=request.GET.get('region_id'))
+        medios = Medio.objects.values('id', 'nombre_medio')
+        dependencias = Dependencia.objects.all()
+        clasificaciones = Clasificacion.objects.values('id', 'nombre_clasificacion')
+
+        map = {}
+        map['region'] = region.to_serializable_dict()
+        map['region']['estados'] = Estado.objects.filter(region_id=region.id).count()
+        map['region']['distritos_electorales'] = DistritoElectoral.objects.filter(estado__region_id=region.id).count()
+        map['region']['municipios'] = Municipio.objects.filter(estado__region_id=region.id).count()
+
+        map['dependencias'] = []
+
+        for dependencia in dependencias:
+            dependencia_map = dependencia.to_serializable_dict()
+            dependencia_map['funcionarios_federales'] = Cargo.objects.filter(dependencia_id=dependencia.id).count()
+            dependencia_map['visitas'] = Visita.objects.filter(
+                Q(dependencia_id=dependencia.id) & Q(region_id=region.id)).count()
+            dependencia_map['municipios'] = Visita.objects.filter(
+                Q(dependencia_id=dependencia.id) & Q(entidad_id=dependencia.id)).values(
+                'municipio_id').distinct().count()
+            dependencia_map['actividades'] = Actividad.objects.filter(
+                Q(visita__dependencia_id=dependencia.id) & Q(visita__region_id=dependencia.id)).count()
+            dependencia_map['participantes_locales'] = ParticipanteLocal.objects.filter(
+                Q(actividad__visita__dependencia_id=dependencia.id) & Q(
+                    actividad__visita__region_id=region.id)).count()
+            dependencia_map['capitalizaciones'] = Capitalizacion.objects.filter(
+                Q(actividad__visita__region_id=region.id) & Q(
+                    actividad__visita__dependencia_id=dependencia.id)).aggregate(Sum('cantidad'))
+            dependencia_map['municipios'] = Visita.objects.filter(
+                Q(region_id=region.id) & Q(dependencia=dependencia.id)).values('municipio_id').distinct().count()
+            map['dependencias'].append(dependencia_map)
+
+        map['dependencias'].sort(key=lambda e: e['capitalizaciones'])
+
+        map['medios'] = []
+        for medio in medios:
+            medio_map = medio
+
+            medio_map['tipos_capitalizacion'] = []
+            tipos_capitalizacion = TipoCapitalizacion.objects.all()
+            for tipo_capitalizacion in tipos_capitalizacion:
+                tipo_map = tipo_capitalizacion.to_serializable_dict()
+                tipo_map['numero'] = Capitalizacion.objects.filter(
+                    Q(tipo_capitalizacion_id=tipo_capitalizacion.id) & Q(medio_id=medio['id']) & Q(
+                        actividad__visita__region_id=region.id)).count()
+                medio_map['tipos_capitalizacion'].append(tipo_map)
+            map['medios'].append(medio_map)
+
+        map['clasificaciones'] = []
+        for clasificacion in clasificaciones:
+            tipo_map = clasificacion
+            tipo_map['numero'] = Actividad.objects.filter(
+                Q(visita__region_id=region.id) & Q(clasificacion_id=clasificacion['id'])).count()
+            map['clasificaciones'].append(tipo_map)
+
+        ans.append(map)
+
+        prs.slides[0].shapes[8].text_frame.paragraphs[0].font.size = Pt(9)
+        prs.slides[0].shapes[9].text_frame.paragraphs[0].font.size = Pt(9)
+        prs.slides[0].shapes[10].text_frame.paragraphs[0].font.size = Pt(9)
+        prs.slides[0].shapes[11].text_frame.paragraphs[0].font.size = Pt(9)
+        prs.slides[0].shapes[12].text_frame.paragraphs[0].font.size = Pt(9)
+
+
+        prs.slides[0].shapes[8].text= json_fecha['dia'] + "/" + json_fecha['mes'] + "/" + json_fecha['ano']
+        prs.slides[0].shapes[9].text= '{0:,}'.format(ans[0]['region']['distritos_electorales'])
+        prs.slides[0].shapes[10].text= ans[0]['region']['numeroRegion']
+        #prs.slides[0].shapes[7].text= '{0:,}'.format(ans[0]['estado']['distritos_electorales'])
+        prs.slides[0].shapes[11].text= '{0:,}'.format(ans[0]['region']['municipios'])
+        prs.slides[0].shapes[12].text= '{0:,}'.format(ans[0]['region']['estados'])
+
+
+        table = prs.slides[0].shapes[0].table
+        # write body cellstable.cell(1, 0)
+        i=1
+
+        mayor = map['dependencias']
+        mayor.sort(key=lambda x: x['funcionarios_federales'], reverse=True)
+
+        for dato in ans[0]['dependencias']:
+            table.cell(i, 0).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i, 1).text_frame.paragraphs[0].font.size = Pt(8)
+
+            table.cell(i, 0).text = str(dato['nombreDependencia'])
+            table.cell(i, 1).text = str(dato['funcionarios_federales'])
+
+            if i==5: break
+            i=i+1
+
+        table = prs.slides[0].shapes[1].table
+        i=1
+        mayor = map['dependencias']
+        mayor.sort(key=lambda x: x['visitas'], reverse=True)
+        for dato in ans[0]['dependencias']:
+            table.cell(i, 0).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i, 1).text_frame.paragraphs[0].font.size = Pt(8)
+
+            table.cell(i, 0).text = str(dato['nombreDependencia'])
+            table.cell(i, 1).text = str(dato['visitas'])
+
+            if i==5: break
+            i=i+1
+
+        table = prs.slides[0].shapes[2].table
+        i=1
+        mayor = map['dependencias']
+        mayor.sort(key=lambda x: x['actividades'], reverse=True)
+        for dato in ans[0]['dependencias']:
+            table.cell(i, 0).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i, 1).text_frame.paragraphs[0].font.size = Pt(8)
+
+            table.cell(i, 0).text = str(dato['nombreDependencia'])
+            table.cell(i, 1).text = str(dato['actividades'])
+
+            if i==5: break
+            i=i+1
+
+        table = prs.slides[0].shapes[3].table
+        i=1
+        mayor = map['dependencias']
+        mayor.sort(key=lambda x: x['municipios'], reverse=True)
+        for dato in ans[0]['dependencias']:
+            table.cell(i, 0).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i, 1).text_frame.paragraphs[0].font.size = Pt(8)
+
+            table.cell(i, 0).text = str(dato['nombreDependencia'])
+            table.cell(i, 1).text = str(dato['municipios'])
+
+            if i==5: break
+            i=i+1
+
+        table = prs.slides[0].shapes[4].table
+        i=1
+        mayor = map['dependencias']
+        mayor.sort(key=lambda x: x['participantes_locales'], reverse=True)
+        for dato in ans[0]['dependencias']:
+            table.cell(i, 0).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i, 1).text_frame.paragraphs[0].font.size = Pt(8)
+
+            table.cell(i, 0).text = str(dato['nombreDependencia'])
+            table.cell(i, 1).text = str(dato['participantes_locales'])
+
+            if i==5: break
+            i=i+1
+
+        table = prs.slides[0].shapes[5].table
+        i=1
+        total1=total2=total3=total4=total5=0
+        for dato in ans[0]['medios']:
+            table.cell(i,1).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i,2).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i,3).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i,4).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i,5).text_frame.paragraphs[0].font.size = Pt(8)
+
+            table.cell(i,1).text = str(dato['tipos_capitalizacion'][0]['numero'])
+            table.cell(i,2).text = str(dato['tipos_capitalizacion'][1]['numero'])
+            table.cell(i,3).text = str(dato['tipos_capitalizacion'][2]['numero'])
+            table.cell(i,4).text = str(dato['tipos_capitalizacion'][3]['numero'])
+            table.cell(i,5).text = str(dato['tipos_capitalizacion'][4]['numero'])
+
+            total1=total1 + dato['tipos_capitalizacion'][0]['numero']
+            total2=total2 + dato['tipos_capitalizacion'][1]['numero']
+            total3=total3 + dato['tipos_capitalizacion'][2]['numero']
+            total4=total4 + dato['tipos_capitalizacion'][3]['numero']
+            total5=total5 + dato['tipos_capitalizacion'][4]['numero']
+            i=i+1
+
+        table.cell(1, 6).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(2, 6).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(3, 6).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(4, 6).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(5, 6).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(1, 6).text = str(total1)
+        table.cell(2, 6).text = str(total2)
+        table.cell(3, 6).text = str(total3)
+        table.cell(4, 6).text = str(total4)
+        table.cell(5, 6).text = str(total5)
+
+        mayor = map['dependencias']
+        mayor.sort(key=lambda x: x['capitalizaciones']['cantidad__sum'], reverse=True)
+
+        table = prs.slides[0].shapes[6].table
+        i=1
+        for dato in mayor:
+            table.cell(i,0).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i,1).text_frame.paragraphs[0].font.size = Pt(8)
+
+            table.cell(i,0).text = str(dato['nombreDependencia'])
+            table.cell(i,1).text = str(0)
+            if str(dato['capitalizaciones']['cantidad__sum'])!='None':
+                table.cell(i,1).text = str(dato['capitalizaciones']['cantidad__sum'])
+
+            if i==3: break
+            i=i+1
+
+        menor = map['dependencias']
+        menor.sort(key=lambda x: x['capitalizaciones']['cantidad__sum'])
+
+        table = prs.slides[0].shapes[7].table
+        i=1
+        for dato in menor:
+            table.cell(i,0).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i,1).text_frame.paragraphs[0].font.size = Pt(8)
+
+            table.cell(i,0).text = str(dato['nombreDependencia'])
+            table.cell(i,1).text = str(0)
+            if str(dato['capitalizaciones']['cantidad__sum'])!='None':
+                table.cell(i,1).text = str(dato['capitalizaciones']['cantidad__sum'])
+
+            if i==3: break
+            i=i+1
+
+        total_clasificaciones=0
+        for cantidad in ans[0]['clasificaciones']:
+            total_clasificaciones = total_clasificaciones + cantidad['numero']
+
+        #grafica pie
+        chart_data = ChartData()
+        chart_data.categories = [ans[0]['clasificaciones'][0]['nombre_clasificacion'], ans[0]['clasificaciones'][1]['nombre_clasificacion'], ans[0]['clasificaciones'][2]['nombre_clasificacion']]
+        chart_data.add_series('Series 1', (float(ans[0]['clasificaciones'][0]['numero'])/float(total_clasificaciones), float(ans[0]['clasificaciones'][1]['numero'])/float(total_clasificaciones), float(ans[0]['clasificaciones'][2]['numero'])/float(total_clasificaciones)))
+
+        x, y, cx, cy = Inches(6.69), Inches(4.7), Inches(3), Inches(2.5)
+
+        chart = prs.slides[0].shapes.add_chart(
+            XL_CHART_TYPE.PIE, x, y, cx, cy, chart_data
+        ).chart
+
+        chart.has_legend = True
+        chart.legend.position = XL_LEGEND_POSITION.BOTTOM
+        chart.legend.include_in_layout = False
+
+        chart.plots[0].has_data_labels = True
+        data_labels = chart.plots[0].data_labels
+        data_labels.number_format = '0%'
+        data_labels.position = XL_LABEL_POSITION.OUTSIDE_END
+
+        #prs.save('visitas_stg/static/ppt/ppt-generados/Reporte_Region_sisef_' + str(usuario.user.id) + '.pptx')
+        #the_file = 'visitas_stg/static/ppt/ppt-generados/Reporte_Region_sisef_' + str(usuario.user.id) + '.pptx'
+
+        prs.save('/home/sisefenlin/visitas/static/ppt/ppt-generados/Reporte_Region_sisef_' + str(usuario.user.id) + '.pptx')
+        the_file = '/home/sisefenlin/visitas/static/ppt/ppt-generados/Reporte_Region_sisef_' + str(usuario.user.id) + '.pptx'
 
         filename = os.path.basename(the_file)
         chunk_size = 8192
