@@ -241,6 +241,7 @@ class ReporteRegionEndpoint(ProtectedResourceView):
 
         map = {}
         map['region'] = region.to_serializable_dict()
+        map['region']['estados'] = Estado.objects.filter(region_id=region.id).count()
         map['region']['distritos_electorales'] = DistritoElectoral.objects.filter(estado__region_id=region.id).count()
         map['region']['municipios'] = Municipio.objects.filter(estado__region_id=region.id).count()
 
