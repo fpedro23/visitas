@@ -5,7 +5,7 @@ from models import Estado, Municipio, TipoCapitalizacion, DistritoElectoral, Reg
     TipoActividad, Clasificacion, Medio, Visita, Capitalizacion, Actividad, ParticipanteLocal
 import json
 from oauth2_provider.models import AccessToken
-from views import get_array_or_none,get_array_or_vacio
+from views import get_array_or_none, get_array_or_vacio
 from oauth2_provider.models import AccessToken
 from django.db.models import Sum, IntegerField, Q, Count
 from django.db.models import F
@@ -49,7 +49,7 @@ class ReporteInicioEndpoint(ProtectedResourceView):
             total_visitas = visitas.filter(entidad=estado).count()
             if total_visitas > 0:
                 reporte_estado = {'estado': estado.to_serialzable_dict(),
-                              'total_visitas': total_visitas }
+                                  'total_visitas': total_visitas}
                 reporte['estados'].append(reporte_estado)
 
         reporte['medios'] = []
@@ -244,6 +244,8 @@ class ReporteRegionEndpoint(ProtectedResourceView):
         map['region']['estados'] = Estado.objects.filter(region_id=region.id).count()
         map['region']['distritos_electorales'] = DistritoElectoral.objects.filter(estado__region_id=region.id).count()
         map['region']['municipios'] = Municipio.objects.filter(estado__region_id=region.id).count()
+        map['region']['municipios_visitados'] = Visita.objects.filter(entidad__region_id=region.id).values(
+            'municipio_id').distinct().count()
 
         map['dependencias'] = []
 
@@ -260,6 +262,8 @@ class ReporteRegionEndpoint(ProtectedResourceView):
             dependencia_map['capitalizaciones'] = Capitalizacion.objects.filter(
                 Q(actividad__visita__region_id=region.id) & Q(
                     actividad__visita__dependencia_id=dependencia.id)).count()
+            dependencia_map['municipios'] = Visita.objects.filter(
+                Q(region_id=region.id) & Q(dependencia=dependencia.id)).values('municipio_id').distinct().count()
             map['dependencias'].append(dependencia_map)
 
         map['medios'] = []
@@ -418,7 +422,7 @@ class DistritoElectoralForEstadosEndpoint(ProtectedResourceView):
 
 class CargosForDependenciasEndpoint(ProtectedResourceView):
     def get(self, request):
-        dependencia_ids = get_array_or_vacio(request.GET.get('dependencias',None))
+        dependencia_ids = get_array_or_vacio(request.GET.get('dependencias', None))
 
         if dependencia_ids is not None and len(dependencia_ids) > 0:
             cargos = Cargo.objects.filter(dependencia_id__in=dependencia_ids)
@@ -630,10 +634,10 @@ class PptxEndpoint(ProtectedResourceView):
         shapes = slide.shapes
         shapes.title.text = 'Resultados'
 
-        #renglones = resultados['reporte_general']['visitas_totales'] + 1
+        # renglones = resultados['reporte_general']['visitas_totales'] + 1
         renglones = len(json_map['visitas'])
         if renglones < 22:
-            rows = renglones+1
+            rows = renglones + 1
         else:
             rows = 22
         cols = 3
