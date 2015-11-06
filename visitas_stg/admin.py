@@ -146,9 +146,10 @@ class VisitaAdmin(NestedModelAdmin):
             if form.changed_data:
                 a = form.save(commit=False)
                 try:
-                    formatted = '%s %s.' % (
-                                'Modificado: ',
-                                ','.join(str(it) for it in form.changed_data)
+                    formatted = 'Modificados %s para "%s" %s.' % (
+                                ','.join(str(it) for it in form.changed_data),
+                                a,
+                                a.__class__.__name__
                     )
                     self.log_change(request, a.actividad.visita, formatted)
                 except Exception as e:
