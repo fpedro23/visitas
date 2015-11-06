@@ -136,7 +136,6 @@ class VisitaAdmin(NestedModelAdmin):
     def log_change(self, request, object, message):
         print message.split()[0]
         if message.split()[0] == 'No':
-            print message
             return
 
         super(VisitaAdmin, self).log_change(request, object, message)
