@@ -6,50 +6,6 @@ from visitas_stg.models import *
 __author__ = 'pedrocontreras'
 
 
-class AddProblematicaForm(forms.ModelForm):
-    class Meta:
-        model = ProblematicaSocial
-        fields = '__all__'
-
-    def save(self, commit=True):
-        print 'save modes'
-        print self.changed_data
-        return super(AddProblematicaForm, self).save(commit)
-
-
-
-class AddParticipanteForm(forms.ModelForm):
-    class Meta:
-        model = ParticipanteLocal
-        fields = '__all__'
-
-    def save(self, commit=True):
-        print 'save modes'
-        print self.changed_data
-        return super(AddParticipanteForm, self).save(commit)
-
-
-class AddCapitalizacionForm(forms.ModelForm):
-    class Meta:
-        model = Capitalizacion
-        fields = '__all__'
-
-    def save(self, commit=True):
-        print 'capitalziacon'
-        print self.changed_data
-        return super(AddCapitalizacionForm, self).save(commit)
-
-
-class AddActividadForm(forms.ModelForm):
-    class Meta:
-        model = Actividad
-        fields = '__all__'
-
-    def save(self, commit=True):
-        print self.changed_data
-        return super(AddActividadForm, self).save(commit)
-
-
 class AddVisitaForm(forms.ModelForm):
     class Meta:
         model = Visita

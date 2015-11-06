@@ -1,7 +1,10 @@
 # coding=utf-8
 from django.contrib import admin
+from django.contrib.admin.options import get_content_type_for_model
 from django.contrib.auth.models import Group
 from django.db.models import Q
+from django.forms import BaseFormSet
+from django.utils.encoding import force_text
 from nested_inline.admin import NestedStackedInline, NestedModelAdmin
 from django.contrib.auth.admin import UserAdmin
 
@@ -17,7 +20,6 @@ from visitas_stg.models import *
 class ProblematicaSocialInLine(NestedStackedInline):
     model = ProblematicaSocial
     can_delete = False
-    form = AddProblematicaForm
 
     def get_extra(self, request, obj=None, **kwargs):
         try:
@@ -33,7 +35,6 @@ class ProblematicaSocialInLine(NestedStackedInline):
 class ParticipanteLocalInline(NestedStackedInline):
     model = ParticipanteLocal
     can_delete = False
-    form = AddParticipanteForm
     def get_extra(self, request, obj=None, **kwargs):
         try:
             if obj.visita.actividad_set.first().participantelocal_set.first() is not None:
@@ -48,7 +49,6 @@ class ParticipanteLocalInline(NestedStackedInline):
 class CapitalizacionInline(NestedStackedInline):
     model = Capitalizacion
     can_delete = False
-    form = AddCapitalizacionForm
 
     def get_extra(self, request, obj=None, **kwargs):
         try:
@@ -85,7 +85,6 @@ class AtLeastOneRequiredInlineFormSet(BaseInlineFormSet):
 
 class ActividadInLine(NestedStackedInline):
     model = Actividad
-    form =  AddActividadForm
     inlines = [ParticipanteLocalInline, CapitalizacionInline, ProblematicaSocialInLine]
     can_delete = False
     formset = AtLeastOneRequiredInlineFormSet
@@ -94,13 +93,11 @@ class ActividadInLine(NestedStackedInline):
 
     ]
 
-
     def get_extra(self, request, obj=None, **kwargs):
         if obj is None:
             return 1
         else:
             return 0
-
 
 
 class FuncionarioAdmin(admin.ModelAdmin):
@@ -136,10 +133,31 @@ class VisitaAdmin(NestedModelAdmin):
 
     ]
 
+    def log_change(self, request, object, message):
+        print message.split()[0]
+        if message.split()[0] == 'No':
+            print message
+            return
+
+        super(VisitaAdmin, self).log_change(request, object, message)
+
+
     def save_formset(self, request, form, formset, change):
-        # print formset
+        for form in formset.forms:
+            if form.changed_data:
+                a = form.save(commit=False)
+                try:
+                    formatted = '%s %s.' % (
+                                'Modificado: ',
+                                ','.join(str(it) for it in form.changed_data)
+                    )
+                    self.log_change(request, a.actividad.visita, formatted)
+                except Exception as e:
+                    print e
 
         super(VisitaAdmin, self).save_formset(request, form, formset, change)
+
+
 
 
     def get_readonly_fields(self, request, obj=None):
