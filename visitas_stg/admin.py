@@ -5,7 +5,7 @@ from django.db.models import Q
 from nested_inline.admin import NestedStackedInline, NestedModelAdmin
 from django.contrib.auth.admin import UserAdmin
 
-from visitas_stg.forms import AddVisitaForm
+from visitas_stg.forms import *
 from visitas_stg.models import *
 
 
@@ -17,6 +17,7 @@ from visitas_stg.models import *
 class ProblematicaSocialInLine(NestedStackedInline):
     model = ProblematicaSocial
     can_delete = False
+    form = AddProblematicaForm
 
     def get_extra(self, request, obj=None, **kwargs):
         try:
@@ -32,7 +33,7 @@ class ProblematicaSocialInLine(NestedStackedInline):
 class ParticipanteLocalInline(NestedStackedInline):
     model = ParticipanteLocal
     can_delete = False
-
+    form = AddParticipanteForm
     def get_extra(self, request, obj=None, **kwargs):
         try:
             if obj.visita.actividad_set.first().participantelocal_set.first() is not None:
@@ -47,6 +48,7 @@ class ParticipanteLocalInline(NestedStackedInline):
 class CapitalizacionInline(NestedStackedInline):
     model = Capitalizacion
     can_delete = False
+    form = AddCapitalizacionForm
 
     def get_extra(self, request, obj=None, **kwargs):
         try:
@@ -83,6 +85,7 @@ class AtLeastOneRequiredInlineFormSet(BaseInlineFormSet):
 
 class ActividadInLine(NestedStackedInline):
     model = Actividad
+    form =  AddActividadForm
     inlines = [ParticipanteLocalInline, CapitalizacionInline, ProblematicaSocialInLine]
     can_delete = False
     formset = AtLeastOneRequiredInlineFormSet
@@ -91,11 +94,13 @@ class ActividadInLine(NestedStackedInline):
 
     ]
 
+
     def get_extra(self, request, obj=None, **kwargs):
         if obj is None:
             return 1
         else:
             return 0
+
 
 
 class FuncionarioAdmin(admin.ModelAdmin):
@@ -130,6 +135,12 @@ class VisitaAdmin(NestedModelAdmin):
         ('Funcionarios', {'fields': ['cargo', 'nombre_funcionario' ]}),
 
     ]
+
+    def save_formset(self, request, form, formset, change):
+        # print formset
+
+        super(VisitaAdmin, self).save_formset(request, form, formset, change)
+
 
     def get_readonly_fields(self, request, obj=None):
         readonly_fields = ('identificador_unico', 'nombre_funcionario')
