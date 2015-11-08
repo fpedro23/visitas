@@ -114,19 +114,42 @@ class BuscarVisitas:
         visitas_totales = visitas.count()
 
         # Reporte Dependencia
-        reporte_dependencia = visitas.values('dependencia__nombreDependencia').annotate(
+        reporte_dependencia = visitas.values('dependencia__nombreDependencia', 'dependencia__id').distinct().annotate(
             numero_visitas=Count('id', distinct=True), numero_apariciones=Sum('actividad__capitalizacion__cantidad'))
+        for dependencia in reporte_dependencia:
+            dependencia['numero_apariciones_internet'] = Capitalizacion.objects.filter(
+                Q(medio_id=3) & Q(actividad__visita__dependencia_id=dependencia['dependencia__id'])).aggregate(
+                total=Sum('cantidad'))['total']
+            if dependencia['numero_apariciones_internet'] is None:
+                dependencia['numero_apariciones_internet'] = 0
+            dependencia['numero_apariciones_otros'] = dependencia['numero_apariciones'] - dependencia[
+                'numero_apariciones_internet']
 
-        reporte_estado = visitas.values('entidad__nombreEstado').annotate(numero_visitas=Count('entidad')).annotate(
+        reporte_estado = visitas.values('entidad_id', 'entidad__nombreEstado').distinct().annotate(numero_visitas=Count('entidad')).annotate(
             numero_apariciones=Sum('actividad__capitalizacion__cantidad'))
+        for estado in reporte_estado:
+            estado['numero_apariciones_internet'] = Capitalizacion.objects.filter(
+                Q(medio_id=3) & Q(actividad__visita__entidad_id=estado['entidad_id'])).aggregate(
+                total=Sum('cantidad'))['total']
+            if estado['numero_apariciones_internet'] is None:
+                estado['numero_apariciones_internet'] = 0
+            estado['numero_apariciones_otros'] = estado['numero_apariciones'] - estado[
+                'numero_apariciones_internet']
 
         reporte_municipio = visitas.values('municipio_id', 'municipio__nombreMunicipio', 'municipio__latitud',
                                            'municipio__longitud', 'entidad__nombreEstado').distinct().annotate(
             numero_visitas=Count('id', distinct=True),
             numero_apariciones=Sum('actividad__capitalizacion__cantidad'))
         for municipio in reporte_municipio:
-            municipio['visitas'] = visitas_municipio = visitas.filter(municipio_id=municipio['municipio_id']).values(
+            municipio['visitas'] = visitas.filter(municipio_id=municipio['municipio_id']).values(
                 'identificador_unico')
+            municipio['numero_apariciones_internet'] = Capitalizacion.objects.filter(
+                Q(medio_id=3) & Q(actividad__visita__municipio_id=municipio['municipio_id'])).aggregate(
+                total=Sum('cantidad'))['total']
+            if municipio['numero_apariciones_internet'] is None:
+                municipio['numero_apariciones_internet'] = 0
+            municipio['numero_apariciones_otros'] = municipio['numero_apariciones'] - municipio[
+                'numero_apariciones_internet']
 
         reporte_general = {
             'visitas_totales': visitas_totales,
