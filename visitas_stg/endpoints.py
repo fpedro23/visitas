@@ -767,6 +767,8 @@ class PptxReporteEndpoint(ProtectedResourceView):
             map['dependencia'] = Dependencia.objects.get(
                 nombreDependencia=reporte['dependencia__nombreDependencia']).to_serializable_dict()
             map['numero_visitas'] = reporte['numero_visitas']
+            map['numero_apariciones_otros'] = reporte['numero_apariciones_otros']
+            map['numero_apariciones_internet'] = reporte['numero_apariciones_internet']
             if resultados['reporte_general']['visitas_totales'] is None:
                 map['sumatotal'] = 0
             else:
@@ -782,7 +784,10 @@ class PptxReporteEndpoint(ProtectedResourceView):
                 map['sumatotal'] = float(resultados['reporte_general']['visitas_totales'])
             map['estado'] = Estado.objects.get(
                 nombreEstado=reporte_estado['entidad__nombreEstado'])
-            map['numero_visitas'] = reporte_estado['numero_visitas']
+            map['numero_visitas' \
+                ''] = reporte_estado['numero_visitas']
+            map['numero_apariciones_otros'] = reporte['numero_apariciones_otros']
+            map['numero_apariciones_internet'] = reporte['numero_apariciones_internet']
 
             json_map['reporte_estado'].append(map)
 
@@ -800,7 +805,7 @@ class PptxReporteEndpoint(ProtectedResourceView):
 
 
             rows = 17
-            cols = 3
+            cols = 4
             left = Inches(0.921)
             top = Inches(1.2)
             width = Inches(6.0)
@@ -811,8 +816,10 @@ class PptxReporteEndpoint(ProtectedResourceView):
             table.columns[0].width = Inches(3.0)
             table.columns[1].width = Inches(2.0)
             table.columns[2].width = Inches(2.0)
+            table.columns[3].width = Inches(2.0)
 
-            for x in range(0, 3):
+
+            for x in range(0, 4):
                 cell = table.rows[0].cells[x]
                 paragraph = cell.textframe.paragraphs[0]
                 paragraph.font.size = Pt(12)
@@ -822,12 +829,14 @@ class PptxReporteEndpoint(ProtectedResourceView):
             # write column headings
             table.cell(0, 0).text = 'Origen'
             table.cell(0, 1).text = 'No. de Visitas '
-            table.cell(0, 2).text = 'Monto'
+            table.cell(0, 2).text = 'Capitalizacion Medios Tradicionales'
+            table.cell(0, 3).text = 'Capitalizacion Internet'
+
 
             # write body cells
             i = 1
             for obra in json_map['reporte_dependencia']:
-                for x in range(0, 3):
+                for x in range(0, 4):
                     cell = table.rows[i].cells[x]
                     paragraph = cell.textframe.paragraphs[0]
                     paragraph.font.size = Pt(8)
@@ -836,12 +845,13 @@ class PptxReporteEndpoint(ProtectedResourceView):
 
                 table.cell(i, 0).text = obra['dependencia']['nombreDependencia']
                 table.cell(i, 1).text = str(obra['numero_visitas'])
-                table.cell(i, 2).text = str(0)
+                table.cell(i, 2).text = str(obra['numero_apariciones_otros'])
+                table.cell(i, 3).text = str(obra['numero_apariciones_internet'])
                 i += 1
 
         if tipoReporte == 'Estado':
             rows = 35
-            cols = 3
+            cols = 4
             left = Inches(0.921)
             top = Inches(1.2)
             width = Inches(6.0)
@@ -852,8 +862,9 @@ class PptxReporteEndpoint(ProtectedResourceView):
             table.columns[0].width = Inches(3.0)
             table.columns[1].width = Inches(2.0)
             table.columns[2].width = Inches(2.0)
+            table.columns[3].width = Inches(2.0)
 
-            for x in range(0, 3):
+            for x in range(0, 4):
                 cell = table.rows[0].cells[x]
                 paragraph = cell.textframe.paragraphs[0]
                 paragraph.font.size = Pt(12)
@@ -863,7 +874,8 @@ class PptxReporteEndpoint(ProtectedResourceView):
             # write column headings
             table.cell(0, 0).text = 'Origen'
             table.cell(0, 1).text = 'No. de visitas '
-            table.cell(0, 2).text = 'Monto'
+            table.cell(0, 2).text = 'Capitalizacion Medios Tradicionales'
+            table.cell(0, 3).text = 'Capitalizacion Internet'
 
             # write body cells
             i = 1
@@ -876,13 +888,14 @@ class PptxReporteEndpoint(ProtectedResourceView):
                     paragraph.font.color.rgb = RGBColor(0x0B, 0x0B, 0x0B)
                 table.cell(i, 0).text = obra['estado'].nombreEstado
                 table.cell(i, 1).text = str(obra['numero_visitas'])
-                table.cell(i, 2).text = str(0)
+                table.cell(i, 2).text = str(obra['numero_apariciones_otros'])
+                table.cell(i, 3).text = str(obra['numero_apariciones_internet'])
                 i += 1
 
         prs.save(output)
         response = StreamingHttpResponse(FileWrapper(output),
                                          content_type='application/vnd.openxmlformats-officedocument.presentationml.presentation')
-        response['Content-Disposition'] = 'attachment; filename="resultado_visitas.pptx"'
+        response['Content-Disposition'] = 'attachment; filename="reporte_visitas.pptx"'
         response['Content-Length'] = output.tell()
 
         output.seek(0)
