@@ -70,7 +70,7 @@ function verDatos() {
 
 
 function datosConcluidas() {
-    for (i=0;i<4;i++){
+    for (i=0;i<5;i++){
        if (datosJson.medios[i].total_apariciones == null){
            datosJson.medios[i].total_apariciones=0;
        }
@@ -81,6 +81,7 @@ function datosConcluidas() {
     $j('#medioRadio').html(formato_numero(datosJson.medios[1].total_apariciones, 0, '.', ','));
     $j('#medioPeriodico').html(formato_numero(datosJson.medios[3].total_apariciones, 0, '.', ','));
     $j('#medioInternet').html(formato_numero(datosJson.medios[2].total_apariciones, 0, '.', ','));
+    $j('#medioRevistas').html(formato_numero(datosJson.medios[4].total_apariciones, 0, '.', ','));
 
 }
 

@@ -583,7 +583,7 @@
 	position: absolute;
 	left: 9px;
 	top: 12px;
-	width: 230px;
+	width: 184px;
 	height: 90px;
 	background-position: -400px 0px;
 	background-color: #9E2528;
@@ -592,9 +592,9 @@
 
 #medioVISITAS02{
 	position: absolute;
-	left: 252px;
+	left: 205px;
 	top: 12px;
-	width: 230px;
+	width: 184px;
 	height: 90px;
 	background-position: -400px 0px;
 	background-color: #862022;
@@ -603,9 +603,9 @@
 
 #medioVISITAS03{
 	position: absolute;
-	left: 495px;
+	left: 398px;
 	top: 12px;
-	width: 230px;
+	width: 184px;
 	height: 90px;
 	background-position: -400px 0px;
 	background-color: #751C1E;
@@ -614,9 +614,20 @@
 
 #medioVISITAS04{
 	position: absolute;
-	left: 740px;
+	left: 593px;
 	top: 12px;
-	width: 230px;
+	width: 184px;
+	height: 90px;
+	background-position: -400px 0px;
+	background-color: #65181B;
+	padding: 2px;
+}
+
+#medioVISITAS05{
+	position: absolute;
+	left: 788px;
+	top: 12px;
+	width: 184px;
 	height: 90px;
 	background-position: -400px 0px;
 	background-color: #65181B;
@@ -638,7 +649,7 @@
 	background-position: -1469px -507px;
 	position: absolute;
 	top: 110px;
-	left: 102px;
+	left: 80px;
 }
 
 #medioICO02{
@@ -648,7 +659,7 @@
 	background-position: -1517px -507px;
 	position: absolute;
 	top: 110px;
-	left: 347px;
+	left: 280px;
 }
 
 #medioICO03{
@@ -658,7 +669,7 @@
 	background-position: -1469px -593px;
 	position: absolute;
 	top: 110px;
-	left: 584px;
+	left: 465px;
 }
 
 #medioICO04{
@@ -668,11 +679,11 @@
 	background-position: -1517px -593px;
 	position: absolute;
 	top: 110px;
-	left: 835px;
+	left: 670px;
 }
 
 .medioNUM_DEF{
-	width: 230px;
+	width: 184px;
 	height: 50px;
 
 	position:absolute;
