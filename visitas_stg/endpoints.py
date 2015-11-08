@@ -523,14 +523,18 @@ class BuscarVisitasEndpoint(ProtectedResourceView):
         for estado in ans['reporte_estado']:
             json_map = {'estado': estado['entidad__nombreEstado'],
                         'numero_visitas': estado['numero_visitas'],
-                        'numero_apariciones': estado['numero_apariciones']}
+                        'numero_apariciones': estado['numero_apariciones'],
+                        'numero_apariciones_internet': estado['numero_apariciones_internet'],
+                        'numero_apariciones_otros': estado['numero_apariciones_otros']}
             json_ans['reporte_estado'].append(json_map)
 
         json_ans['reporte_dependencia'] = []
         for dependencia in ans['reporte_dependencia']:
             json_map = {'dependencia': dependencia['dependencia__nombreDependencia'],
                         'numero_visitas': dependencia['numero_visitas'],
-                        'numero_apariciones': dependencia['numero_apariciones']}
+                        'numero_apariciones': dependencia['numero_apariciones'],
+                        'numero_apariciones_internet': dependencia['numero_apariciones_internet'],
+                        'numero_apariciones_otros': dependencia['numero_apariciones_otros']}
             json_ans['reporte_dependencia'].append(json_map)
 
         json_ans['reporte_municipio'] = []
@@ -539,6 +543,8 @@ class BuscarVisitasEndpoint(ProtectedResourceView):
                         'estado': municipio['entidad__nombreEstado'],
                         'numero_visitas': municipio['numero_visitas'],
                         'numero_apariciones': municipio['numero_apariciones'],
+                        'numero_apariciones_internet': municipio['numero_apariciones_internet'],
+                        'numero_apariciones_otros': municipio['numero_apariciones_otros'],
                         'longitud': municipio['municipio__longitud'],
                         'latitud': municipio['municipio__latitud'],
                         'visitas': []}
