@@ -653,11 +653,14 @@ def Predefinido_Estado(request):
 
         chart.has_legend = True
         chart.legend.position = XL_LEGEND_POSITION.BOTTOM
+        chart.legend.font.size = Pt(12)
         chart.legend.include_in_layout = False
 
         chart.plots[0].has_data_labels = True
         data_labels = chart.plots[0].data_labels
         data_labels.number_format = '0%'
+        data_labels.font.size = Pt(12)
+        data_labels.font.color.rgb = RGBColor(0x0A, 0x42, 0x80)
         data_labels.position = XL_LABEL_POSITION.OUTSIDE_END
 
         #prs.save('visitas_stg/static/ppt/ppt-generados/Reporte_Estado_sisef_' + str(usuario.user.id) + '.pptx')
@@ -934,11 +937,14 @@ def Predefinido_Dependencia(request):
 
         chart.has_legend = True
         chart.legend.position = XL_LEGEND_POSITION.BOTTOM
+        chart.legend.font.size = Pt(12)
         chart.legend.include_in_layout = False
 
         chart.plots[0].has_data_labels = True
         data_labels = chart.plots[0].data_labels
         data_labels.number_format = '0%'
+        data_labels.font.size = Pt(12)
+        data_labels.font.color.rgb = RGBColor(0x0A, 0x42, 0x80)
         data_labels.position = XL_LABEL_POSITION.OUTSIDE_END
 
         #prs.save('visitas_stg/static/ppt/ppt-generados/Reporte_Dependencia_sisef_' + str(usuario.user.id) + '.pptx')
