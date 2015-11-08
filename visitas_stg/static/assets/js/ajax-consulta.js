@@ -1720,7 +1720,13 @@ function tablaD(Datos){
         }
     }
 
-        sHtml +='</tbody>'
+        sHtml += '<tr>'
+            + '<td width= "40%"></td>'
+            + '<td width= "20%" align="right"></td>'
+            + '<td width= "20%" align="right"></td>'
+            + '<td width= "20%" align="right"></td>'
+            + '</tr>'
+            + '</tbody>'
                 +'</table>'
 
                 //+'<fieldset>'
