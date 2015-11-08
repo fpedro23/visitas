@@ -1608,9 +1608,24 @@ function tablaD(Datos){
     var sHtmlExporta="";
     var sHtmlShorter="";
 
+    var totalAparicionesInternet = 0
+    var totalAparicionesOtros = 0
+    if (tipoReporte=="Dependencia") {
+        for (var i = 0; i < Datos.reporte_dependencia.length; i++) {
+            totalAparicionesOtros += Datos.reporte_dependencia[i].numero_apariciones_otros
+            totalAparicionesInternet += Datos.reporte_dependencia[i].numero_apariciones_internet
+        }
+    }else{
+        for (var i = 0; i < Datos.reporte_estado.length; i++) {
+            totalAparicionesOtros += Datos.reporte_estado[i].numero_apariciones_otros
+            totalAparicionesInternet += Datos.reporte_estado[i].numero_apariciones_internet
+        }
+    }
+
     sHtmlExporta= '<table id="tablaExporta" class="table table-striped">'
                 +' <colgroup>'
-                +' <col width="50%">'
+                +' <col width="40%">'
+                +' <col width="20%">'
                 +' <col width="20%">'
                 +' <col width="20%">'
                 +' </colgroup> '
@@ -1618,30 +1633,34 @@ function tablaD(Datos){
                         +'<tr>'
                             +'<th>Origen</th>'
                             +'<th>No. de visitas</th>'
-                            +'<th>Capitalizaciones</th>'
+                            +'<th>Capitalización Medios Tradicionales</th>'
+                            +'<th>Capitalización Internet</th>'
                         +'</tr>'
                 +'</thead>'
                 +'<tbody>';
     sHtmlShorter ='<table cellspacing="1"  id="tablaDerecha">'
                 +' <colgroup>'
-                +' <col width="30%">'
                 +' <col width="40%">'
-                +' <col width="30%">'
+                +' <col width="20%">'
+                +' <col width="20%">'
+                +' <col width="20%">'
                 +' </colgroup> ';
     //alert($j('input:radio[name=tipoReporte]:checked').val());
 
     var sHtml='<thead>'
                         +'<tr>'
-                            +'<th width= "60%">Origen</th>'
+                            +'<th width= "40%">Origen</th>'
                             +'<th width= "20%">No. de Visitas</th>'
-                            +'<th width= "20%">Capitalizaciones</th>'
+                            +'<th width= "20%">Capitalización Medios Tradicionales</th>'
+                            +'<th width= "20%">Capitalización Internet</th>'
                         +'</tr>'
                     +'</thead>'
                     +'<tfoot>'
                         +'<tr>'
                             +'<th>TOTALES</th>'
-                            +'<th align="right">'+ formato_numero(Datos.reporte_general.visitas_totales, 0, '.', ',') +'</th>'
-                            +'<th align="right">'+ formato_numero(Datos.reporte_general.numero_apariciones, 0, '.', ',') +'</th>'
+                            +'<th style="text-align:right;">'+ formato_numero(Datos.reporte_general.visitas_totales, 0, '.', ',') +'</th>'
+                            +'<th style="text-align:right;">'+ formato_numero(totalAparicionesOtros, 0, '.', ',') +'</th>'
+                            +'<th style="text-align:right; padding-right:10px;">'+ formato_numero(totalAparicionesInternet, 0, '.', ',') +'</th>'
                         +'</tr>'
 
                         +'<tr><td class="pager" id="pagerD" colspan="3">'
@@ -1665,15 +1684,17 @@ function tablaD(Datos){
         dependenciasChecked="checked";
         for (var i = 0; i < Datos.reporte_dependencia.length; i++) {
             sHtml += '<tr>'
-            + '<td width= "60%">' + Datos.reporte_dependencia[i].dependencia + '</td>'
+            + '<td width= "40%">' + Datos.reporte_dependencia[i].dependencia + '</td>'
             + '<td width= "20%" align="right">' + formato_numero(Datos.reporte_dependencia[i].numero_visitas, 0, '.', ',') + '</td>'
-            + '<td width= "20%" align="right">' + formato_numero(Datos.reporte_dependencia[i].numero_apariciones, 0, '.', ',') + '</td>'
+            + '<td width= "20%" align="right">' + formato_numero(Datos.reporte_dependencia[i].numero_apariciones_otros, 0, '.', ',') + '</td>'
+            + '<td width= "20%" align="right">' + formato_numero(Datos.reporte_dependencia[i].numero_apariciones_internet, 0, '.', ',') + '</td>'
             + '</tr>'
 
             sHtmlExporta += '<tr>'
-            + '<td width= "60%">' + Datos.reporte_dependencia[i].dependencia + '</td>'
+            + '<td width= "40%">' + Datos.reporte_dependencia[i].dependencia + '</td>'
             + '<td width= "20%" align="right">' + formato_numero(Datos.reporte_dependencia[i].numero_visitas, 0, '.', ',') + '</td>'
-            + '<td width= "20%" align="right">' + formato_numero(Datos.reporte_dependencia[i].numero_apariciones, 2, '.', ',') + '</td>'
+            + '<td width= "20%" align="right">' + formato_numero(Datos.reporte_dependencia[i].numero_apariciones_otros, 0, '.', ',') + '</td>'
+            + '<td width= "20%" align="right">' + formato_numero(Datos.reporte_dependencia[i].numero_apariciones_internet, 2, '.', ',') + '</td>'
             + '</tr>'
         }
     }
@@ -1686,13 +1707,15 @@ function tablaD(Datos){
             sHtml += '<tr>'
             + '<td>' + Datos.reporte_estado[i].estado + '</td>'
             + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_visitas, 0, '.', ',') + '</td>'
-            + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_apariciones, 0, '.', ',') + '</td>'
+            + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_apariciones_otros, 0, '.', ',') + '</td>'
+            + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_apariciones_internet, 0, '.', ',') + '</td>'
             + '</tr>'
 
             sHtmlExporta += '<tr>'
             + '<td>' + Datos.reporte_estado[i].estado + '</td>'
             + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_visitas, 0, '.', ',') + '</td>'
-            + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_apariciones, 0, '.', ',') + '</td>'
+            + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_apariciones_otros, 0, '.', ',') + '</td>'
+            + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_apariciones_internet, 0, '.', ',') + '</td>'
             + '</tr>'
         }
     }
@@ -1744,7 +1767,7 @@ function tablaD(Datos){
                 +'    headerTemplate : "{content} {icon}",'
                 +'    widgets: [ "uitheme", "zebra", "pager", "scroller" ],'
                 +'    widgetOptions : {'
-                +'        scroller_height : 140,'
+                +'        scroller_height : 135,'
                 +'        scroller_upAfterSort: true,'
                 +'        scroller_jumpToHeader: true,'
                 +'        scroller_barWidth : null,'
@@ -1779,12 +1802,19 @@ $j.tablaGrafica = function(Datos){
     var dependenciasChecked="";
     var estadosChecked="";
 
-    var totalApariciones = 0
-    for (var i = 0; i < Datos.reporte_dependencia.length; i++) {
-
-            totalApariciones += Datos.reporte_dependencia[i].numero_apariciones
+    var totalAparicionesInternet = 0
+    var totalAparicionesOtros = 0
+    if (tipoReporte=="Dependencia") {
+        for (var i = 0; i < Datos.reporte_dependencia.length; i++) {
+            totalAparicionesOtros += Datos.reporte_dependencia[i].numero_apariciones_otros
+            totalAparicionesInternet += Datos.reporte_dependencia[i].numero_apariciones_internet
         }
-
+    }else{
+        for (var i = 0; i < Datos.reporte_estado.length; i++) {
+            totalAparicionesOtros += Datos.reporte_estado[i].numero_apariciones_otros
+            totalAparicionesInternet += Datos.reporte_estado[i].numero_apariciones_internet
+        }
+    }
     //alert($j('input:radio[name=tipoReporte]:checked').val());
     var sHtml= '<div class="row tituloFiltros">'
                     + '<div class="col-md-6">'
@@ -1801,14 +1831,16 @@ $j.tablaGrafica = function(Datos){
                         +'<tr>'
                             +'<th>Origen</th>'
                             +'<th>No. de Visitas</th>'
-                            +'<th>Capitalizaciones</th>'
+                            +'<th>Capitalizacion Medios Tradicionales</th>'
+                            +'<th>Capitalización Internet</th>'
                         +'</tr>'
                     +'</thead>'
                     +'<tfoot>'
                         +'<tr>'
                             +'<th>TOTALES</th>'
                             +'<th style="text-align:right;">'+ formato_numero(Datos.reporte_general.visitas_totales, 0, '.', ',') +'</th>'
-                            +'<th style="text-align:right; padding-right:10px;">'+ formato_numero(totalApariciones, 0, '.', ',') +'</th>'
+                            +'<th style="text-align:right;">'+ formato_numero(totalAparicionesOtros, 0, '.', ',') +'</th>'
+                            +'<th style="text-align:right; padding-right:10px;">'+ formato_numero(totalAparicionesInternet, 0, '.', ',') +'</th>'
                         +'</tr>'
 
                         +'<tr><td class="pager" id="pagerG" colspan="3">'
@@ -1833,7 +1865,8 @@ $j.tablaGrafica = function(Datos){
             sHtml += '<tr>'
             + '<td>' + Datos.reporte_dependencia[i].dependencia + '</td>'
             + '<td align="right">' + formato_numero(Datos.reporte_dependencia[i].numero_visitas, 0, '.', ',') + '</td>'
-            + '<td align="right">' + formato_numero(Datos.reporte_dependencia[i].numero_apariciones, 0, '.', ',') + '</td>'
+            + '<td align="right">' + formato_numero(Datos.reporte_dependencia[i].numero_apariciones_otros, 0, '.', ',') + '</td>'
+            + '<td align="right">' + formato_numero(Datos.reporte_dependencia[i].numero_apariciones_internet, 0, '.', ',') + '</td>'
             + '</tr>'
         }
     }
@@ -1845,7 +1878,8 @@ $j.tablaGrafica = function(Datos){
             sHtml += '<tr>'
             + '<td>' + Datos.reporte_estado[i].estado + '</td>'
             + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_visitas, 0, '.', ',') + '</td>'
-            + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_apariciones, 0, '.', ',') + '</td>'
+            + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_apariciones_otros, 0, '.', ',') + '</td>'
+            + '<td align="right">' + formato_numero(Datos.reporte_estado[i].numero_apariciones_internet, 0, '.', ',') + '</td>'
             + '</tr>'
         }
     }
@@ -1861,7 +1895,7 @@ $j.tablaGrafica = function(Datos){
                 +'    headerTemplate : "{content} {icon}",'
                 +'    widgets: [ "uitheme", "zebra", "pager","scroller" ],'
                 +'    widgetOptions : {'
-                +'        scroller_height : 90,'
+                +'        scroller_height : 95,'
                 +'        scroller_upAfterSort: true,'
                 +'        scroller_jumpToHeader: true,'
                 +'        scroller_barWidth : null,'
