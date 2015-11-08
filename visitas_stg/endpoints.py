@@ -880,7 +880,7 @@ class PptxReporteEndpoint(ProtectedResourceView):
             # write body cells
             i = 1
             for obra in json_map['reporte_estado']:
-                for x in range(0, 3):
+                for x in range(0, 4):
                     cell = table.rows[i].cells[x]
                     paragraph = cell.textframe.paragraphs[0]
                     paragraph.font.size = Pt(8)

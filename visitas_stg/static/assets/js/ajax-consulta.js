@@ -1663,7 +1663,7 @@ function tablaD(Datos){
                             +'<th style="text-align:right; padding-right:10px;">'+ formato_numero(totalAparicionesInternet, 0, '.', ',') +'</th>'
                         +'</tr>'
 
-                        +'<tr><td class="pager" id="pagerD" colspan="3">'
+                        +'<tr><td class="pager" id="pagerD" colspan="4">'
                         //+'<div class="first principioFLECHA" id="firstD" style="height:11px"></div>'
                         +'<img src="../../static/assets/tablesorter/addons/pager/icons/first.png" class="first" id="firstD"/>'
                         +'<img src="../../static/assets/tablesorter/addons/pager/icons/prev.png" class="prev" id="prevD"/>'
@@ -1767,7 +1767,7 @@ function tablaD(Datos){
                 +'    headerTemplate : "{content} {icon}",'
                 +'    widgets: [ "uitheme", "zebra", "pager", "scroller" ],'
                 +'    widgetOptions : {'
-                +'        scroller_height : 135,'
+                +'        scroller_height : 130,'
                 +'        scroller_upAfterSort: true,'
                 +'        scroller_jumpToHeader: true,'
                 +'        scroller_barWidth : null,'
