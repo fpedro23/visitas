@@ -125,6 +125,14 @@ class VisitaAdmin(NestedModelAdmin):
         'partido_gobernante',
         'distrito_electoral', )
 
+    list_filter = ('dependencia',  'region', 'entidad', 'municipio', 'cargo',
+                   'partido_gobernante', 'distrito_electoral',
+                   )
+
+    search_fields = ('actividad__descripcion', 'cargo__nombre_funcionario', 'cargo__nombre_cargo',
+                     'partido_gobernante__nombre_partido_gobernante',
+                     )
+
     fieldsets = [
         ('Información básica de la visita', {'fields': ['identificador_unico', 'dependencia', 'fecha_visita', ]}),
         ('Localización', {'fields': ['region', 'entidad', 'municipio', ]}),
@@ -139,7 +147,6 @@ class VisitaAdmin(NestedModelAdmin):
             return
 
         super(VisitaAdmin, self).log_change(request, object, message)
-
 
     def save_formset(self, request, form, formset, change):
         for form in formset.forms:
@@ -156,9 +163,6 @@ class VisitaAdmin(NestedModelAdmin):
                     print e
 
         super(VisitaAdmin, self).save_formset(request, form, formset, change)
-
-
-
 
     def get_readonly_fields(self, request, obj=None):
         readonly_fields = ('identificador_unico', 'nombre_funcionario')
