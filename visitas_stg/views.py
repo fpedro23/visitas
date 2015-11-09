@@ -529,7 +529,8 @@ def Predefinido_Estado(request):
         table = prs.slides[0].shapes[0].table
         # write body cellstable.cell(1, 0)
         i=1
-        total1=total2=total3=total4=total5=0
+        totalColumna=total1=total2=total3=total4=total5=0
+
         for dato in ans[0]['dependencias']:
             if i>=16: break
             table.cell(1, i).text_frame.paragraphs[0].font.size = Pt(8)
@@ -537,6 +538,7 @@ def Predefinido_Estado(request):
             table.cell(3, i).text_frame.paragraphs[0].font.size = Pt(8)
             table.cell(4, i).text_frame.paragraphs[0].font.size = Pt(8)
             table.cell(5, i).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(6, i).text_frame.paragraphs[0].font.size = Pt(8)
             #fill=table.cell(1, i).fill
             #fill.solid()
             #fill.fore_color.rgb = RGBColor(255,0,0)
@@ -555,6 +557,8 @@ def Predefinido_Estado(request):
             total3=total3 + dato['actividades']
             total4=total4 + dato['municipios']
             total5=total5 + dato['participantes_locales']
+            totalColumna=dato['funcionarios_federales']+dato['visitas']+dato['actividades']+dato['municipios']+dato['participantes_locales']
+            table.cell(6, i).text = str(totalColumna)
             i=i+1
 
         table.cell(1, 16).text_frame.paragraphs[0].font.size = Pt(8)
@@ -562,11 +566,13 @@ def Predefinido_Estado(request):
         table.cell(3, 16).text_frame.paragraphs[0].font.size = Pt(8)
         table.cell(4, 16).text_frame.paragraphs[0].font.size = Pt(8)
         table.cell(5, 16).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 16).text_frame.paragraphs[0].font.size = Pt(8)
         table.cell(1, 16).text = str(total1)
         table.cell(2, 16).text = str(total2)
         table.cell(3, 16).text = str(total3)
         table.cell(4, 16).text = str(total4)
         table.cell(5, 16).text = str(total5)
+        table.cell(6, 16).text = str(total1+total2+total3+total4+total5)
 
         table = prs.slides[0].shapes[1].table
         i=1
@@ -577,6 +583,7 @@ def Predefinido_Estado(request):
             table.cell(i,3).text_frame.paragraphs[0].font.size = Pt(8)
             table.cell(i,4).text_frame.paragraphs[0].font.size = Pt(8)
             table.cell(i,5).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i,6).text_frame.paragraphs[0].font.size = Pt(8)
 
             table.cell(i,1).text = str(dato['tipos_capitalizacion'][0]['numero'])
             table.cell(i,2).text = str(dato['tipos_capitalizacion'][1]['numero'])
@@ -584,23 +591,32 @@ def Predefinido_Estado(request):
             table.cell(i,4).text = str(dato['tipos_capitalizacion'][3]['numero'])
             table.cell(i,5).text = str(dato['tipos_capitalizacion'][4]['numero'])
 
+            totalColumna=0
+            for j in  range(0,5):
+                totalColumna += dato['tipos_capitalizacion'][j]['numero']
+            table.cell(i,6).text = str(totalColumna)
+
             total1=total1 + dato['tipos_capitalizacion'][0]['numero']
             total2=total2 + dato['tipos_capitalizacion'][1]['numero']
             total3=total3 + dato['tipos_capitalizacion'][2]['numero']
             total4=total4 + dato['tipos_capitalizacion'][3]['numero']
             total5=total5 + dato['tipos_capitalizacion'][4]['numero']
+
+
             i=i+1
 
-        table.cell(1, 6).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(2, 6).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(3, 6).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(4, 6).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(5, 6).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(1, 6).text = str(total1)
-        table.cell(2, 6).text = str(total2)
-        table.cell(3, 6).text = str(total3)
-        table.cell(4, 6).text = str(total4)
-        table.cell(5, 6).text = str(total5)
+        table.cell(6, 1).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 2).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 3).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 4).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 5).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 6).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 1).text = str(total1)
+        table.cell(6, 2).text = str(total2)
+        table.cell(6, 3).text = str(total3)
+        table.cell(6, 4).text = str(total4)
+        table.cell(6, 5).text = str(total5)
+        table.cell(6, 6).text = str(total1+total2+total3+total4+total5)
 
         mayor = map['dependencias']
         mayor.sort(key=lambda x: x['capitalizaciones']['cantidad__sum'], reverse=True)
@@ -645,7 +661,7 @@ def Predefinido_Estado(request):
         chart_data.categories = [ans[0]['clasificaciones'][0]['nombre_clasificacion'], ans[0]['clasificaciones'][1]['nombre_clasificacion'], ans[0]['clasificaciones'][2]['nombre_clasificacion']]
         chart_data.add_series('Series 1', (float(ans[0]['clasificaciones'][0]['numero'])/float(total_clasificaciones), float(ans[0]['clasificaciones'][1]['numero'])/float(total_clasificaciones), float(ans[0]['clasificaciones'][2]['numero'])/float(total_clasificaciones)))
 
-        x, y, cx, cy = Inches(6.69), Inches(4.7), Inches(3), Inches(2.5)
+        x, y, cx, cy = Inches(6.69), Inches(4.9), Inches(3), Inches(2.5)
 
         chart = prs.slides[0].shapes.add_chart(
             XL_CHART_TYPE.PIE, x, y, cx, cy, chart_data
@@ -786,71 +802,100 @@ def Predefinido_Dependencia(request):
         mayor = map['estados']
         mayor.sort(key=lambda x: x['total_visitas_funcionarios_federales'], reverse=True)
 
+        total=0
+
         for dato in ans[0]['estados']:
             table.cell(i, 0).text_frame.paragraphs[0].font.size = Pt(8)
             table.cell(i, 1).text_frame.paragraphs[0].font.size = Pt(8)
 
             table.cell(i, 0).text = str(dato['nombreEstado'])
             table.cell(i, 1).text = str(dato['total_visitas_funcionarios_federales'])
-
+            total += dato['total_visitas_funcionarios_federales']
             if i==5: break
             i=i+1
+        table.cell(6, 0).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 1).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 0).text = "TOTAL"
+        table.cell(6, 1).text = str(total)
 
         table = prs.slides[0].shapes[1].table
         i=1
         mayor = map['estados']
         mayor.sort(key=lambda x: x['total_visitas'], reverse=True)
+        total=0
         for dato in ans[0]['estados']:
             table.cell(i, 0).text_frame.paragraphs[0].font.size = Pt(8)
             table.cell(i, 1).text_frame.paragraphs[0].font.size = Pt(8)
 
             table.cell(i, 0).text = str(dato['nombreEstado'])
             table.cell(i, 1).text = str(dato['total_visitas'])
+            total+=dato['total_visitas']
 
             if i==5: break
             i=i+1
+        table.cell(6, 0).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 1).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 0).text = "TOTAL"
+        table.cell(6, 1).text = str(total)
 
         table = prs.slides[0].shapes[2].table
         i=1
         mayor = map['estados']
         mayor.sort(key=lambda x: x['total_actividades'], reverse=True)
+        total=0
         for dato in ans[0]['estados']:
             table.cell(i, 0).text_frame.paragraphs[0].font.size = Pt(8)
             table.cell(i, 1).text_frame.paragraphs[0].font.size = Pt(8)
 
             table.cell(i, 0).text = str(dato['nombreEstado'])
             table.cell(i, 1).text = str(dato['total_actividades'])
+            total += dato['total_actividades']
 
             if i==5: break
             i=i+1
+        table.cell(6, 0).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 1).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 0).text = "TOTAL"
+        table.cell(6, 1).text = str(total)
 
         table = prs.slides[0].shapes[3].table
         i=1
         mayor = map['estados']
         mayor.sort(key=lambda x: x['municipios'], reverse=True)
+        total=0
         for dato in ans[0]['estados']:
             table.cell(i, 0).text_frame.paragraphs[0].font.size = Pt(8)
             table.cell(i, 1).text_frame.paragraphs[0].font.size = Pt(8)
 
             table.cell(i, 0).text = str(dato['nombreEstado'])
             table.cell(i, 1).text = str(dato['municipios'])
-
+            total += dato['municipios']
             if i==5: break
             i=i+1
+        table.cell(6, 0).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 1).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 0).text = "TOTAL"
+        table.cell(6, 1).text = str(total)
 
         table = prs.slides[0].shapes[4].table
         i=1
         mayor = map['estados']
         mayor.sort(key=lambda x: x['participantes_locales'], reverse=True)
+        total=0
         for dato in ans[0]['estados']:
             table.cell(i, 0).text_frame.paragraphs[0].font.size = Pt(8)
             table.cell(i, 1).text_frame.paragraphs[0].font.size = Pt(8)
 
             table.cell(i, 0).text = str(dato['nombreEstado'])
             table.cell(i, 1).text = str(dato['participantes_locales'])
+            total += dato['participantes_locales']
 
             if i==5: break
             i=i+1
+        table.cell(6, 0).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 1).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 0).text = "TOTAL"
+        table.cell(6, 1).text = str(total)
 
         table = prs.slides[0].shapes[5].table
         i=1
@@ -861,12 +906,18 @@ def Predefinido_Dependencia(request):
             table.cell(i,3).text_frame.paragraphs[0].font.size = Pt(8)
             table.cell(i,4).text_frame.paragraphs[0].font.size = Pt(8)
             table.cell(i,5).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i,6).text_frame.paragraphs[0].font.size = Pt(8)
 
             table.cell(i,1).text = str(dato['tipos_capitalizacion'][0]['numero'])
             table.cell(i,2).text = str(dato['tipos_capitalizacion'][1]['numero'])
             table.cell(i,3).text = str(dato['tipos_capitalizacion'][2]['numero'])
             table.cell(i,4).text = str(dato['tipos_capitalizacion'][3]['numero'])
             table.cell(i,5).text = str(dato['tipos_capitalizacion'][4]['numero'])
+
+            totalColumna=0
+            for j in  range(0,5):
+                totalColumna += dato['tipos_capitalizacion'][j]['numero']
+            table.cell(i,6).text = str(totalColumna)
 
             total1=total1 + dato['tipos_capitalizacion'][0]['numero']
             total2=total2 + dato['tipos_capitalizacion'][1]['numero']
@@ -875,16 +926,18 @@ def Predefinido_Dependencia(request):
             total5=total5 + dato['tipos_capitalizacion'][4]['numero']
             i=i+1
 
-        table.cell(1, 6).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(2, 6).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(3, 6).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(4, 6).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(5, 6).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(1, 6).text = str(total1)
-        table.cell(2, 6).text = str(total2)
-        table.cell(3, 6).text = str(total3)
-        table.cell(4, 6).text = str(total4)
-        table.cell(5, 6).text = str(total5)
+        table.cell(6, 1).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 2).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 3).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 4).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 5).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 6).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 1).text = str(total1)
+        table.cell(6, 2).text = str(total2)
+        table.cell(6, 3).text = str(total3)
+        table.cell(6, 4).text = str(total4)
+        table.cell(6, 5).text = str(total5)
+        table.cell(6, 6).text = str(total1+total2+total3+total4+total5)
 
         mayor = map['estados']
         mayor.sort(key=lambda x: x['capitalizaciones']['cantidad__sum'], reverse=True)
@@ -1069,72 +1122,100 @@ def Predefinido_Region(request):
 
         mayor = map['dependencias']
         mayor.sort(key=lambda x: x['funcionarios_federales'], reverse=True)
-
+        total=0
         for dato in ans[0]['dependencias']:
             table.cell(i, 0).text_frame.paragraphs[0].font.size = Pt(8)
             table.cell(i, 1).text_frame.paragraphs[0].font.size = Pt(8)
 
             table.cell(i, 0).text = str(dato['nombreDependencia'])
             table.cell(i, 1).text = str(dato['funcionarios_federales'])
-
+            total+=dato['funcionarios_federales']
             if i==5: break
             i=i+1
+        table.cell(6, 0).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 1).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 0).text = "TOTAL"
+        table.cell(6, 1).text = str(total)
 
         table = prs.slides[0].shapes[1].table
         i=1
         mayor = map['dependencias']
         mayor.sort(key=lambda x: x['visitas'], reverse=True)
+        total=0
         for dato in ans[0]['dependencias']:
             table.cell(i, 0).text_frame.paragraphs[0].font.size = Pt(8)
             table.cell(i, 1).text_frame.paragraphs[0].font.size = Pt(8)
 
             table.cell(i, 0).text = str(dato['nombreDependencia'])
             table.cell(i, 1).text = str(dato['visitas'])
+            total += dato['visitas']
 
             if i==5: break
             i=i+1
+        table.cell(6, 0).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 1).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 0).text = "TOTAL"
+        table.cell(6, 1).text = str(total)
 
         table = prs.slides[0].shapes[2].table
         i=1
         mayor = map['dependencias']
         mayor.sort(key=lambda x: x['actividades'], reverse=True)
+        total=0
         for dato in ans[0]['dependencias']:
             table.cell(i, 0).text_frame.paragraphs[0].font.size = Pt(8)
             table.cell(i, 1).text_frame.paragraphs[0].font.size = Pt(8)
 
             table.cell(i, 0).text = str(dato['nombreDependencia'])
             table.cell(i, 1).text = str(dato['actividades'])
+            total+=dato['actividades']
 
             if i==5: break
             i=i+1
+        table.cell(6, 0).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 1).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 0).text = "TOTAL"
+        table.cell(6, 1).text = str(total)
 
         table = prs.slides[0].shapes[3].table
         i=1
         mayor = map['dependencias']
         mayor.sort(key=lambda x: x['municipios'], reverse=True)
+        total=0
         for dato in ans[0]['dependencias']:
             table.cell(i, 0).text_frame.paragraphs[0].font.size = Pt(8)
             table.cell(i, 1).text_frame.paragraphs[0].font.size = Pt(8)
 
             table.cell(i, 0).text = str(dato['nombreDependencia'])
             table.cell(i, 1).text = str(dato['municipios'])
+            total += dato['municipios']
 
             if i==5: break
             i=i+1
+        table.cell(6, 0).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 1).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 0).text = "TOTAL"
+        table.cell(6, 1).text = str(total)
 
         table = prs.slides[0].shapes[4].table
         i=1
         mayor = map['dependencias']
         mayor.sort(key=lambda x: x['participantes_locales'], reverse=True)
+        total=0
         for dato in ans[0]['dependencias']:
             table.cell(i, 0).text_frame.paragraphs[0].font.size = Pt(8)
             table.cell(i, 1).text_frame.paragraphs[0].font.size = Pt(8)
 
             table.cell(i, 0).text = str(dato['nombreDependencia'])
             table.cell(i, 1).text = str(dato['participantes_locales'])
+            total += dato['participantes_locales']
 
             if i==5: break
             i=i+1
+        table.cell(6, 0).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 1).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 0).text = "TOTAL"
+        table.cell(6, 1).text = str(total)
 
         table = prs.slides[0].shapes[5].table
         i=1
@@ -1145,12 +1226,18 @@ def Predefinido_Region(request):
             table.cell(i,3).text_frame.paragraphs[0].font.size = Pt(8)
             table.cell(i,4).text_frame.paragraphs[0].font.size = Pt(8)
             table.cell(i,5).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i,6).text_frame.paragraphs[0].font.size = Pt(8)
 
             table.cell(i,1).text = str(dato['tipos_capitalizacion'][0]['numero'])
             table.cell(i,2).text = str(dato['tipos_capitalizacion'][1]['numero'])
             table.cell(i,3).text = str(dato['tipos_capitalizacion'][2]['numero'])
             table.cell(i,4).text = str(dato['tipos_capitalizacion'][3]['numero'])
             table.cell(i,5).text = str(dato['tipos_capitalizacion'][4]['numero'])
+
+            totalColumna=0
+            for j in  range(0,5):
+                totalColumna += dato['tipos_capitalizacion'][j]['numero']
+            table.cell(i,6).text = str(totalColumna)
 
             total1=total1 + dato['tipos_capitalizacion'][0]['numero']
             total2=total2 + dato['tipos_capitalizacion'][1]['numero']
@@ -1159,16 +1246,18 @@ def Predefinido_Region(request):
             total5=total5 + dato['tipos_capitalizacion'][4]['numero']
             i=i+1
 
-        table.cell(1, 6).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(2, 6).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(3, 6).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(4, 6).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(5, 6).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(1, 6).text = str(total1)
-        table.cell(2, 6).text = str(total2)
-        table.cell(3, 6).text = str(total3)
-        table.cell(4, 6).text = str(total4)
-        table.cell(5, 6).text = str(total5)
+        table.cell(6, 1).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 2).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 3).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 4).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 5).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 6).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(6, 1).text = str(total1)
+        table.cell(6, 2).text = str(total2)
+        table.cell(6, 3).text = str(total3)
+        table.cell(6, 4).text = str(total4)
+        table.cell(6, 5).text = str(total5)
+        table.cell(6, 6).text = str(total1+total2+total3+total4+total5)
 
         mayor = map['dependencias']
         mayor.sort(key=lambda x: x['capitalizaciones']['cantidad__sum'], reverse=True)
@@ -1221,11 +1310,14 @@ def Predefinido_Region(request):
 
         chart.has_legend = True
         chart.legend.position = XL_LEGEND_POSITION.BOTTOM
+        chart.legend.font.size = Pt(12)
         chart.legend.include_in_layout = False
 
         chart.plots[0].has_data_labels = True
         data_labels = chart.plots[0].data_labels
         data_labels.number_format = '0%'
+        data_labels.font.size = Pt(12)
+        data_labels.font.color.rgb = RGBColor(0x0A, 0x42, 0x80)
         data_labels.position = XL_LABEL_POSITION.OUTSIDE_END
 
         #prs.save('visitas_stg/static/ppt/ppt-generados/Reporte_Region_sisef_' + str(usuario.user.id) + '.pptx')
