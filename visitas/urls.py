@@ -34,6 +34,11 @@ urlpatterns = patterns('',
     url('^visitas/Predefinido_Dependencia', views.Predefinido_Dependencia),
     url('^visitas/Predefinido_Region', views.Predefinido_Region),
 
+    url(r'^visitas/ayuda$', 'visitas_stg.views.ayuda', name='ayuda'),
+    url(r'^visitas/videos$', 'visitas_stg.views.videos', name='videos'),
+    url(r'^visitas/ver_video$', 'visitas_stg.views.ver_video', name='ver_video'),
+    url(r'^visitas/manuales-Pdf$', 'visitas_stg.views.manualesPdf', name='manualesPdf'),
+
 
     url(r'^admin/password_reset/$', auth_views.password_reset, name='admin_password_reset'),
     url(r'^admin/password_reset/done/$', auth_views.password_reset_done, name='password_reset_done'),

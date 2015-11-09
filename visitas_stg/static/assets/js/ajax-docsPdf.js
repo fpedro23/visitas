@@ -20,67 +20,61 @@ function main_consulta() {
 		}
 	});
 
-    $j('#crearObra').on('click', crear_obra);
-    $j('#modificarObra').on('click', modificar_obra);
+    $j('#crearVisita').on('click', crear_visita);
+    $j('#modificarVisita').on('click', modificar_visita);
 
     $j('#consultaFiltros').on('click', consulta_filtros);
     $j('#consultaPredefinidos').on('click', consulta_predefinida);
-    $j('#listadoObras').on('click', lista_obras);
-    $j('#catalogoDependencias').on('click', dependencias);
-    $j('#catalogoSubdependencias').on('click', subdependencias);
-    $j('#catalogoClasificaciones').on('click', clasificacion);
-    $j('#catalogoInversion').on('click', inversion);
-    $j('#catalogoImpacto').on('click', impacto);
-    $j('#catalogoInauguradores').on('click', inaugurador);
+    $j('#listadoVisita').on('click', lista_visita);
+    $j('#catalogoFuncionarios').on('click', funcionarios);
+    $j('#catalogoMedios').on('click', medios);
+    $j('#catalogoActividades').on('click', actividades);
+    $j('#catalogoCapitalizaciones').on('click', capitalizaciones);
     $j('#catalogoUsuarios').on('click', usuarios);
 
 }
 
-function crear_obra(){
-    verDocPdf('ManualAltaObra','Crear una Obra');
+function crear_visita(){
+    verDocPdf('SISEF_ALTA_VISITA','Crear una visita');
 }
-function modificar_obra(){
-    verDocPdf('ManualModificarObra','Modificar una Obra');
+function modificar_visita(){
+    verDocPdf('SISEF_MODIFICAR_VISITA','Modificar una Obra');
 }
 
 function consulta_filtros(){
-    verDocPdf('ManualConsultaMedianteFiltros','Consulta Mediante Filtros');
+    verDocPdf('SISEF_CONSULTA_FILTROS','Consulta Mediante Filtros');
 }
 function consulta_predefinida(){
-    verDocPdf('ManualConsultaPredefinida','Consultas Predefinidas');
+    verDocPdf('SISEF_CONSULTAS_PREDEFINIDAS','Consultas Predefinidas');
 }
-function lista_obras(){
-    verDocPdf('ManualListaObras','Listado de Obras');
+function lista_visita(){
+    verDocPdf('SISEF_LISTADO_VISITAS','Listado de Obras');
 }
 
-function clasificacion(){
-    verDocPdf('ManualCatalogoClasificacion','Catálogo de Clasificación');
+function funcionarios(){
+    verDocPdf('SISEF_CATALOGO_FUNCIONARIOS','Catálogo de Funcionarios');
 }
-function dependencias(){
-    verDocPdf('ManualCatalogoDependencias','Catálogo de Dependencias');
+function medios(){
+    verDocPdf('SISEF_CATALOGO_MEDIOS','Catálogo de Medios');
 }
-function subdependencias(){
-    verDocPdf('ManualCatalogoSubDependencias','Catálogo de Sub Dependencias');
+function actividades(){
+    verDocPdf('SISEF_CATALOGO_ACTIVIDADES','Catálogo de Actividades');
 }
-function impacto(){
-    verDocPdf('ManualCatalogoImpacto','Catálogo de Impactos');
+function capitalizaciones(){
+    verDocPdf('SISEF_CATALOGO_CAPITALIZACIONES','Catálogo de Capitalizaciones');
 }
-function inaugurador(){
-    verDocPdf('ManualCatalogoInauguradores','Catálogo de Inauguradores');
-}
+
 function usuarios(){
-    verDocPdf('ManualUsuarios','Catálogo de Usuarios');
+    verDocPdf('SISEF_USUARIOS','Catálogo de Usuarios');
 }
-function inversion(){
-    verDocPdf('ManualCatalogoInversion','Catálogo de tipos de Invesión');
-}
+
 
 function verDocPdf(nombrePdf,titulo){
 
 
     $('#titulo').html(titulo);
     //$j('#descripcion').html(descripcion);
-    $('#vistaPdf').html('<embed src="https://obrasapf.mx/media/tutorialesPDF/'+ nombrePdf +'.pdf" width="720" height="375">');
+    $('#vistaPdf').html('<embed src="http://sisefenlinea.mx/media/tutorialesPDF/'+ nombrePdf +'.pdf" width="720" height="375">');
 
 
 }

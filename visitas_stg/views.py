@@ -1334,5 +1334,75 @@ def Predefinido_Region(request):
         response['Content-Disposition'] = "attachment; filename=%s" % filename
         return response
 
+
+def ayuda(request):
+    return render_to_response('admin/visitas_stg/ayuda/c_ayuda.html', locals(),
+                              context_instance=RequestContext(request))
+def videos(request):
+    return render_to_response('admin/visitas_stg/videos/videos_lista.html', locals(),
+                              context_instance=RequestContext(request))
+def manualesPdf(request):
+    return render_to_response('admin/visitas_stg/manuales/manuales_lista.html', locals(),
+                              context_instance=RequestContext(request))
+@login_required()
+def ver_video(request):
+    tituloVideo=""
+    cualVideo=request.GET.get('cualVideo', None),
+    print(str(cualVideo[0]))
+    if str(cualVideo[0]) =='alta_VISITA.mp4':
+        tituloVideo='Alta de una Visita',
+    elif str(cualVideo[0]) =='modificar_VISITA.mp4':
+        tituloVideo='Modificar una Visita',
+
+    elif str(cualVideo[0]) =='consulta_FILTROS.mp4':
+        tituloVideo='Consulta Mediante Filtros',
+    elif str(cualVideo[0]) =='consulta_PRDETERMINADAS.mp4':
+        tituloVideo='Consulta Predefinidos',
+    elif str(cualVideo[0]) =='lista_VISITAS.mp4':
+        tituloVideo='Consulta Predefinidos',
+
+    elif str(cualVideo[0]) =='add_FUNCIONARIO.mp4':
+        tituloVideo='Agregar un Funcionario',
+    elif str(cualVideo[0]) =='seach_FUNCIONARIO.mp4':
+        tituloVideo='Buscar un Funcionario',
+    elif str(cualVideo[0]) =='modify_FUNCIONARIO.mp4':
+        tituloVideo='Modificar un Funcionario',
+    elif str(cualVideo[0]) =='delete_FUNCIONARIO.mp4':
+        tituloVideo='Eliminar un Funcionario',
+
+    elif str(cualVideo[0]) =='add_MEDIO.mp4':
+        tituloVideo='Agregar un Medio',
+    elif str(cualVideo[0]) =='seach_MEDIO.mp4':
+        tituloVideo='Buscar un Medio',
+    elif str(cualVideo[0]) =='modify_MEDIO.mp4':
+        tituloVideo='Modificar un Medio',
+    elif str(cualVideo[0]) =='delete_MEDIO.mp4':
+        tituloVideo='Eliminar un Medio',
+
+    elif str(cualVideo[0]) =='add_ACTIVIDAD.mp4':
+        tituloVideo='Agregar un Tipo de Actividad',
+    elif str(cualVideo[0]) =='seach_ACTIVIDAD.mp4':
+        tituloVideo='Buscar un Tipo de Actividad',
+    elif str(cualVideo[0]) =='modify_ACTIVIDAD.mp4':
+        tituloVideo='Modificar un Tipo de Actividad',
+    elif str(cualVideo[0]) =='delete_ACTIVIDAD.mp4':
+        tituloVideo='Eliminar un Tipo de Actividad',
+
+    elif str(cualVideo[0]) =='add_CAPITALIZACION.mp4':
+        tituloVideo='Agregar un Tipo de Capitalizacion',
+    elif str(cualVideo[0]) =='seach_CAPITALIZACION.mp4':
+        tituloVideo='Buscar un Tipo de Capitalizacion',
+    elif str(cualVideo[0]) =='modify_CAPITALIZACION.mp4':
+        tituloVideo='Modificar un Tipo de Capitalizacion',
+    elif str(cualVideo[0]) =='delete_CAPITALIZACION.mp4':
+        tituloVideo='Eliminar un Tipo de Capitalizacion',
+
+    template = loader.get_template('admin/visitas_stg/videos/videos_lista.html')
+    context = RequestContext(request, {
+        'cualVideo': cualVideo,
+        'tituloVideo': tituloVideo,
+    })
+    return HttpResponse(template.render(context))
+
 def redirect_admin(request):
     return redirect('admin/')

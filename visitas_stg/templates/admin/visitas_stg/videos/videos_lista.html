@@ -1,0 +1,151 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static %}
+{% block extrastyle %}{{ block.super }}
+
+    <link href="{% static "assets/css/menu.css" %}" rel="stylesheet">  <!--AQUI VAN TODOS LOS ARCHIVOS DE ESTILO EXTRA QUE SE REQUIEREN PARA LA PAGINA O JS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static "assets/bootstrap/css/bootstrap.css"%}" />
+
+
+    <link href="{% static "assets/css/styles.css"%}" rel="stylesheet">
+
+
+
+
+    <!-- Chang URLs to wherever Video.js files will be hosted -->
+     <link href="{% static "assets/video-js/video-js.css"%}" rel="stylesheet" type="text/css">
+    <!-- video.js must be in the <head> for older IEs to work. -->
+    <script src="{% static "assets/video-js/video.js"%}"></script>
+
+    <!-- Unless using the CDN hosted version, update the URL to the Flash SWF -->
+    <script>
+        videojs.options.flash.swf = "video-js.swf";
+    </script>
+    <style type="text/css">
+      .vjs-default-skin { color: #970b0b; }
+      .vjs-default-skin .vjs-play-progress,
+      .vjs-default-skin .vjs-volume-level { background-color: #0b7811 }
+    </style>
+
+{% endblock %}
+{% block breadcrumbs %}
+{% endblock %}
+
+{% block content %}
+
+    <div id="regresarBTN" onclick="location.href='/visitas/ayuda'">
+    </div>   <!--AGREGAR A DONDE SE VA A REGRESAR CON ESTA URL REGRESA A LA PÀGINA PRINCIPAL-->
+
+    <div id="welcome">Manuales de Ayuda al Usuario en Video</div>
+    <input type="hidden" name="historico" id="historico"/>
+    <div class="row" style="padding-right: 18px; padding-left: 0px; padding-bottom: 0px; padding-top: 0px ">
+       <div class="col-md-3" style="height:500px; overflow: scroll;">
+           <div class="panel-group">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h6 class="panel-title">Visitas</h6>
+                                </div>
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li style="height: 25px"><a href="/visitas/ver_video?cualVideo=alta_VISITA.mp4" >Alta de Visita <span id="load1" class="glyphicon glyphicon-refresh glyphicon-refresh-animate mfp-hide"></span></a></li>
+                                    <li style="height: 30px"><a href="/visitas/ver_video?cualVideo=modificar_VISITA.mp4" >Modificar una Visita <span id="load2" class="glyphicon glyphicon-refresh glyphicon-refresh-animate mfp-hide"></span></a></li>
+                                </ul>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h6 class="panel-title">Consultas</h6>
+                                </div>
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li style="height: 25px"><a href="/visitas/ver_video?cualVideo=consulta_FILTROS.mp4" >Consulta Mediante Filtros <span id="load1" class="glyphicon glyphicon-refresh glyphicon-refresh-animate mfp-hide"></span></a></li>
+                                    <li style="height: 25px"><a href="/visitas/ver_video?cualVideo=consulta_PRDETERMINADAS.mp4" >Consulta Predefinidos<span id="load2" class="glyphicon glyphicon-refresh glyphicon-refresh-animate mfp-hide"></span></a></li>
+                                    <li style="height: 30px"><a href="/visitas/ver_video?cualVideo=lista_VISITAS.mp4" >Listado de Visitas<span id="load2" class="glyphicon glyphicon-refresh glyphicon-refresh-animate mfp-hide"></span></a></li>
+                                </ul>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h6 class="panel-title">Funcionarios</h6>
+                                </div>
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li style="height: 25px"><a href="/visitas/ver_video?cualVideo=add_FUNCIONARIO.mp4"  >Agregar un Funcionario</a></li>
+                                    <li style="height: 25px"><a href="/visitas/ver_video?cualVideo=seach_FUNCIONARIO.mp4"  >Buscar un Funcionario </a></li>
+                                    <li style="height: 25px"><a href="/visitas/ver_video?cualVideo=modify_FUNCIONARIO.mp4"  >Modificar un Funcionario</a></li>
+                                    <li style="height: 30px"><a href="/visitas/ver_video?cualVideo=delete_FUNCIONARIO.mp4"  >Eliminar un Funcionario </a></li>
+                                </ul>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h6 class="panel-title">Medios</h6>
+                                </div>
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li style="height: 25px"><a href="/visitas/ver_video?cualVideo=add_MEDIO.mp4"  >Agregar un Medio</a></li>
+                                    <li style="height: 25px"><a href="/visitas/ver_video?cualVideo=seach_MEDIO.mp4"  >Buscar un Medio</a></li>
+                                    <li style="height: 25px"><a href="/visitas/ver_video?cualVideo=modify_MEDIO.mp4"  >Modificar un Medio </a></li>
+                                    <li style="height: 30px"><a href="/visitas/ver_video?cualVideo=delete_MEDIOS.mp4"  >Eliminar un Medio</a></li>
+                                </ul>
+                            </div>
+
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h6 class="panel-title">Tipos de Actividad</h6>
+                                </div>
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li style="height: 25px"><a href="/visitas/ver_video?cualVideo=add_ACTIVIDAD.mp4"  >Agregar un Tipo de Actividad</a></li>
+                                    <li style="height: 25px"><a href="/visitas/ver_video?cualVideo=seach_ACTIVIDAD.mp4"  >Buscar un Tipo de Actividad</a></li>
+                                    <li style="height: 25px"><a href="/visitas/ver_video?cualVideo=modify_ACTIVIDAD.mp4"  >Modificar un Tipo de Actividad </a></li>
+                                    <li style="height: 30px"><a href="/visitas/ver_video?cualVideo=delete_ACTIVIDAD.mp4"  >Eliminar un Tipo de Actividad</a></li>
+                                </ul>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h6 class="panel-title">Tipos de Clasificación</h6>
+                                </div>
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li style="height: 25px"><a href="/visitas/ver_video?cualVideo=add_CAPITALIZACION.mp4"  >Agregar un Tipo de Clasificación</a></li>
+                                    <li style="height: 25px"><a href="/visitas/ver_video?cualVideo=seach_CAPITALIZACION.mp4"  >Buscar un Tipo de Clasificación</a></li>
+                                    <li style="height: 25px"><a href="/visitas/ver_video?cualVideo=modify_CAPITALIZACION.mp4"  >Modificar un Tipo de Clasificación </a></li>
+                                    <li style="height: 30px"><a href="/visitas/ver_video?cualVideo=delete_CAPITALIZACION.mp4"  >Eliminar un Tipo de Clasificación</a></li>
+                                </ul>
+                            </div>
+
+
+           </div>
+
+       </div>
+
+       <div class="col-md-9-box" style="height: 500px">
+            </br>
+
+            <div class="row">
+                <div class="col-md-12 titulo" id="titulo">
+                {% for titulo in tituloVideo %}
+                           {{ titulo }}
+                {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" ><center>
+
+                {% for video in cualVideo %}
+                    <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="610" height="400"
+                          poster=""
+                          data-setup="{}">
+
+                                <source src="http://sisefenlinea.mx/media/tutorialesVideo/{{ video }}" type='video/mp4'/>
+                        <track kind="captions" src="demo.captions.vtt"  srclang="es" label="Español"></track>
+                        <track kind="subtitles" src="demo.captions.vtt" srclang="es" label="Español"></track>
+
+                        <p class="vjs-no-js">Para ver el vídeo por favor habilite JavaScript y considere actualizar a un navegador web que <a href="http://videojs.com/html5-video-support/" target="_blank">soporte video en HTML5</a></p>
+                    </video>
+                 {% endfor %}
+                </center></div>
+            </div>
+           </br>
+            <div class="row">
+                <div class="col-md-12" id="descripcion"></div>
+            </div>
+       </div>
+    </div>
+
+
+{% endblock %}
