@@ -122,6 +122,9 @@ class BuscarVisitas:
                 total=Sum('cantidad'))['total']
             if dependencia['numero_apariciones_internet'] is None:
                 dependencia['numero_apariciones_internet'] = 0
+
+            if dependencia['numero_apariciones'] is None: dependencia['numero_apariciones']=0
+            if dependencia['numero_apariciones_internet'] is None: dependencia['numero_apariciones_internet']=0
             dependencia['numero_apariciones_otros'] = dependencia['numero_apariciones'] - dependencia[
                 'numero_apariciones_internet']
 
@@ -133,6 +136,9 @@ class BuscarVisitas:
                 total=Sum('cantidad'))['total']
             if estado['numero_apariciones_internet'] is None:
                 estado['numero_apariciones_internet'] = 0
+
+            if estado['numero_apariciones'] is None: estado['numero_apariciones']=0
+            if estado['numero_apariciones_internet'] is None: estado['numero_apariciones_internet']=0
             estado['numero_apariciones_otros'] = estado['numero_apariciones'] - estado[
                 'numero_apariciones_internet']
 
@@ -148,6 +154,8 @@ class BuscarVisitas:
                 total=Sum('cantidad'))['total']
             if municipio['numero_apariciones_internet'] is None:
                 municipio['numero_apariciones_internet'] = 0
+            if municipio['numero_apariciones'] is None: municipio['numero_apariciones']=0
+            if municipio['numero_apariciones_internet'] is None: municipio['numero_apariciones_internet']=0
             municipio['numero_apariciones_otros'] = municipio['numero_apariciones'] - municipio[
                 'numero_apariciones_internet']
 

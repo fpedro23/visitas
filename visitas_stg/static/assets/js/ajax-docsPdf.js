@@ -25,7 +25,7 @@ function main_consulta() {
 
     $j('#consultaFiltros').on('click', consulta_filtros);
     $j('#consultaPredefinidos').on('click', consulta_predefinida);
-    $j('#listadoVisita').on('click', lista_visita);
+    $j('#listadoVisitas').on('click', lista_visita);
     $j('#catalogoFuncionarios').on('click', funcionarios);
     $j('#catalogoMedios').on('click', medios);
     $j('#catalogoActividades').on('click', actividades);
@@ -74,7 +74,7 @@ function verDocPdf(nombrePdf,titulo){
 
     $('#titulo').html(titulo);
     //$j('#descripcion').html(descripcion);
-    $('#vistaPdf').html('<embed src="http://sisefenlinea.mx/media/tutorialesPDF/'+ nombrePdf +'.pdf" width="720" height="375">');
+    $('#vistaPdf').html('<embed src="http://sisefenlinea.mx/media/tutorialesPDF/'+ nombrePdf +'.pdf" width="720" height="450">');
 
 
 }

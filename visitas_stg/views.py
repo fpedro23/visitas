@@ -1359,11 +1359,11 @@ def ver_video(request):
     elif str(cualVideo[0]) =='consulta_PRDETERMINADAS.mp4':
         tituloVideo='Consulta Predefinidos',
     elif str(cualVideo[0]) =='lista_VISITAS.mp4':
-        tituloVideo='Consulta Predefinidos',
+        tituloVideo='Listado de visitas',
 
     elif str(cualVideo[0]) =='add_FUNCIONARIO.mp4':
         tituloVideo='Agregar un Funcionario',
-    elif str(cualVideo[0]) =='seach_FUNCIONARIO.mp4':
+    elif str(cualVideo[0]) =='search_FUNCIONARIO.mp4':
         tituloVideo='Buscar un Funcionario',
     elif str(cualVideo[0]) =='modify_FUNCIONARIO.mp4':
         tituloVideo='Modificar un Funcionario',
@@ -1372,16 +1372,16 @@ def ver_video(request):
 
     elif str(cualVideo[0]) =='add_MEDIO.mp4':
         tituloVideo='Agregar un Medio',
-    elif str(cualVideo[0]) =='seach_MEDIO.mp4':
+    elif str(cualVideo[0]) =='search_MEDIO.mp4':
         tituloVideo='Buscar un Medio',
     elif str(cualVideo[0]) =='modify_MEDIO.mp4':
         tituloVideo='Modificar un Medio',
-    elif str(cualVideo[0]) =='delete_MEDIO.mp4':
+    elif str(cualVideo[0]) =='delete_MEDIOS.mp4':
         tituloVideo='Eliminar un Medio',
 
     elif str(cualVideo[0]) =='add_ACTIVIDAD.mp4':
         tituloVideo='Agregar un Tipo de Actividad',
-    elif str(cualVideo[0]) =='seach_ACTIVIDAD.mp4':
+    elif str(cualVideo[0]) =='search_ACTIVIDAD.mp4':
         tituloVideo='Buscar un Tipo de Actividad',
     elif str(cualVideo[0]) =='modify_ACTIVIDAD.mp4':
         tituloVideo='Modificar un Tipo de Actividad',
@@ -1390,7 +1390,7 @@ def ver_video(request):
 
     elif str(cualVideo[0]) =='add_CAPITALIZACION.mp4':
         tituloVideo='Agregar un Tipo de Capitalizacion',
-    elif str(cualVideo[0]) =='seach_CAPITALIZACION.mp4':
+    elif str(cualVideo[0]) =='search_CAPITALIZACION.mp4':
         tituloVideo='Buscar un Tipo de Capitalizacion',
     elif str(cualVideo[0]) =='modify_CAPITALIZACION.mp4':
         tituloVideo='Modificar un Tipo de Capitalizacion',
