@@ -592,7 +592,7 @@
 
 #medioVISITAS02{
 	position: absolute;
-	left: 205px;
+	left: 203px;
 	top: 12px;
 	width: 184px;
 	height: 90px;
@@ -603,7 +603,7 @@
 
 #medioVISITAS03{
 	position: absolute;
-	left: 398px;
+	left: 397px;
 	top: 12px;
 	width: 184px;
 	height: 90px;
@@ -625,7 +625,7 @@
 
 #medioVISITAS05{
 	position: absolute;
-	left: 788px;
+	left: 789px;
 	top: 12px;
 	width: 184px;
 	height: 90px;
@@ -680,6 +680,16 @@
 	position: absolute;
 	top: 110px;
 	left: 670px;
+}
+
+#medioICO05{
+	width: 40px;
+	height: 40px;
+	background-image: url(../imagenes/bigBACK.png);
+	background-position: -1469px -550px;
+	position: absolute;
+	top: 110px;
+	left: 859px;
 }
 
 .medioNUM_DEF{
