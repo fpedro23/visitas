@@ -107,8 +107,7 @@
 #changelist #toolbar {
     padding: 3px;
     border-bottom: 1px solid #ddd;
-    background: #e1e1e1 ;
-    color: #666;
+
 }
 
 #changelist #toolbar form input {
@@ -130,9 +129,9 @@
 #changelist-filter {
     position: absolute;
     top: 63px;
-    left: 907px;
+    left: 895px;
     z-index: 1000;
-    width: 110px;
+    width: 127px;
     border-left: 1px solid #ddd;
     background: #e4e5e6;
     margin: 0;

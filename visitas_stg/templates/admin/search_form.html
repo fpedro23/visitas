@@ -1,11 +1,13 @@
 {% load i18n admin_static %}
 {% if cl.search_fields %}
-<div id="toolbar"><form id="changelist-search" action="" method="get">
-<div><!-- DIV needed for valid HTML -->
-<label for="searchbar"><img src="{% static "admin/img/icon_searchbox.png" %}" alt="Search" /></label>
-<input type="text" size="40" name="{{ search_var }}" value="{{ cl.query }}" id="searchbar" />
-<input type="submit" value="{% trans 'Search' %}" />
-{% if show_result_count %}
+<div id="" style="width:1024px;"><form id="changelist-search" action="" method="get">
+<div style="width:986px;" align="right"><!-- DIV needed for valid HTML -->
+
+<input type="text" size="40" name="{{ search_var }}" value="{{ cl.query }}" id="searchbar" style="width: 180px;"/>
+    <input type="submit" value="" id="buscarICO"  style="border:0px; left:988px; top:0px;"/>
+
+<br>
+    {% if show_result_count %}
     <span class="small quiet">{% blocktrans count counter=cl.result_count %}{{ counter }} result{% plural %}{{ counter }} results{% endblocktrans %} (<a href="?{% if cl.is_popup %}_popup=1{% endif %}">{% blocktrans with full_result_count=cl.full_result_count %}{{ full_result_count }} total{% endblocktrans %}</a>)</span>
 {% endif %}
 {% for pair in cl.params.items %}
