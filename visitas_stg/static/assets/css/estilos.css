@@ -45,7 +45,7 @@
 	width: 320px;
 	height: 20px;
 	position: absolute;
-	top: 34px;
+	top: 24px;
 	left: 681px;
 }
 
@@ -55,7 +55,7 @@
 
 	position: absolute;
 	right: 48px;
-	top: 55px;
+	top: 45px;
 
 	font-family: Verdana, Geneva, sans-serif;
 	font-size: 13px;
@@ -66,7 +66,7 @@
 	height: 22px;
 	position: absolute;
 	right: 23px;
-	top: 55px;
+	top: 45px;
 	background-image:url(../imagenes/bigBACK.png);
 	background-position: -874px -199px;
 }
@@ -2057,6 +2057,11 @@ input[type=file] {
 .div-hide {
   display: none !important; }
 
+::-webkit-scrollbar:horizontal {
+background:#fff;
+height:10px;
+}
+
 
 ::-webkit-scrollbar {
 background:#fff;
@@ -2064,9 +2069,13 @@ width:10px;
 }
 ::-webkit-scrollbar-thumb {
 -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+border-radius: 10px;
 background-image: -webkit-linear-gradient(top, rgba(55, 54, 48, 0.19) 10%, rgba(97, 96, 90, 0.65) 51%);
 }
 ::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	-webkit-border-radius: 10px;
+    border-radius: 10px;
 }
 
 

@@ -70,7 +70,7 @@
         <div id="homeBOT" onclick="location.href='/admin/'"></div>
 
     <div class="titleHEADER01">
-    Sistema de Seguimiento a Entidades Federativas{% if user.is_active %}  {% else %}<br><br>{% endif %}
+    {% if user.is_active %}  {% else %}<br><br>{% endif %}
     </div>
     <div class="titleHEADER02">SISEF</div>
 
