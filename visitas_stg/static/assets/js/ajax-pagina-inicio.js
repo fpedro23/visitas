@@ -49,8 +49,19 @@ function verDatos() {
                 var mapOptions = {
                 zoom: 4,
                 center: new google.maps.LatLng(22.6526121, -100.1780452),
-                mapTypeId: google.maps.MapTypeId.SATELLITE
+                mapTypeId: google.maps.MapTypeId.HYBRID,
+                styles:[
+                    {
+                        featureType: "road",
+                        elementType: "labels",
+                        stylers: [
+                            { visibility: "off" }
+                        ]
+                    }
+                ]
                 }
+
+
                 var map = new google.maps.Map(document.getElementById('mapaVISITAS'),
                                             mapOptions)
                 var lugares =  new Array();
