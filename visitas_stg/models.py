@@ -7,9 +7,46 @@ from smart_selects.db_fields import ChainedForeignKey
 from django.forms import model_to_dict
 from datetime import datetime
 
+class Dependencia(models.Model):
+    nombreDependencia = models.CharField(max_length=200)
+
+    def __str__(self):  # __unicode__ on Python 2
+        return self.nombreDependencia
+
+    def __unicode__(self):  # __unicode__ on Python 2
+        return self.nombreDependencia
+
+    def to_serializable_dict(self):
+        return {'id': self.id, 'nombreDependencia': self.nombreDependencia}
+
+    class Meta:
+        verbose_name = 'Dependencia'
+        verbose_name_plural = 'Dependencias'
+
+
+class Cargo(models.Model):  # Cargo de la persona que hace la actividad
+    nombre_cargo = models.CharField(max_length=200)
+    nombre_funcionario = models.CharField(max_length=200)
+    dependencia = models.ForeignKey(Dependencia)
+
+    def __str__(self):
+        return self.nombre_cargo
+
+    def __unicode__(self):
+        return self.nombre_cargo
+
+    def to_serializable_dict(self):
+        return {'id': self.id, 'nombre_cargo': self.nombre_cargo, 'nombre_funcionario': self.nombre_funcionario,
+                'dependencia': self.dependencia.to_serializable_dict()}
+
+    class Meta:
+        verbose_name = 'Funcionario'
+        verbose_name_plural = 'Funcionarios'
 
 class Region(models.Model):
     numeroRegion = models.CharField(max_length=2)
+    nombreRegion = models.CharField(max_length=50)
+    cargo = models.ForeignKey(Cargo, null=False, blank=False)
 
     def __str__(self):  # __unicode__ on Python 2
         return self.numeroRegion
@@ -22,7 +59,7 @@ class Region(models.Model):
         verbose_name_plural = 'Regiones'
 
     def to_serializable_dict(self):
-        return {'id': self.id, 'numeroRegion': self.numeroRegion}
+        return {'id': self.id, 'numeroRegion': self.numeroRegion,'nombreRegion': self.nombreRegion,'cargo': self.cargo.to_serializable_dict()}
 
 
 class Estado(models.Model):
@@ -87,41 +124,6 @@ class Municipio(models.Model):
         return ans
 
 
-class Dependencia(models.Model):
-    nombreDependencia = models.CharField(max_length=200)
-
-    def __str__(self):  # __unicode__ on Python 2
-        return self.nombreDependencia
-
-    def __unicode__(self):  # __unicode__ on Python 2
-        return self.nombreDependencia
-
-    def to_serializable_dict(self):
-        return {'id': self.id, 'nombreDependencia': self.nombreDependencia}
-
-    class Meta:
-        verbose_name = 'Dependencia'
-        verbose_name_plural = 'Dependencias'
-
-
-class Cargo(models.Model):  # Cargo de la persona que hace la actividad
-    nombre_cargo = models.CharField(max_length=200)
-    nombre_funcionario = models.CharField(max_length=200)
-    dependencia = models.ForeignKey(Dependencia)
-
-    def __str__(self):
-        return self.nombre_cargo
-
-    def __unicode__(self):
-        return self.nombre_cargo
-
-    def to_serializable_dict(self):
-        return {'id': self.id, 'nombre_cargo': self.nombre_cargo, 'nombre_funcionario': self.nombre_funcionario,
-                'dependencia': self.dependencia.to_serializable_dict()}
-
-    class Meta:
-        verbose_name = 'Funcionario'
-        verbose_name_plural = 'Funcionarios'
 
 
 class PartidoGobernante(models.Model):

@@ -511,70 +511,78 @@ def Predefinido_Estado(request):
 
         ans.append(map)
 
-        prs.slides[0].shapes[4].text_frame.paragraphs[0].font.size = Pt(9)
-        prs.slides[0].shapes[5].text_frame.paragraphs[0].font.size = Pt(9)
-        prs.slides[0].shapes[6].text_frame.paragraphs[0].font.size = Pt(9)
-        prs.slides[0].shapes[7].text_frame.paragraphs[0].font.size = Pt(9)
-        prs.slides[0].shapes[8].text_frame.paragraphs[0].font.size = Pt(9)
 
 
-        prs.slides[0].shapes[4].text= json_fecha['dia'] + "/" + json_fecha['mes'] + "/" + json_fecha['ano']
-        prs.slides[0].shapes[5].text= '{0:,}'.format(ans[0]['estado']['distritos_electorales'])
-        prs.slides[0].shapes[6].text= ans[0]['estado']['nombreEstado']
-        #prs.slides[0].shapes[7].text= '{0:,}'.format(ans[0]['estado']['distritos_electorales'])
-        prs.slides[0].shapes[7].text= '{0:,}'.format(ans[0]['estado']['municipios'])
-        prs.slides[0].shapes[8].text= ans[0]['estado']['region']['numeroRegion']
+        for i in range(0,2):
+            table1 = prs.slides[i].shapes[0].table
+            table2 = prs.slides[i].shapes[1].table
+
+            table1.cell(0,0).text_frame.paragraphs[0].font.size = Pt(9)
+            table1.cell(0,1).text_frame.paragraphs[0].font.size = Pt(9)
+            table2.cell(0,0).text_frame.paragraphs[0].font.size = Pt(9)
+            table2.cell(0,1).text_frame.paragraphs[0].font.size = Pt(9)
+            table2.cell(0,2).text_frame.paragraphs[0].font.size = Pt(9)
+
+            table1.cell(0,0).text_frame.paragraphs[0].font.color.rgb = RGBColor(0x00, 0x00, 0x00)
+            table1.cell(0,1).text_frame.paragraphs[0].font.color.rgb = RGBColor(0x00, 0x00, 0x00)
+            table2.cell(0,0).text_frame.paragraphs[0].font.color.rgb = RGBColor(0x00, 0x00, 0x00)
+            table2.cell(0,1).text_frame.paragraphs[0].font.color.rgb = RGBColor(0x00, 0x00, 0x00)
+            table2.cell(0,2).text_frame.paragraphs[0].font.color.rgb = RGBColor(0x00, 0x00, 0x00)
 
 
-        table = prs.slides[0].shapes[0].table
+            table1.cell(0,0).text= "Fecha: " + json_fecha['dia'] + "/" + json_fecha['mes'] + "/" + json_fecha['ano']
+            table1.cell(0,1).text= "Region: " + ans[0]['estado']['region']['numeroRegion'] + "                      Responsable: " \
+                                   + ans[0]['estado']['region']['cargo']['nombre_funcionario'] + "  " \
+                                   + ans[0]['estado']['region']['cargo']['nombre_cargo']
+
+            table2.cell(0,0).text= "Estado: " + ans[0]['estado']['nombreEstado']
+            table2.cell(0,1).text= "Total de Municipios: " + '{0:,}'.format(ans[0]['estado']['municipios'])
+            table2.cell(0,2).text= "Distritos Electorales: " + '{0:,}'.format(ans[0]['estado']['distritos_electorales'])
+
+
+        table = prs.slides[0].shapes[2].table
         # write body cellstable.cell(1, 0)
         i=1
         totalColumna=total1=total2=total3=total4=total5=0
 
         for dato in ans[0]['dependencias']:
-            if i>=16: break
-            table.cell(1, i).text_frame.paragraphs[0].font.size = Pt(8)
-            table.cell(2, i).text_frame.paragraphs[0].font.size = Pt(8)
-            table.cell(3, i).text_frame.paragraphs[0].font.size = Pt(8)
-            table.cell(4, i).text_frame.paragraphs[0].font.size = Pt(8)
-            table.cell(5, i).text_frame.paragraphs[0].font.size = Pt(8)
-            table.cell(6, i).text_frame.paragraphs[0].font.size = Pt(8)
-            #fill=table.cell(1, i).fill
-            #fill.solid()
-            #fill.fore_color.rgb = RGBColor(255,0,0)
-            #fill.fore_color.theme_color = MSO_THEME_COLOR.ACCENT_1
-            #fill.fore_color.brightness = 0.25
-            #fill.transparency = 0.25
-            #fill.background()
+            table.cell(i,0).text_frame.paragraphs[0].font.size = Pt(9)
+            table.cell(i,1).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i,2).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i,3).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i,4).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i,5).text_frame.paragraphs[0].font.size = Pt(8)
+            table.cell(i,6).text_frame.paragraphs[0].font.size = Pt(8)
 
-            table.cell(1, i).text = str(dato['funcionarios_federales'])
-            table.cell(2, i).text = str(dato['visitas'])
-            table.cell(3, i).text = str(dato['actividades'])
-            table.cell(4, i).text = str(dato['municipios'])
-            table.cell(5, i).text = str(dato['participantes_locales'])
+            table.cell(i,0).text = str(dato['nombreDependencia'])
+            table.cell(i,1).text = str(dato['funcionarios_federales'])
+            table.cell(i,2).text = str(dato['visitas'])
+            table.cell(i,3).text = str(dato['actividades'])
+            table.cell(i,4).text = str(dato['municipios'])
+            table.cell(i,5).text = str(dato['participantes_locales'])
             total1=total1 + dato['funcionarios_federales']
             total2=total2 + dato['visitas']
             total3=total3 + dato['actividades']
             total4=total4 + dato['municipios']
             total5=total5 + dato['participantes_locales']
             totalColumna=dato['funcionarios_federales']+dato['visitas']+dato['actividades']+dato['municipios']+dato['participantes_locales']
-            table.cell(6, i).text = str(totalColumna)
+            table.cell(i,6).text = str(totalColumna)
             i=i+1
 
-        table.cell(1, 16).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(2, 16).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(3, 16).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(4, 16).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(5, 16).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(6, 16).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(1, 16).text = str(total1)
-        table.cell(2, 16).text = str(total2)
-        table.cell(3, 16).text = str(total3)
-        table.cell(4, 16).text = str(total4)
-        table.cell(5, 16).text = str(total5)
-        table.cell(6, 16).text = str(total1+total2+total3+total4+total5)
+        table.cell(26,1).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(26,2).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(26,3).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(26,4).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(26,5).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(26,6).text_frame.paragraphs[0].font.size = Pt(8)
+        table.cell(26,1).text = str(total1)
+        table.cell(26,2).text = str(total2)
+        table.cell(26,3).text = str(total3)
+        table.cell(26,4).text = str(total4)
+        table.cell(26,5).text = str(total5)
+        table.cell(26,6).text = str(total1+total2+total3+total4+total5)
 
-        table = prs.slides[0].shapes[1].table
+        table = prs.slides[1].shapes[2].table
         i=1
         total1=total2=total3=total4=total5=0
         for dato in ans[0]['medios']:
@@ -621,7 +629,7 @@ def Predefinido_Estado(request):
         mayor = map['dependencias']
         mayor.sort(key=lambda x: x['capitalizaciones']['cantidad__sum'], reverse=True)
 
-        table = prs.slides[0].shapes[2].table
+        table = prs.slides[1].shapes[3].table
         i=1
         for dato in mayor:
             table.cell(i,0).text_frame.paragraphs[0].font.size = Pt(8)
@@ -638,7 +646,7 @@ def Predefinido_Estado(request):
         menor = map['dependencias']
         menor.sort(key=lambda x: x['capitalizaciones']['cantidad__sum'])
 
-        table = prs.slides[0].shapes[3].table
+        table = prs.slides[1].shapes[4].table
         i=1
         for dato in menor:
             table.cell(i,0).text_frame.paragraphs[0].font.size = Pt(8)
@@ -661,9 +669,9 @@ def Predefinido_Estado(request):
         chart_data.categories = [ans[0]['clasificaciones'][0]['nombre_clasificacion'], ans[0]['clasificaciones'][1]['nombre_clasificacion'], ans[0]['clasificaciones'][2]['nombre_clasificacion']]
         chart_data.add_series('Series 1', (float(ans[0]['clasificaciones'][0]['numero'])/float(total_clasificaciones), float(ans[0]['clasificaciones'][1]['numero'])/float(total_clasificaciones), float(ans[0]['clasificaciones'][2]['numero'])/float(total_clasificaciones)))
 
-        x, y, cx, cy = Inches(6.69), Inches(4.9), Inches(3), Inches(2.5)
+        x, y, cx, cy = Inches(5.8), Inches(4.5), Inches(3), Inches(3)
 
-        chart = prs.slides[0].shapes.add_chart(
+        chart = prs.slides[1].shapes.add_chart(
             XL_CHART_TYPE.PIE, x, y, cx, cy, chart_data
         ).chart
 
