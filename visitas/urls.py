@@ -33,6 +33,8 @@ urlpatterns = patterns('',
     url('^visitas/Predefinido_Estado', views.Predefinido_Estado),
     url('^visitas/Predefinido_Dependencia', views.Predefinido_Dependencia),
     url('^visitas/Predefinido_Region', views.Predefinido_Region),
+    url('^visitas/Predefinido_Trece_Entidades', views.Predefinido_Trece_Entidades),
+
 
     url(r'^visitas/ayuda$', 'visitas_stg.views.ayuda', name='ayuda'),
     url(r'^visitas/videos$', 'visitas_stg.views.videos', name='videos'),
