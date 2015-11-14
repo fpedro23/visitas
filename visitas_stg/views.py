@@ -469,6 +469,7 @@ def Predefinido_Estado(request):
 
         map['dependencias'] = []
 
+
         for dependencia in dependencias:
             dependencia_map = dependencia.to_serializable_dict()
             dependencia_map['funcionarios_federales'] = Cargo.objects.filter(dependencia_id=dependencia.id).count()
@@ -484,6 +485,46 @@ def Predefinido_Estado(request):
             dependencia_map['capitalizaciones'] = Capitalizacion.objects.filter(
                 Q(actividad__visita__entidad_id=estado.id) & Q(
                     actividad__visita__dependencia_id=dependencia.id)).aggregate(Sum('cantidad'))
+
+            dependencia_map['numero_apariciones_internet'] = Capitalizacion.objects.filter(
+                Q(actividad__visita__entidad_id=estado.id) &
+                Q(medio_id=3) & Q(actividad__visita__dependencia_id=dependencia.id)).aggregate(
+                total=Sum('cantidad'))['total']
+            if dependencia_map['numero_apariciones_internet'] is None:
+                dependencia_map['numero_apariciones_internet'] = 0
+
+            dependencia_map['numero_apariciones_tv'] = Capitalizacion.objects.filter(
+                Q(actividad__visita__entidad_id=estado.id) &
+                Q(medio_id=1) & Q(actividad__visita__dependencia_id=dependencia.id)).aggregate(
+                total=Sum('cantidad'))['total']
+            if dependencia_map['numero_apariciones_tv'] is None:
+                dependencia_map['numero_apariciones_tv'] = 0
+            dependencia_map['numero_apariciones_radio'] = Capitalizacion.objects.filter(
+                Q(actividad__visita__entidad_id=estado.id) &
+                Q(medio_id=2) & Q(actividad__visita__dependencia_id=dependencia.id)).aggregate(
+                total=Sum('cantidad'))['total']
+            if dependencia_map['numero_apariciones_radio'] is None:
+                dependencia_map['numero_apariciones_radio'] = 0
+            dependencia_map['numero_apariciones_periodico'] = Capitalizacion.objects.filter(
+                Q(actividad__visita__entidad_id=estado.id) &
+                Q(medio_id=4) & Q(actividad__visita__dependencia_id=dependencia.id)).aggregate(
+                total=Sum('cantidad'))['total']
+            if dependencia_map['numero_apariciones_periodico'] is None:
+                dependencia_map['numero_apariciones_periodico'] = 0
+            dependencia_map['numero_apariciones_revista'] = Capitalizacion.objects.filter(
+                Q(actividad__visita__entidad_id=estado.id) &
+                Q(medio_id=5) & Q(actividad__visita__dependencia_id=dependencia.id)).aggregate(
+                total=Sum('cantidad'))['total']
+            if dependencia_map['numero_apariciones_revista'] is None:
+                dependencia_map['numero_apariciones_revista'] = 0
+
+            dependencia_map['numero_apariciones_otros'] = Capitalizacion.objects.filter(
+                Q(actividad__visita__entidad_id=estado.id) &
+                Q(medio_id__in=[1,2,4,5]) & Q(actividad__visita__dependencia_id=dependencia.id)).aggregate(
+                total=Sum('cantidad'))['total']
+            if dependencia_map['numero_apariciones_otros'] is None:
+                dependencia_map['numero_apariciones_otros'] = 0
+
             map['dependencias'].append(dependencia_map)
 
 
@@ -542,17 +583,12 @@ def Predefinido_Estado(request):
 
         table = prs.slides[0].shapes[2].table
         # write body cellstable.cell(1, 0)
-        i=1
-        totalColumna=total1=total2=total3=total4=total5=0
+        i=2
+        totalColumna=total1=total2=total3=total4=total5=total6=total7=total8=total9=total10=total11=0
 
         for dato in ans[0]['dependencias']:
-            table.cell(i,0).text_frame.paragraphs[0].font.size = Pt(9)
-            table.cell(i,1).text_frame.paragraphs[0].font.size = Pt(8)
-            table.cell(i,2).text_frame.paragraphs[0].font.size = Pt(8)
-            table.cell(i,3).text_frame.paragraphs[0].font.size = Pt(8)
-            table.cell(i,4).text_frame.paragraphs[0].font.size = Pt(8)
-            table.cell(i,5).text_frame.paragraphs[0].font.size = Pt(8)
-            table.cell(i,6).text_frame.paragraphs[0].font.size = Pt(8)
+            for ind in range(0,13):
+                table.cell(i,ind).text_frame.paragraphs[0].font.size = Pt(9)
 
             table.cell(i,0).text = str(dato['nombreDependencia'])
             table.cell(i,1).text = str(dato['funcionarios_federales'])
@@ -560,27 +596,45 @@ def Predefinido_Estado(request):
             table.cell(i,3).text = str(dato['actividades'])
             table.cell(i,4).text = str(dato['municipios'])
             table.cell(i,5).text = str(dato['participantes_locales'])
+            table.cell(i,6).text = str(dato['numero_apariciones_tv'])
+            table.cell(i,7).text = str(dato['numero_apariciones_radio'])
+            table.cell(i,8).text = str(dato['numero_apariciones_periodico'])
+            table.cell(i,9).text = str(dato['numero_apariciones_revista'])
+            table.cell(i,10).text = str(dato['numero_apariciones_otros'])
+            table.cell(i,11).text = str(dato['numero_apariciones_internet'])
             total1=total1 + dato['funcionarios_federales']
             total2=total2 + dato['visitas']
             total3=total3 + dato['actividades']
             total4=total4 + dato['municipios']
             total5=total5 + dato['participantes_locales']
-            totalColumna=dato['funcionarios_federales']+dato['visitas']+dato['actividades']+dato['municipios']+dato['participantes_locales']
-            table.cell(i,6).text = str(totalColumna)
+            total6=total6 + dato['numero_apariciones_tv']
+            total7=total7 + dato['numero_apariciones_radio']
+            total8=total8 + dato['numero_apariciones_periodico']
+            total9=total9 + dato['numero_apariciones_revista']
+
+            total10=total10 + dato['numero_apariciones_otros']
+            total11=total11 + dato['numero_apariciones_internet']
+            totalColumna=dato['numero_apariciones_otros']+dato['numero_apariciones_internet']
+            table.cell(i,12).text = str(totalColumna)
             i=i+1
 
-        table.cell(26,1).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(26,2).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(26,3).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(26,4).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(26,5).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(26,6).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(26,1).text = str(total1)
-        table.cell(26,2).text = str(total2)
-        table.cell(26,3).text = str(total3)
-        table.cell(26,4).text = str(total4)
-        table.cell(26,5).text = str(total5)
-        table.cell(26,6).text = str(total1+total2+total3+total4+total5)
+        for ind in range(0,13):
+            table.cell(27,ind).text_frame.paragraphs[0].font.size = Pt(8)
+
+        table.cell(27,0).text ="TOTALES"
+        table.cell(27,1).text = str(total1)
+        table.cell(27,2).text = str(total2)
+        table.cell(27,3).text = str(total3)
+        table.cell(27,4).text = str(total4)
+        table.cell(27,5).text = str(total5)
+        table.cell(27,6).text = str(total6)
+        table.cell(27,7).text = str(total7)
+        table.cell(27,8).text = str(total8)
+        table.cell(27,9).text = str(total9)
+        table.cell(27,10).text = str(total10)
+        table.cell(27,11).text = str(total11)
+
+        table.cell(27,12).text = str(total10+total11)
 
         table = prs.slides[1].shapes[2].table
         i=1
@@ -762,6 +816,47 @@ def Predefinido_Dependencia(request):
             estado_map['capitalizaciones'] = Capitalizacion.objects.filter(
                 Q(actividad__visita__dependencia_id=dependencia.id) & Q(
                     actividad__visita__entidad_id=estado.id)).aggregate(Sum('cantidad'))
+
+            estado_map['numero_apariciones_internet'] = Capitalizacion.objects.filter(
+                Q(actividad__visita__dependencia_id=dependencia.id) &
+                Q(medio_id=3) & Q(actividad__visita__entidad_id=estado.id)).aggregate(
+                total=Sum('cantidad'))['total']
+            if estado_map['numero_apariciones_internet'] is None:
+                estado_map['numero_apariciones_internet'] = 0
+
+            estado_map['numero_apariciones_tv'] = Capitalizacion.objects.filter(
+                Q(actividad__visita__dependencia_id=dependencia.id) &
+                Q(medio_id=1) & Q(actividad__visita__entidad_id=estado.id)).aggregate(
+                total=Sum('cantidad'))['total']
+            if estado_map['numero_apariciones_tv'] is None:
+                estado_map['numero_apariciones_tv'] = 0
+            estado_map['numero_apariciones_radio'] = Capitalizacion.objects.filter(
+                Q(actividad__visita__dependencia_id=dependencia.id) &
+                Q(medio_id=2) & Q(actividad__visita__entidad_id=estado.id)).aggregate(
+                total=Sum('cantidad'))['total']
+            if estado_map['numero_apariciones_radio'] is None:
+                estado_map['numero_apariciones_radio'] = 0
+            estado_map['numero_apariciones_periodico'] = Capitalizacion.objects.filter(
+                Q(actividad__visita__dependencia_id=dependencia.id) &
+                Q(medio_id=4) & Q(actividad__visita__entidad_id=estado.id)).aggregate(
+                total=Sum('cantidad'))['total']
+            if estado_map['numero_apariciones_periodico'] is None:
+                estado_map['numero_apariciones_periodico'] = 0
+            estado_map['numero_apariciones_revista'] = Capitalizacion.objects.filter(
+                Q(actividad__visita__dependencia_id=dependencia.id) &
+                Q(medio_id=5) & Q(actividad__visita__entidad_id=estado.id)).aggregate(
+                total=Sum('cantidad'))['total']
+            if estado_map['numero_apariciones_revista'] is None:
+                estado_map['numero_apariciones_revista'] = 0
+
+            estado_map['numero_apariciones_otros'] = Capitalizacion.objects.filter(
+                Q(actividad__visita__dependencia_id=dependencia.id) &
+                Q(medio_id__in=[1,2,4,5]) & Q(actividad__visita__entidad_id=estado.id)).aggregate(
+                total=Sum('cantidad'))['total']
+            if estado_map['numero_apariciones_otros'] is None:
+                estado_map['numero_apariciones_otros'] = 0
+
+
             map['estados'].append(estado_map)
         #map['estados'].sort(key=lambda e: e['capitalizaciones'])
 
@@ -816,19 +911,14 @@ def Predefinido_Dependencia(request):
         table = prs.slides[0].shapes[2].table
         table2 = prs.slides[1].shapes[2].table
         # write body cellstable.cell(1, 0)
-        i=1
-        j=1
-        totalColumna=total1=total2=total3=total4=total5=0
+        i=2
+        j=2
+        totalColumna=total1=total2=total3=total4=total5=total6=total7=total8=total9=total10=total11=0
 
         for dato in ans[0]['estados']:
-            if i<=17:
-                table.cell(i,0).text_frame.paragraphs[0].font.size = Pt(9)
-                table.cell(i,1).text_frame.paragraphs[0].font.size = Pt(8)
-                table.cell(i,2).text_frame.paragraphs[0].font.size = Pt(8)
-                table.cell(i,3).text_frame.paragraphs[0].font.size = Pt(8)
-                table.cell(i,4).text_frame.paragraphs[0].font.size = Pt(8)
-                table.cell(i,5).text_frame.paragraphs[0].font.size = Pt(8)
-                table.cell(i,6).text_frame.paragraphs[0].font.size = Pt(8)
+            if i<=18:
+                for ind in range(0,13):
+                    table.cell(i,ind).text_frame.paragraphs[0].font.size = Pt(9)
 
                 table.cell(i,0).text = str(dato['nombreEstado'])
                 table.cell(i,1).text = str(dato['total_visitas_funcionarios_federales'])
@@ -836,22 +926,31 @@ def Predefinido_Dependencia(request):
                 table.cell(i,3).text = str(dato['total_actividades'])
                 table.cell(i,4).text = str(dato['municipios'])
                 table.cell(i,5).text = str(dato['participantes_locales'])
+                table.cell(i,6).text = str(dato['numero_apariciones_tv'])
+                table.cell(i,7).text = str(dato['numero_apariciones_radio'])
+                table.cell(i,8).text = str(dato['numero_apariciones_periodico'])
+                table.cell(i,9).text = str(dato['numero_apariciones_revista'])
+                table.cell(i,10).text = str(dato['numero_apariciones_otros'])
+                table.cell(i,11).text = str(dato['numero_apariciones_internet'])
+
                 total1=total1 + dato['total_visitas_funcionarios_federales']
                 total2=total2 + dato['total_visitas']
                 total3=total3 + dato['total_actividades']
                 total4=total4 + dato['municipios']
                 total5=total5 + dato['participantes_locales']
-                totalColumna=dato['total_visitas_funcionarios_federales']+dato['total_visitas']+dato['total_actividades']+dato['municipios']+dato['participantes_locales']
-                table.cell(i,6).text = str(totalColumna)
+                total6=total6 + dato['numero_apariciones_tv']
+                total7=total7 + dato['numero_apariciones_radio']
+                total8=total8 + dato['numero_apariciones_periodico']
+                total9=total9 + dato['numero_apariciones_revista']
+
+                total10=total10 + dato['numero_apariciones_otros']
+                total11=total11 + dato['numero_apariciones_internet']
+                totalColumna=dato['numero_apariciones_otros']+dato['numero_apariciones_internet']
+                table.cell(i,12).text = str(totalColumna)
                 i=i+1
             else:
-                table2.cell(j,0).text_frame.paragraphs[0].font.size = Pt(9)
-                table2.cell(j,1).text_frame.paragraphs[0].font.size = Pt(8)
-                table2.cell(j,2).text_frame.paragraphs[0].font.size = Pt(8)
-                table2.cell(j,3).text_frame.paragraphs[0].font.size = Pt(8)
-                table2.cell(j,4).text_frame.paragraphs[0].font.size = Pt(8)
-                table2.cell(j,5).text_frame.paragraphs[0].font.size = Pt(8)
-                table2.cell(j,6).text_frame.paragraphs[0].font.size = Pt(8)
+                for ind in range(0,13):
+                    table2.cell(j,ind).text_frame.paragraphs[0].font.size = Pt(9)
 
                 table2.cell(j,0).text = str(dato['nombreEstado'])
                 table2.cell(j,1).text = str(dato['total_visitas_funcionarios_federales'])
@@ -859,29 +958,45 @@ def Predefinido_Dependencia(request):
                 table2.cell(j,3).text = str(dato['total_actividades'])
                 table2.cell(j,4).text = str(dato['municipios'])
                 table2.cell(j,5).text = str(dato['participantes_locales'])
+                table2.cell(j,6).text = str(dato['numero_apariciones_tv'])
+                table2.cell(j,7).text = str(dato['numero_apariciones_radio'])
+                table2.cell(j,8).text = str(dato['numero_apariciones_periodico'])
+                table2.cell(j,9).text = str(dato['numero_apariciones_revista'])
+                table2.cell(j,10).text = str(dato['numero_apariciones_otros'])
+                table2.cell(j,11).text = str(dato['numero_apariciones_internet'])
                 total1=total1 + dato['total_visitas_funcionarios_federales']
                 total2=total2 + dato['total_visitas']
                 total3=total3 + dato['total_actividades']
                 total4=total4 + dato['municipios']
                 total5=total5 + dato['participantes_locales']
-                totalColumna=dato['total_visitas_funcionarios_federales']+dato['total_visitas']+dato['total_actividades']+dato['municipios']+dato['participantes_locales']
-                table2.cell(j,6).text = str(totalColumna)
+                total6=total6 + dato['numero_apariciones_tv']
+                total7=total7 + dato['numero_apariciones_radio']
+                total8=total8 + dato['numero_apariciones_periodico']
+                total9=total9 + dato['numero_apariciones_revista']
+
+                total10=total10 + dato['numero_apariciones_otros']
+                total11=total11 + dato['numero_apariciones_internet']
+                totalColumna=dato['numero_apariciones_otros']+dato['numero_apariciones_internet']
+                table2.cell(j,12).text = str(totalColumna)
                 j=j+1
 
-        table2.cell(16,0).text_frame.paragraphs[0].font.size = Pt(8)
-        table2.cell(16,1).text_frame.paragraphs[0].font.size = Pt(8)
-        table2.cell(16,2).text_frame.paragraphs[0].font.size = Pt(8)
-        table2.cell(16,3).text_frame.paragraphs[0].font.size = Pt(8)
-        table2.cell(16,4).text_frame.paragraphs[0].font.size = Pt(8)
-        table2.cell(16,5).text_frame.paragraphs[0].font.size = Pt(8)
-        table2.cell(16,6).text_frame.paragraphs[0].font.size = Pt(8)
-        table2.cell(16,0).text = "TOTALES"
-        table2.cell(16,1).text = str(total1)
-        table2.cell(16,2).text = str(total2)
-        table2.cell(16,3).text = str(total3)
-        table2.cell(16,4).text = str(total4)
-        table2.cell(16,5).text = str(total5)
-        table2.cell(16,6).text = str(total1+total2+total3+total4+total5)
+        for ind in range(0,13):
+            table2.cell(18,ind).text_frame.paragraphs[0].font.size = Pt(8)
+
+        table2.cell(18,0).text ="TOTALES"
+        table2.cell(18,1).text = str(total1)
+        table2.cell(18,2).text = str(total2)
+        table2.cell(18,3).text = str(total3)
+        table2.cell(18,4).text = str(total4)
+        table2.cell(18,5).text = str(total5)
+        table2.cell(18,6).text = str(total6)
+        table2.cell(18,7).text = str(total7)
+        table2.cell(18,8).text = str(total8)
+        table2.cell(18,9).text = str(total9)
+        table2.cell(18,10).text = str(total10)
+        table2.cell(18,11).text = str(total11)
+
+        table2.cell(18,12).text = str(total10+total11)
 
         table = prs.slides[2].shapes[2].table
         i=1
@@ -1380,13 +1495,54 @@ def Predefinido_Trece_Entidades(request):
             dependencia_map['municipios'] = Visita.objects.filter(
                 Q(dependencia_id=dependencia.id) & Q(entidad_id__in=lista)).distinct().count()
             dependencia_map['actividades'] = Actividad.objects.filter(
-                Q(visita__dependencia_id=dependencia.id) & Q(visita__entidad_id=dependencia.id)).count()
+                Q(visita__dependencia_id=dependencia.id) & Q(visita__entidad_id__in=lista)).count()
             dependencia_map['participantes_locales'] = ParticipanteLocal.objects.filter(
                 Q(actividad__visita__dependencia_id=dependencia.id) & Q(
                     actividad__visita__entidad_id__in=lista)).count()
             dependencia_map['capitalizaciones'] = Capitalizacion.objects.filter(
                 Q(actividad__visita__entidad_id__in=lista) & Q(
                     actividad__visita__dependencia_id=dependencia.id)).aggregate(Sum('cantidad'))
+
+            dependencia_map['numero_apariciones_internet'] = Capitalizacion.objects.filter(
+                Q(actividad__visita__entidad_id__in=lista) &
+                Q(medio_id=3) & Q(actividad__visita__dependencia_id=dependencia.id)).aggregate(
+                total=Sum('cantidad'))['total']
+            if dependencia_map['numero_apariciones_internet'] is None:
+                dependencia_map['numero_apariciones_internet'] = 0
+
+            dependencia_map['numero_apariciones_tv'] = Capitalizacion.objects.filter(
+                Q(actividad__visita__entidad_id__in=lista) &
+                Q(medio_id=1) & Q(actividad__visita__dependencia_id=dependencia.id)).aggregate(
+                total=Sum('cantidad'))['total']
+            if dependencia_map['numero_apariciones_tv'] is None:
+                dependencia_map['numero_apariciones_tv'] = 0
+            dependencia_map['numero_apariciones_radio'] = Capitalizacion.objects.filter(
+                Q(actividad__visita__entidad_id__in=lista) &
+                Q(medio_id=2) & Q(actividad__visita__dependencia_id=dependencia.id)).aggregate(
+                total=Sum('cantidad'))['total']
+            if dependencia_map['numero_apariciones_radio'] is None:
+                dependencia_map['numero_apariciones_radio'] = 0
+            dependencia_map['numero_apariciones_periodico'] = Capitalizacion.objects.filter(
+                Q(actividad__visita__entidad_id__in=lista) &
+                Q(medio_id=4) & Q(actividad__visita__dependencia_id=dependencia.id)).aggregate(
+                total=Sum('cantidad'))['total']
+            if dependencia_map['numero_apariciones_periodico'] is None:
+                dependencia_map['numero_apariciones_periodico'] = 0
+            dependencia_map['numero_apariciones_revista'] = Capitalizacion.objects.filter(
+                Q(actividad__visita__entidad_id__in=lista) &
+                Q(medio_id=5) & Q(actividad__visita__dependencia_id=dependencia.id)).aggregate(
+                total=Sum('cantidad'))['total']
+            if dependencia_map['numero_apariciones_revista'] is None:
+                dependencia_map['numero_apariciones_revista'] = 0
+
+            dependencia_map['numero_apariciones_otros'] = Capitalizacion.objects.filter(
+                Q(actividad__visita__entidad_id__in=lista) &
+                Q(medio_id__in=[1,2,4,5]) & Q(actividad__visita__dependencia_id=dependencia.id)).aggregate(
+                total=Sum('cantidad'))['total']
+            if dependencia_map['numero_apariciones_otros'] is None:
+                dependencia_map['numero_apariciones_otros'] = 0
+
+
             map['dependencias'].append(dependencia_map)
 
 
@@ -1440,17 +1596,13 @@ def Predefinido_Trece_Entidades(request):
 
         table = prs.slides[0].shapes[1].table
         # write body cellstable.cell(1, 0)
-        i=1
-        totalColumna=total1=total2=total3=total4=total5=0
+        i=2
+        totalColumna=total1=total2=total3=total4=total5=total6=total7=total8=total9=total10=total11=0
 
         for dato in ans[0]['dependencias']:
-            table.cell(i,0).text_frame.paragraphs[0].font.size = Pt(9)
-            table.cell(i,1).text_frame.paragraphs[0].font.size = Pt(8)
-            table.cell(i,2).text_frame.paragraphs[0].font.size = Pt(8)
-            table.cell(i,3).text_frame.paragraphs[0].font.size = Pt(8)
-            table.cell(i,4).text_frame.paragraphs[0].font.size = Pt(8)
-            table.cell(i,5).text_frame.paragraphs[0].font.size = Pt(8)
-            table.cell(i,6).text_frame.paragraphs[0].font.size = Pt(8)
+            for ind in range(0,13):
+                table.cell(i,ind).text_frame.paragraphs[0].font.size = Pt(9)
+
 
             table.cell(i,0).text = str(dato['nombreDependencia'])
             table.cell(i,1).text = str(dato['funcionarios_federales'])
@@ -1458,27 +1610,47 @@ def Predefinido_Trece_Entidades(request):
             table.cell(i,3).text = str(dato['actividades'])
             table.cell(i,4).text = str(dato['municipios'])
             table.cell(i,5).text = str(dato['participantes_locales'])
+
+            table.cell(i,6).text = str(dato['numero_apariciones_tv'])
+            table.cell(i,7).text = str(dato['numero_apariciones_radio'])
+            table.cell(i,8).text = str(dato['numero_apariciones_periodico'])
+            table.cell(i,9).text = str(dato['numero_apariciones_revista'])
+            table.cell(i,10).text = str(dato['numero_apariciones_otros'])
+            table.cell(i,11).text = str(dato['numero_apariciones_internet'])
             total1=total1 + dato['funcionarios_federales']
             total2=total2 + dato['visitas']
             total3=total3 + dato['actividades']
             total4=total4 + dato['municipios']
             total5=total5 + dato['participantes_locales']
-            totalColumna=dato['funcionarios_federales']+dato['visitas']+dato['actividades']+dato['municipios']+dato['participantes_locales']
-            table.cell(i,6).text = str(totalColumna)
+            total6=total6 + dato['numero_apariciones_tv']
+            total7=total7 + dato['numero_apariciones_radio']
+            total8=total8 + dato['numero_apariciones_periodico']
+            total9=total9 + dato['numero_apariciones_revista']
+
+            total10=total10 + dato['numero_apariciones_otros']
+            total11=total11 + dato['numero_apariciones_internet']
+            totalColumna=dato['numero_apariciones_otros']+dato['numero_apariciones_internet']
+            table.cell(i,12).text = str(totalColumna)
+
             i=i+1
 
-        table.cell(26,1).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(26,2).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(26,3).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(26,4).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(26,5).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(26,6).text_frame.paragraphs[0].font.size = Pt(8)
-        table.cell(26,1).text = str(total1)
-        table.cell(26,2).text = str(total2)
-        table.cell(26,3).text = str(total3)
-        table.cell(26,4).text = str(total4)
-        table.cell(26,5).text = str(total5)
-        table.cell(26,6).text = str(total1+total2+total3+total4+total5)
+        for ind in range(0,13):
+            table.cell(27,ind).text_frame.paragraphs[0].font.size = Pt(8)
+
+        table.cell(27,0).text ="TOTALES"
+        table.cell(27,1).text = str(total1)
+        table.cell(27,2).text = str(total2)
+        table.cell(27,3).text = str(total3)
+        table.cell(27,4).text = str(total4)
+        table.cell(27,5).text = str(total5)
+        table.cell(27,6).text = str(total6)
+        table.cell(27,7).text = str(total7)
+        table.cell(27,8).text = str(total8)
+        table.cell(27,9).text = str(total9)
+        table.cell(27,10).text = str(total10)
+        table.cell(27,11).text = str(total11)
+
+        table.cell(27,12).text = str(total10+total11)
 
         table = prs.slides[1].shapes[1].table
         i=1
