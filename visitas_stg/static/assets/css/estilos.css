@@ -1169,6 +1169,20 @@
 	background-position: -875px -501px;
 }
 
+.funcionarioCATALOGO_US{
+	width: 180px;
+	height: 190px;
+	background-image: url(../imagenes/bigBACK.png);
+	background-position: -875px -311px;
+	position: absolute;
+	top: 80px;
+	left: 415px;
+}
+
+.funcionarioCATALOGO_US:hover{
+	background-position: -875px -501px;
+}
+
 .mediosCATALOGO{
 	width: 180px;
 	height: 190px;

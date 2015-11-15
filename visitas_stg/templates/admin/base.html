@@ -129,9 +129,10 @@
                             </div>
                         </li>
 
-            {%  if user.userprofile.rol == 'AD' %}
+            {%  if user.userprofile.rol == 'US' or user.userprofile.rol == 'AD' %}
                 <div class="CATALOGOS" onclick="location.href='/visitas/catalogos'"></div>
                         <div class="pto003">
+                            {% if user.userprofile.rol == 'AD' %}
                             <a href="/catalogo" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="pto03"></span></a>
                                 <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu" style="left:-165px; top:29px;">
                                     <li class="dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">De Funcionarios</a>
@@ -142,6 +143,22 @@
                                           <li><a href="/admin/visitas_stg/cargo/?e=1">Eliminar</a></li>
                                       </ul>
                                   </li>
+                             {% endif %}
+
+                            {% if user.userprofile.rol == 'US' %}
+                            <a href="/catalogo" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="pto03"></span></a>
+                                <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu" style="left:-165px; top:29px;">
+                                    <li class="dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">De Funcionarios</a>
+                                      <ul class="dropdown-menu" style="left:160px; top:8px;">
+                                          <li><a tabindex="-1" href="/admin/visitas_stg/cargo/add/?s=1">Crear</a></li>
+                                          <li><a href="/admin/visitas_stg/cargo/">Buscar</a></li>
+                                          <li><a href="/admin/visitas_stg/cargo/?e=2">Modificar</a></li>
+                                          <li><a href="/admin/visitas_stg/cargo/?e=1">Eliminar</a></li>
+                                      </ul>
+                                  </li>
+                             {% endif %}
+
+                            {% if user.userprofile.rol == 'AD' %}
                                   <li class="dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">De Medios</a>
                                     <ul class="dropdown-menu" style="left:217px; top:8px;">
                                           <li><a tabindex="-1" href="/admin/visitas_stg/medio/add">Crear</a></li>
@@ -166,6 +183,7 @@
                                               <li><a href="/admin/visitas_stg/tipocapitalizacion/?e=1">Eliminar</a></li>
                                       </ul>
                                   </li>
+                            {% endif %}
                                      <!-- <li class="dropdown-submenu" ><a tabindex="-1" href="#" class="dropdown-toggle" data-toggle="dropdown">De Clasificación</a>
                                                               <ul class="dropdown-menu" style="left:217px; top:9px;">
                                                                   <li><a href="/admin/visitas_stg/clasificacion/add">Crear</a></li>
@@ -178,7 +196,7 @@
                             </ul>
                     </div>
 
-
+                {%  if user.userprofile.rol == 'AD' %}
                 <div class="USUARIOS" onclick="location.href='/visitas/usuarios'"></div>
                   <li class="dropdown right-text" style="list-style-type: none;">
                     <div class="pto004">
@@ -191,6 +209,7 @@
                         </ul>
                     </div>
                   </li>
+                {% endif %}
             {% endif %}
 
          {% endif %}

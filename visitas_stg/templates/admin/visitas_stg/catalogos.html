@@ -12,13 +12,18 @@
    	    <div id= "regresarBTN" onclick="window.history.go(-1);"></div>
           <div id="welcome">C A T Á L O G O S</div>
 
-          <div class="funcionarioCATALOGO" onclick="location.href='/visitas/catalogo-funcionarios'"></div>
+        {% if user.userprofile.rol == 'US' %}
+          <div class="funcionarioCATALOGO_US" onclick="location.href='/visitas/catalogo-funcionarios'"></div>
+        {% endif %}
 
+        {% if user.userprofile.rol == 'AD' %}
+          <div class="funcionarioCATALOGO" onclick="location.href='/visitas/catalogo-funcionarios'"></div>
           <div class="mediosCATALOGO" onclick="location.href='/visitas/catalogo-medios'"></div>
 
           <div class="actividadCATALOGO" onclick="location.href='/visitas/catalogo-tipoActividad'"></div>
 
           <div class="capitalizacionCATALOGO" onclick="location.href='/visitas/catalogo-capitalizacion'"></div>
+        {% endif %}
     </div>
 
 

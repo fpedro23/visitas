@@ -1,5 +1,6 @@
 # coding=utf-8
 from django.contrib import admin
+from django.contrib.admin import SimpleListFilter
 from django.contrib.admin.options import get_content_type_for_model
 from django.contrib.auth.models import Group
 from django.db.models import Q
@@ -15,6 +16,43 @@ from visitas_stg.models import *
 
 
 # Register your models here.
+
+
+class DependenciaListFilter(SimpleListFilter):
+    # USAGE
+    # In your admin class, pass three filter class as tuple for the list_filter attribute:
+    #
+    # list_filter = (CategoryListFilter,)
+    # Human-readable title which will be displayed in the
+    # right admin sidebar just above the filter options.
+    title = 'Dependencia'
+
+    parameter_name = 'dependencia'
+
+    def lookups(self, request, model_admin):
+        """
+        Returns a list of tuples. The first element in each
+        tuple is the coded value for the option that will
+        appear in the URL query. The second element is the
+        human-readable name for the option that will appear
+        in the right sidebar.
+        """
+        arreglo_dependencias = []
+        for dependencia in request.user.userprofile.dependencia.all():
+            arreglo_dependencias.append(dependencia.id)
+
+        if request.user.userprofile.rol == 'AD':  # Secretaria tecnica
+            dependencias = Dependencia.objects.all()
+
+        elif request.user.usuario.rol == 'US':
+            dependencias = Dependencia.objects.filter(
+                Q(id__in=arreglo_dependencias)
+            )
+
+        list_tuple = []
+        for dependencia in dependencias:
+            list_tuple.append((dependencia.id, dependencia.nombreDependencia))
+        return list_tuple
 
 
 class ProblematicaSocialInLine(NestedStackedInline):
@@ -115,6 +153,21 @@ class FuncionarioAdmin(admin.ModelAdmin):
             return qs.filter(
                 Q(dependencia_id=request.user.userprofile.dependencia.id))
 
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "dependencia":
+            if request.user.userprofile.rol == 'AD':
+                kwargs["queryset"] = Dependencia.objects.all()
+            elif request.user.userprofile.rol == 'US':
+                arreglo_dependencias = []
+
+                arreglo_dependencias.append(request.user.userprofile.dependencia.id)
+
+                kwargs["queryset"] = Dependencia.objects.filter(
+                    Q(id__in=arreglo_dependencias)
+                )
+
+        return super(
+            FuncionarioAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 class VisitaAdmin(NestedModelAdmin):
     model = Visita
@@ -124,6 +177,7 @@ class VisitaAdmin(NestedModelAdmin):
         'identificador_unico', '__str__', 'dependencia', 'region', 'entidad', 'municipio', 'cargo',
         'partido_gobernante',
         'distrito_electoral', )
+
 
     list_filter = ('dependencia',  'region', 'entidad', 'municipio', 'cargo',
                    'partido_gobernante', 'distrito_electoral',
